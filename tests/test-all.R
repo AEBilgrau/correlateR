@@ -1,4 +1,4 @@
-library(testthat)
-library(stringr)
+library("testthat")
+library("correlateR")
 
 test_package("correlateR")
