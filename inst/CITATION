@@ -4,13 +4,18 @@ citHeader("Thanks for using the correlateR package!",
 
 citEntry(entry = "Manual",
          title = "correlateR: Fast, efficient, and robust partial correlations",
-         author = personList(person(family="Bilgrau", given="Anders", middle="Ellern", email="abilgrau@math.aau.dk")),
+         author = personList(person(family="Bilgrau", 
+                                    given="Anders", 
+                                    middle="Ellern", 
+                                    email="abilgrau@math.aau.dk")),
          url = "http://github.com/AEBilgrau/correlateR",
          year = "2014",
-         textVersion = paste("Bilgrau, Anders Ellern; correlateR: Fast, efficient, and robust partial correlations;", 
+         textVersion = paste("Bilgrau, Anders Ellern; correlateR: Fast,",
+                             "efficient, and robust partial correlations;", 
                              "http://github.com/AEBilgrau/correlateR"))
 
 
-citFooter("Suggestions for improvements and bug reports is very welcome at",
+citFooter("Suggestions for improvements, comments, and bug",
+          "reports are very welcome at",
           "http://github.com/AEBilgrau/correlateR")
  
