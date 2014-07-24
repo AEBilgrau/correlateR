@@ -1,5 +1,5 @@
-`correlateR`: a kaleidoscope of correlations
-============================================
+`correlateR`
+============
 
 The R-package `correlateR` features fast, robust, and efficient marginal, partial, semi-partial correlations and covariances of arbitrary conditional order. A good discussion and explanation of marginal (unconditioned), partial, and semi-partial (or, part) correlations is found [here.](http://luna.cas.usf.edu/~mbrannic/files/regression/Partial.html)
 
