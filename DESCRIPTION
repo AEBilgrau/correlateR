@@ -10,7 +10,7 @@ Description: Fast, robust, and efficient estimation of marginal, partial, and
 License: GPL (>=2)
 Imports:
     Rcpp (>= 0.10.6)
-LinkingTo: Rcpp, RcppArmadillo
+LinkingTo: Rcpp, RcppArmadillo, RcppEigen
 Suggests:
     testthat (>= 0.3)
 URL: https://github.com/AEBilgrau/correlateR
