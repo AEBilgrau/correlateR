@@ -15,7 +15,7 @@
 
 // [[Rcpp::export]]
 arma::mat covArma(const arma::mat & X, 
-                   const int norm_type) {
+                  const int norm_type) {
   return arma::cov(X, norm_type);
 }
 
