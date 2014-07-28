@@ -28,7 +28,7 @@ supplied, the cross-covariances between the columns of the matrices are
 computed.
 }
 \details{
-Functions like \link{\code{cov}}. The \code{i}'th and \code{j}'th
+Functions like \code{\link{cov}}. The \code{i}'th and \code{j}'th
   entry of the output matrix  is the covariance between \code{X[i, ]} and
   \code{Y[j, ]}. When \code{Y} is not supplied, then the output is equivalent
   to \code{Y} = \code{X}.
@@ -41,12 +41,13 @@ dimnames(Y) <- list(paste0("obs", 1:nrow(Y)), paste0("var", 1:ncol(Y)))
 
 covariance(X)  # ==  covariance(X, X, "Unbiased")
 covariance(X, method = "ML")
-covariance(X, Y, "Unbiased")
+covariance(X, Y, method = "ML")
+covariance(X, Y, method = "Unbiased")
 }
 \author{
 Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 }
 \seealso{
-\link{\code{cov}}
+\code{\link{cov}}
 }
 
