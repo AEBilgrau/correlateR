@@ -125,31 +125,31 @@ Eigen::MatrixXd crosscorEigen(Eigen::Map<Eigen::MatrixXd> & X,
 
 
 
-///*** R
-//library("microbenchmark")
-//
-//X <- replicate(10, rnorm(50));
-//dimnames(X) <- list(paste0("obs", 1:nrow(X)), paste0("dim", 1:ncol(X)))
-//Y <- replicate(15, rnorm(50));
-//dimnames(Y) <- list(paste0("obs", 1:nrow(Y)), paste0("dim", 1:ncol(Y)))
-//
-//# Covariance check
-//XX <- unname(stats::cov(X))
-//stopifnot(all.equal(XX, covArma(X,0)),
-//          all.equal(XX, crosscovArma(X,X,0)),
-//          all.equal(XX, covEigen(X,0)),
-//          all.equal(XX, crosscovEigen(X,X,0)))
-//
-//microbenchmark(stats::cov(X),
-//               covArma(X, 0),
-//               crosscovArma(X, X, 0),
-//               covEigen(X, 0),
-//               crosscovEigen(X, X, 0),
-//               times = 100)
-//
-//
-//
-//# Correlation check
-//all.equal(unname(stats::cor(X)), corArma(X, 0))
-//*/
+/*** R
+library("microbenchmark")
+
+X <- replicate(10, rnorm(50))
+dimnames(X) <- list(paste0("obs", 1:nrow(X)), paste0("dim", 1:ncol(X)))
+Y <- replicate(15, rnorm(50))
+dimnames(Y) <- list(paste0("obs", 1:nrow(Y)), paste0("dim", 1:ncol(Y)))
+
+# Covariance check
+XX <- unname(stats::cov(X))
+stopifnot(all.equal(XX, covArma(X,0)),
+          all.equal(XX, crosscovArma(X,X,0)),
+          all.equal(XX, covEigen(X,0)),
+          all.equal(XX, crosscovEigen(X,X,0)))
+
+microbenchmark(stats::cov(X),
+               covArma(X, 0),
+               crosscovArma(X, X, 0),
+               covEigen(X, 0),
+               crosscovEigen(X, X, 0),
+               times = 100)
+
+
+
+# Correlation check
+all.equal(unname(stats::cor(X)), corArma(X, 0))
+*/
 
