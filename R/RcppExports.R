@@ -17,7 +17,19 @@ crosscovEigen <- function(X, Y, norm_type = 0L) {
     .Call('correlateR_crosscovEigen', PACKAGE = 'correlateR', X, Y, norm_type)
 }
 
-corRcpp <- function(X) {
-    .Call('correlateR_corRcpp', PACKAGE = 'correlateR', X)
+corArma <- function(X, norm_type) {
+    .Call('correlateR_corArma', PACKAGE = 'correlateR', X, norm_type)
+}
+
+crosscorArma <- function(X, Y, norm_type) {
+    .Call('correlateR_crosscorArma', PACKAGE = 'correlateR', X, Y, norm_type)
+}
+
+corEigen <- function(X, norm_type = 0L) {
+    .Call('correlateR_corEigen', PACKAGE = 'correlateR', X, norm_type)
+}
+
+crosscorEigen <- function(X, Y, norm_type = 0L) {
+    .Call('correlateR_crosscorEigen', PACKAGE = 'correlateR', X, Y, norm_type)
 }
 

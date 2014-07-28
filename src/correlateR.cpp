@@ -9,19 +9,19 @@
 //using namespace arma;
 //using namespace Eigen;
 
-/* 
+/*
     Marginal covariance (and cross-covariance) functions
 */
 
 // [[Rcpp::export]]
-arma::mat covArma(const arma::mat & X, 
+arma::mat covArma(const arma::mat & X,
                   const int norm_type) {
   return arma::cov(X, norm_type);
 }
 
 // [[Rcpp::export]]
-arma::mat crosscovArma(const arma::mat & X, 
-                       const arma::mat & Y, 
+arma::mat crosscovArma(const arma::mat & X,
+                       const arma::mat & Y,
                        const int norm_type) {
   return arma::cov(X, Y, norm_type);
 }
@@ -35,8 +35,8 @@ Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd> & X,
     const int df = X.rows() - 1 + norm_type; // Subtract 1 by default
 
     X.rowwise() -= X.colwise().mean();  // Centering
-    
-    // Return the X^T * X is the scatter matrix  
+
+    // Return the X^T * X is the scatter matrix
     return X.transpose() * X / df;
 }
 
@@ -48,27 +48,83 @@ Eigen::MatrixXd crosscovEigen(Eigen::Map<Eigen::MatrixXd> & X,
     // Computing degrees of freedom
     // n - 1 is the unbiased estimate whereas n is the MLE
     const int df = X.rows() - 1 + norm_type; // Subtract 1 by default
-    
+
     // Centering matrices
     Y.rowwise() -= Y.colwise().mean();
     X.rowwise() -= X.colwise().mean();
-    
-    // Return the X^T * X is the scatter matrix  
+
+    // Return the X^T * X is the scatter matrix
     return X.transpose() * Y / df;
 }
 
 
 
-/* 
-    Marginal correlation
+/*
+    Marginal correlation (and cross-correlation) functions
 */
 
 // [[Rcpp::export]]
-arma::mat corRcpp(arma::mat & X) {
-  return arma::cor(X);
+arma::mat corArma(const arma::mat & X,
+                  const int norm_type) {
+  return arma::cor(X, norm_type);
 }
 
-//
+// [[Rcpp::export]]
+arma::mat crosscorArma(const arma::mat & X,
+                       const arma::mat & Y,
+                       const int norm_type) {
+  return arma::cor(X, Y, norm_type);
+}
+
+// [[Rcpp::export]]
+Eigen::MatrixXd corEigen(Eigen::Map<Eigen::MatrixXd> & X,
+                         const int norm_type = 0) {
+
+    // Computing degrees of freedom
+    // n - 1 is the unbiased estimate whereas n is the MLE
+    const int df = X.rows() - 1 + norm_type; // Subtract 1 by default
+
+    X.rowwise() -= X.colwise().mean();  // Centering
+
+    Eigen::MatrixXd cor = X.transpose() * X / df;   // The covariance matrix
+
+    // Get 1 over the standard deviations
+    Eigen::VectorXd inv_sds = cor.diagonal().array().sqrt().inverse();
+
+    // Scale the covariance matrix
+    cor = cor.cwiseProduct(inv_sds * inv_sds.transpose());
+
+    return cor;
+}
+
+// [[Rcpp::export]]
+Eigen::MatrixXd crosscorEigen(Eigen::Map<Eigen::MatrixXd> & X,
+                              Eigen::Map<Eigen::MatrixXd> & Y,
+                              const int norm_type = 0) {
+
+    // Computing degrees of freedom
+    // n - 1 is the unbiased estimate whereas n is the MLE
+    const int df = X.rows() - 1 + norm_type; // Subtract 1 by default
+
+    // Centering matrices
+    Y.rowwise() -= Y.colwise().mean();
+    X.rowwise() -= X.colwise().mean();
+
+    // The covariance matrix
+    Eigen::MatrixXd cor = X.transpose() * Y / df;
+
+    // Compute 1 over the standard deviations of X and Y
+    Eigen::VectorXd inv_sds_X = (X.colwise().norm()/sqrt(df)).array().inverse();
+    Eigen::VectorXd inv_sds_Y = (Y.colwise().norm()/sqrt(df)).array().inverse();
+
+    // Scale the covariance matrix
+    cor = cor.cwiseProduct(inv_sds_X * inv_sds_Y.transpose());
+    return cor;
+}
+
+
+
+
 ///*** R
 //library("microbenchmark")
 //
@@ -77,8 +133,6 @@ arma::mat corRcpp(arma::mat & X) {
 //Y <- replicate(15, rnorm(50));
 //dimnames(Y) <- list(paste0("obs", 1:nrow(Y)), paste0("dim", 1:ncol(Y)))
 //
-//
-//
 //# Covariance check
 //XX <- unname(stats::cov(X))
 //stopifnot(all.equal(XX, covArma(X,0)),
@@ -86,9 +140,8 @@ arma::mat corRcpp(arma::mat & X) {
 //          all.equal(XX, covEigen(X,0)),
 //          all.equal(XX, crosscovEigen(X,X,0)))
 //
-//
-//microbenchmark(stats::cov(X), 
-//               covArma(X, 0), 
+//microbenchmark(stats::cov(X),
+//               covArma(X, 0),
 //               crosscovArma(X, X, 0),
 //               covEigen(X, 0),
 //               crosscovEigen(X, X, 0),
@@ -97,7 +150,6 @@ arma::mat corRcpp(arma::mat & X) {
 //
 //
 //# Correlation check
-//all.equal(unname(stats::cor(X)), corRcpp(X))
-//
+//all.equal(unname(stats::cor(X)), corArma(X, 0))
 //*/
-//
+
