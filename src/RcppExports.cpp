@@ -7,72 +7,6 @@
 
 using namespace Rcpp;
 
-// covArma
-arma::mat covArma(const arma::mat& X, const int norm_type);
-RcppExport SEXP correlateR_covArma(SEXP XSEXP, SEXP norm_typeSEXP) {
-BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        arma::mat __result = covArma(X, norm_type);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
-END_RCPP
-}
-// crosscovArma
-arma::mat crosscovArma(const arma::mat& X, const arma::mat& Y, const int norm_type);
-RcppExport SEXP correlateR_crosscovArma(SEXP XSEXP, SEXP YSEXP, SEXP norm_typeSEXP) {
-BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        arma::mat __result = crosscovArma(X, Y, norm_type);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
-END_RCPP
-}
-// covEigen
-Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd>& X, const int norm_type = 0);
-RcppExport SEXP correlateR_covEigen(SEXP XSEXP, SEXP norm_typeSEXP) {
-BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        Eigen::MatrixXd __result = covEigen(X, norm_type);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
-END_RCPP
-}
-// crosscovEigen
-Eigen::MatrixXd crosscovEigen(Eigen::Map<Eigen::MatrixXd>& X, Eigen::Map<Eigen::MatrixXd>& Y, const int norm_type = 0);
-RcppExport SEXP correlateR_crosscovEigen(SEXP XSEXP, SEXP YSEXP, SEXP norm_typeSEXP) {
-BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type Y(YSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        Eigen::MatrixXd __result = crosscovEigen(X, Y, norm_type);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
-END_RCPP
-}
 // corArma
 arma::mat corArma(const arma::mat& X, const int norm_type);
 RcppExport SEXP correlateR_corArma(SEXP XSEXP, SEXP norm_typeSEXP) {
@@ -133,6 +67,87 @@ BEGIN_RCPP
         Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type Y(YSEXP );
         Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
         Eigen::MatrixXd __result = crosscorEigen(X, Y, norm_type);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// cube
+double cube(const double x);
+RcppExport SEXP correlateR_cube(SEXP xSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const double >::type x(xSEXP );
+        double __result = cube(x);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// covArma
+arma::mat covArma(const arma::mat& X, const int norm_type);
+RcppExport SEXP correlateR_covArma(SEXP XSEXP, SEXP norm_typeSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
+        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
+        arma::mat __result = covArma(X, norm_type);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// crosscovArma
+arma::mat crosscovArma(const arma::mat& X, const arma::mat& Y, const int norm_type);
+RcppExport SEXP correlateR_crosscovArma(SEXP XSEXP, SEXP YSEXP, SEXP norm_typeSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
+        Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP );
+        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
+        arma::mat __result = crosscovArma(X, Y, norm_type);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// covEigen
+Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd>& X, const int norm_type = 0);
+RcppExport SEXP correlateR_covEigen(SEXP XSEXP, SEXP norm_typeSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP );
+        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
+        Eigen::MatrixXd __result = covEigen(X, norm_type);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// crosscovEigen
+Eigen::MatrixXd crosscovEigen(Eigen::Map<Eigen::MatrixXd>& X, Eigen::Map<Eigen::MatrixXd>& Y, const int norm_type = 0);
+RcppExport SEXP correlateR_crosscovEigen(SEXP XSEXP, SEXP YSEXP, SEXP norm_typeSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP );
+        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type Y(YSEXP );
+        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
+        Eigen::MatrixXd __result = crosscovEigen(X, Y, norm_type);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
