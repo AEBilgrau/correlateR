@@ -40,6 +40,7 @@ covariance <- function(X, Y = NULL, method = c("Unbiased", "ML")) {
     colnames(ans) <- 
     rownames(ans) <- colnames(X)
   } else {
+  ¨ stopifnot(nrow(X) == nrow(Y))
     ans <- crosscovArma(X = X, Y = Y, norm_type = norm_type)
     colnames(ans) <- colnames(Y)
     rownames(ans) <- colnames(X)
