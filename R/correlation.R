@@ -9,8 +9,6 @@
 #' @param Y A numeric matrix of compatible dimension with the \code{X}, i.e. 
 #'   \code{nrow(X)} equals \code{nrow(Y)}. The default value \code{NULL} is 
 #'   equivalent to Y = X howver more efficient.
-#' @param method A character of length 1. The unbiased estimate divided with
-#'   \code{n-1} and wheras ML uses \code{n}.
 #' @return If \code{Y} is not supplied the a square symmetric correlation matrix 
 #'   of size \code{ncol(X)} is returned. If \code{Y} is given the 
 #'   cross-correlation matrix of size \code{ncol(X)} times \code{ncol(Y)} is 
@@ -27,23 +25,19 @@
 #' Y <- replicate(3, rnorm(10))
 #' dimnames(Y) <- list(paste0("obs", 1:nrow(Y)), paste0("var", 1:ncol(Y)))
 #' 
-#' correlation(X)  # ==  correlation(X, X, "Unbiased")
-#' correlation(X, method = "ML")
-#' correlation(X, Y, method = "ML")
-#' correlation(X, Y, method = "Unbiased")
-correlation <- function(X, Y = NULL, method = c("Unbiased", "ML")) {
-  method <- match.arg(method)
-  norm_type <- ifelse(method == "Unbiased", 0L, 1L)
-  
+#' correlation(X)
+#' correlation(X, X)
+#' correlation(X, Y)
+correlation <- function(X, Y = NULL) {
   if (is.null(Y)) {
-    ans <- corArma(X = X, norm_type = norm_type) 
+    ans <- corArma(X = X) 
     colnames(ans) <- 
     rownames(ans) <- colnames(X)
   } else {
-    ans <- crosscorArma(X = X, Y = Y, norm_type = norm_type)
+    stopifnot(nrow(X) == nrow(Y))
+    ans <- crosscorArma(X = X, Y = Y)
     colnames(ans) <- colnames(Y)
     rownames(ans) <- colnames(X)
   }
-
   return(ans)
 }

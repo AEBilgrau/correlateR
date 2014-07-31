@@ -6,4 +6,7 @@
 
 double square(const double x);
 
+// Subtract the rowmeans of a numeric matrix
+Rcpp::NumericMatrix centerNumericMatrix(Rcpp::NumericMatrix & X);
+
 #endif // AUX_FUNCTIONS_H

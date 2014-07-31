@@ -3,7 +3,7 @@
 \alias{correlation}
 \title{Compute the correlation matrix}
 \usage{
-correlation(X, Y = NULL, method = c("Unbiased", "ML"))
+correlation(X, Y = NULL)
 }
 \arguments{
 \item{X}{A numeric matrix.}
@@ -11,9 +11,6 @@ correlation(X, Y = NULL, method = c("Unbiased", "ML"))
 \item{Y}{A numeric matrix of compatible dimension with the \code{X}, i.e.
 \code{nrow(X)} equals \code{nrow(Y)}. The default value \code{NULL} is
 equivalent to Y = X howver more efficient.}
-
-\item{method}{A character of length 1. The unbiased estimate divided with
-\code{n-1} and wheras ML uses \code{n}.}
 }
 \value{
 If \code{Y} is not supplied the a square symmetric correlation matrix
@@ -39,10 +36,9 @@ dimnames(X) <- list(paste0("obs", 1:nrow(X)), paste0("var", 1:ncol(X)))
 Y <- replicate(3, rnorm(10))
 dimnames(Y) <- list(paste0("obs", 1:nrow(Y)), paste0("var", 1:ncol(Y)))
 
-correlation(X)  # ==  correlation(X, X, "Unbiased")
-correlation(X, method = "ML")
-correlation(X, Y, method = "ML")
-correlation(X, Y, method = "Unbiased")
+correlation(X)
+correlation(X, X)
+correlation(X, Y)
 }
 \author{
 Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>

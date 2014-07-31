@@ -7,16 +7,46 @@
 
 using namespace Rcpp;
 
+// corRcpp
+Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix& X);
+RcppExport SEXP correlateR_corRcpp(SEXP XSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type X(XSEXP );
+        Rcpp::NumericMatrix __result = corRcpp(X);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// crosscorRcpp
+Rcpp::NumericMatrix crosscorRcpp(Rcpp::NumericMatrix& X, Rcpp::NumericMatrix& Y);
+RcppExport SEXP correlateR_crosscorRcpp(SEXP XSEXP, SEXP YSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type X(XSEXP );
+        Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type Y(YSEXP );
+        Rcpp::NumericMatrix __result = crosscorRcpp(X, Y);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // corArma
-arma::mat corArma(const arma::mat& X, const int norm_type);
-RcppExport SEXP correlateR_corArma(SEXP XSEXP, SEXP norm_typeSEXP) {
+arma::mat corArma(const arma::mat& X);
+RcppExport SEXP correlateR_corArma(SEXP XSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
         Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        arma::mat __result = corArma(X, norm_type);
+        arma::mat __result = corArma(X);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
@@ -24,16 +54,15 @@ BEGIN_RCPP
 END_RCPP
 }
 // crosscorArma
-arma::mat crosscorArma(const arma::mat& X, const arma::mat& Y, const int norm_type);
-RcppExport SEXP correlateR_crosscorArma(SEXP XSEXP, SEXP YSEXP, SEXP norm_typeSEXP) {
+arma::mat crosscorArma(const arma::mat& X, const arma::mat& Y);
+RcppExport SEXP correlateR_crosscorArma(SEXP XSEXP, SEXP YSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
         Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
         Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        arma::mat __result = crosscorArma(X, Y, norm_type);
+        arma::mat __result = crosscorArma(X, Y);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
@@ -41,15 +70,14 @@ BEGIN_RCPP
 END_RCPP
 }
 // corEigen
-Eigen::MatrixXd corEigen(Eigen::Map<Eigen::MatrixXd>& X, const int norm_type = 0);
-RcppExport SEXP correlateR_corEigen(SEXP XSEXP, SEXP norm_typeSEXP) {
+Eigen::MatrixXd corEigen(Eigen::Map<Eigen::MatrixXd>& X);
+RcppExport SEXP correlateR_corEigen(SEXP XSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
         Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        Eigen::MatrixXd __result = corEigen(X, norm_type);
+        Eigen::MatrixXd __result = corEigen(X);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
@@ -57,31 +85,48 @@ BEGIN_RCPP
 END_RCPP
 }
 // crosscorEigen
-Eigen::MatrixXd crosscorEigen(Eigen::Map<Eigen::MatrixXd>& X, Eigen::Map<Eigen::MatrixXd>& Y, const int norm_type = 0);
-RcppExport SEXP correlateR_crosscorEigen(SEXP XSEXP, SEXP YSEXP, SEXP norm_typeSEXP) {
+Eigen::MatrixXd crosscorEigen(Eigen::Map<Eigen::MatrixXd>& X, Eigen::Map<Eigen::MatrixXd>& Y);
+RcppExport SEXP correlateR_crosscorEigen(SEXP XSEXP, SEXP YSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
         Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP );
         Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type Y(YSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        Eigen::MatrixXd __result = crosscorEigen(X, Y, norm_type);
+        Eigen::MatrixXd __result = crosscorEigen(X, Y);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);
     return __sexp_result;
 END_RCPP
 }
-// cube
-double cube(const double x);
-RcppExport SEXP correlateR_cube(SEXP xSEXP) {
+// covRcpp
+Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix& X, const int norm_type);
+RcppExport SEXP correlateR_covRcpp(SEXP XSEXP, SEXP norm_typeSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
     {
         Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const double >::type x(xSEXP );
-        double __result = cube(x);
+        Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type X(XSEXP );
+        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
+        Rcpp::NumericMatrix __result = covRcpp(X, norm_type);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// crosscovRcpp
+Rcpp::NumericMatrix crosscovRcpp(Rcpp::NumericMatrix& X, Rcpp::NumericMatrix& Y, const int norm_type);
+RcppExport SEXP correlateR_crosscovRcpp(SEXP XSEXP, SEXP YSEXP, SEXP norm_typeSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type X(XSEXP );
+        Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type Y(YSEXP );
+        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
+        Rcpp::NumericMatrix __result = crosscovRcpp(X, Y, norm_type);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);

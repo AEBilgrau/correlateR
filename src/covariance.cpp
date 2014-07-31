@@ -11,21 +11,75 @@
 //using namespace arma;
 //using namespace Eigen;
 
+
 /*
-    Marginal covariance (and cross-covariance) functions
+  Various functions to compute the marginal (or unconditional) covariance 
+  (and cross-covariance) estimates. The functions feature both the maximum
+  likelihood and the biased corrected estimates.
 */
 
+
+// Covariance implementation in Rcpp
 // [[Rcpp::export]]
-double cube (const double x) {
-  return x * square(x);
+Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix & X,
+                            const int norm_type) {
+  
+  const int n = X.nrow();
+  const int m = X.ncol();
+  const int df = n - 1 + norm_type;
+  
+  // Centering the matrix!
+  X = centerNumericMatrix(X);  // Defined in aux_functions
+
+  // Computing the covariance matrix
+  Rcpp::NumericMatrix cov(m, m);
+  for (int i = 0; i < m; ++i) {
+    for (int j = 0; j <= i; ++j) {
+      cov(i,j) = Rcpp::sum(X(Rcpp::_, i)*X(Rcpp::_, j))/df;
+      cov(j,i) = cov(i,j);
+    }
+  }
+  
+  return cov;
 }
 
+
+// Cross-covariance implementation in Rcpp
+// [[Rcpp::export]]
+Rcpp::NumericMatrix crosscovRcpp(Rcpp::NumericMatrix & X,
+                                 Rcpp::NumericMatrix & Y,
+                                 const int norm_type) {
+  
+  const int n = X.nrow();
+  const int m_X = X.ncol();
+  const int m_Y = Y.ncol();
+  const int df = n - 1 + norm_type;
+  
+  // Centering the matrices
+  X = centerNumericMatrix(X);
+  Y = centerNumericMatrix(Y);
+  
+  // Computing the covariance matrix
+  Rcpp::NumericMatrix cov(m_X, m_Y);
+  for (int i = 0; i < m_X; ++i) {
+    for (int j = 0; j < m_Y; ++j) {
+      cov(i,j) = Rcpp::sum(X(Rcpp::_, i)*Y(Rcpp::_, j))/df;
+    }
+  }
+  
+  return cov;
+}
+
+
+// covariance "Implementation"" in Armadillio
 // [[Rcpp::export]]
 arma::mat covArma(const arma::mat & X,
                   const int norm_type) {
   return arma::cov(X, norm_type);
 }
 
+
+// Cross-covariance "Implementation"" in Armadillio
 // [[Rcpp::export]]
 arma::mat crosscovArma(const arma::mat & X,
                        const arma::mat & Y,
@@ -33,6 +87,8 @@ arma::mat crosscovArma(const arma::mat & X,
   return arma::cov(X, Y, norm_type);
 }
 
+
+// covariance in Eigen
 // [[Rcpp::export]]
 Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd> & X,
                          const int norm_type = 0) {
@@ -41,12 +97,15 @@ Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd> & X,
     // n - 1 is the unbiased estimate whereas n is the MLE
     const int df = X.rows() - 1 + norm_type; // Subtract 1 by default
 
-    X.rowwise() -= X.colwise().mean();  // Centering
+    // Centering the matrix
+    X.rowwise() -= X.colwise().mean();  
 
     // Return the X^T * X is the scatter matrix
-    return X.transpose() * X / df;
+    return X.transpose() * X / df;  // could be .adjoint()
 }
 
+
+// Cross-covariance in Eigen
 // [[Rcpp::export]]
 Eigen::MatrixXd crosscovEigen(Eigen::Map<Eigen::MatrixXd> & X,
                               Eigen::Map<Eigen::MatrixXd> & Y,
@@ -74,20 +133,15 @@ dimnames(X) <- list(paste0("obs", 1:nrow(X)), paste0("dim", 1:ncol(X)))
 Y <- replicate(15, rnorm(50))
 dimnames(Y) <- list(paste0("obs", 1:nrow(Y)), paste0("dim", 1:ncol(Y)))
 
-# Covariance check
-XX <- unname(stats::cov(X))
-stopifnot(all.equal(XX, covArma(X,0)),
-          all.equal(XX, crosscovArma(X,X,0)),
-          all.equal(XX, covEigen(X,0)),
-          all.equal(XX, crosscovEigen(X,X,0)))
+covArma(X, 0)
+covRcpp(X, 0)
+covEigen(X, 0)
+all.equal(covArma(X, 0), covRcpp(X, 0))
+all.equal(covArma(X, 1), covRcpp(X, 1))
 
-microbenchmark(stats::cov(X),
-               covArma(X, 0),
-               crosscovArma(X, X, 0),
-               covEigen(X, 0),
-               crosscovEigen(X, X, 0),
-               times = 100)
-
-
+all(crosscovRcpp(X, Y, 1) == crosscovArma(X, Y, 1))
+print(microbenchmark(crosscovArma(X, Y, 0), 
+                     crosscovEigen(X, Y, 0),
+                     crosscovRcpp(X, Y, 0), times = 10), order = "median")
 */
 
