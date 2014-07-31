@@ -6,13 +6,14 @@ The R-package `correlateR` features fast, robust, and efficient marginal, partia
 
 The package is designed to perform well in both high and low dimensional cases as well as  both on dense and sparse matrices.
 
-The packages is planned to feature:
-* covariance/correlation
-* cross-covariance/correlation
-* arbitrary order conditional covariance/correlation
-* (?) arbitrary order conditional cross-covariance/correlation
-* sparse estimation methods
-* robust estimation methods
+The packages is features (or, is planned to feature):
+* Covariance/Correlation ✓
+* Cross-covariance/Cross-correlation
+* Arbitrary order conditional/partial covariance/correlation
+* Arbitrary order conditional/partial cross-covariance/correlation (?)
+* Part (or semi-partial) covariances and correlation (?)
+* Sparse estimation methods
+* Robust estimation methods
 * ... and more!
 
 Installation
