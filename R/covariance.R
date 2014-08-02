@@ -11,7 +11,8 @@
 #'   equivalent to Y = X howver more efficient.
 #' @param method A character of length 1. The unbiased estimate divided with
 #'   \code{n-1} and wheras ML uses \code{n}.
-#' @return If \code{Y} is not supplied the a square symmetric covariance matrix 
+#' @return 
+#'   If \code{Y} is not supplied the a square symmetric covariance matrix 
 #'   of size \code{ncol(X)} is returned. If \code{Y} is given the 
 #'   cross-covariance matrix of size \code{ncol(X)} times \code{ncol(Y)} is 
 #'   returned.

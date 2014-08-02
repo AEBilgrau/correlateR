@@ -1,7 +1,7 @@
-PKG_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
+#PKG_LIBS = $(LAPACK_LIBS) $(BLAS_LIBS) $(FLIBS)
 
 # http://people.math.aau.dk/~sorenh/misc/Rdocs/Rcpp/RcppSHLIB.html
-#PKG_LIBS = $(BLAS_LIBS) $(FLIBS) $(LAPACK_LIBS) \
-#           $(shell "Rscript.exe" -e "Rcpp:::LdFlags()")
-#PKG_CPPFLAGS = -I${R_HOME}/include -I${R_HOME}/library/Rcpp/include \
-#               -I${R_HOME}/library/RcppArmadillo/include  -I. -DNDEBUG
+PKG_LIBS = $(BLAS_LIBS) $(FLIBS) $(LAPACK_LIBS) \
+           $(shell "Rscript.exe" -e "Rcpp:::LdFlags()")
+PKG_CPPFLAGS = -I${R_HOME}/include -I${R_HOME}/library/Rcpp/include \
+               -I${R_HOME}/library/RcppArmadillo/include  -I. -DNDEBUG
