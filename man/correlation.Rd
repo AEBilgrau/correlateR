@@ -44,6 +44,6 @@ correlation(X, Y)
 Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 }
 \seealso{
-\code{\link{cov}}
+\code{\link{cor}}, \code{\link{corFamily}} (the workhorse functions)
 }
 

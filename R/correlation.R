@@ -20,7 +20,7 @@
 #'   \code{Y[j, ]}. When \code{Y} is not supplied, then the output is equivalent
 #'   to \code{Y} = \code{X}.
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
-#' @seealso \code{\link{cor}}
+#' @seealso \code{\link{cor}}, \code{\link{corFamily}} (the workhorse functions)
 #' @examples
 #' X <- replicate(2, rnorm(10))
 #' dimnames(X) <- list(paste0("obs", 1:nrow(X)), paste0("var", 1:ncol(X)))

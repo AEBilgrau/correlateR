@@ -8,16 +8,17 @@
 //' Compute correlation matrix
 //'
 //' Various functions to compute the marginal (or unconditional) correlations 
-//' (and cross-covariance) estimates efficently. They are (almost) equivalent 
-//' implementations of \link{\code{cor}} in Rcpp, RcppArmadillo, and 
+//' (and cross-covariance) estimates efficiently. They are (almost) equivalent 
+//' implementations of \code{\link{cor}} in Rcpp, RcppArmadillo, and 
 //' RcppEigen.
 //' 
 //' @rdname corFamily
-//' @aliases corRcpp crosscorRcpp corArma crosscorArma corEigen crosscorEigen
+//' @aliases corFamily
+//'   corRcpp crosscorRcpp corArma crosscorArma corEigen crosscorEigen
+//'   crosscor
 //' @param X A numeric matrix.
 //' @param Y A numeric matrix of compatible dimension with the \code{X}, i.e. 
-//'   \code{nrow(X)} equals \code{nrow(Y)}. The default value \code{NULL} is 
-//'   equivalent to Y = X howver more efficient.
+//'   \code{nrow(X)} equals \code{nrow(Y)}.
 //' @return
 //'   The \code{corXX} familiy returns a numeric correlation matrix of size 
 //'   \code{ncol(X)} times \code{ncol(X)}.
@@ -117,7 +118,7 @@ arma::mat corArma(const arma::mat & X) {
 }
 
 // Cross-correlation implementation in armadillo
-////' @rdname corFamily
+//' @rdname corFamily
 // [[Rcpp::export]]
 arma::mat crosscorArma(const arma::mat & X,
                        const arma::mat & Y) {
