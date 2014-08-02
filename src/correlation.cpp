@@ -4,13 +4,40 @@
 
 #include "aux_functions.h"
 
-/*
-  Various functions to compute the marginal (or unconditional) correlations 
-  (and cross-covariance) estimates. The functions feature both the maximum
-  likelihood and the biased corrected estimates.
-*/
 
-// Correlation implementation in Rcpp
+//' Compute correlation matrix
+//'
+//' Various functions to compute the marginal (or unconditional) correlations 
+//' (and cross-covariance) estimates efficently. They are (almost) equivalent 
+//' implementations of \link{\code{cor}} in Rcpp, RcppArmadillo, and 
+//' RcppEigen.
+//' 
+//' @rdname corFamily
+//' @aliases corRcpp crosscorRcpp corArma crosscorArma corEigen crosscorEigen
+//' @param X A numeric matrix.
+//' @param Y A numeric matrix of compatible dimension with the \code{X}, i.e. 
+//'   \code{nrow(X)} equals \code{nrow(Y)}. The default value \code{NULL} is 
+//'   equivalent to Y = X howver more efficient.
+//' @return
+//'   The \code{corXX} familiy returns a numeric correlation matrix of size 
+//'   \code{ncol(X)} times \code{ncol(X)}.
+//'   
+//'   The \code{crosscorXX} family returns a numeric cross-correlation matrix 
+//'   of size \code{ncol(X)} times \code{ncol(Y)}.
+//' @details
+//'   Functions almost like \code{\link{cor}}.
+//'   For the \code{crosscorXX} functions, the \code{i}'th and \code{j}'th 
+//'   entry of the output matrix is the correlation between \code{X[i, ]} and 
+//'   \code{X[j, ]}.
+//'   Likewise, for the \code{crosscorXX} functions, the \code{i}'th and
+//'   \code{j}'th entry of the output is the correlation between \code{X[i, ]} 
+//'   and \code{Y[j, ]}.
+//' @note 
+//'   NA's in \code{X} or \code{Y} will yield NA's in the correlation matrix.
+//'   This also includes the diagonal unlike the behaviour of 
+//'   \code{stats::cor(X)}.
+//' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+//' @seealso \code{\link{correlation}} \code{\link{cor}}
 // [[Rcpp::export]]
 Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix & X) {
   
@@ -41,6 +68,7 @@ Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix & X) {
 
 
 // Cross-correlation implementation in Rcpp
+//' @rdname corFamily
 // [[Rcpp::export]]
 Rcpp::NumericMatrix crosscorRcpp(Rcpp::NumericMatrix & X,
                                  Rcpp::NumericMatrix & Y) {
@@ -77,13 +105,19 @@ Rcpp::NumericMatrix crosscorRcpp(Rcpp::NumericMatrix & X,
 
 
 
-// Cross-correlation implementation in Rcpp
+
+// Correlation implementation in armadillo
+//' @rdname corFamily
 // [[Rcpp::export]]
 arma::mat corArma(const arma::mat & X) {
+  //arma::mat cor = arma::cor(X, 0);
+  // Ensure 1 in the diagonal if NAs in X
+  //cor.diag() = arma::ones<arma::vec>(cor.n_rows); 
   return arma::cor(X, 0);
 }
 
-// Cross-correlation implementation in Rcpp
+// Cross-correlation implementation in armadillo
+////' @rdname corFamily
 // [[Rcpp::export]]
 arma::mat crosscorArma(const arma::mat & X,
                        const arma::mat & Y) {
@@ -92,6 +126,9 @@ arma::mat crosscorArma(const arma::mat & X,
 
 
 
+
+// Correlation implementation in Eigen
+//' @rdname corFamily
 // [[Rcpp::export]]
 Eigen::MatrixXd corEigen(Eigen::Map<Eigen::MatrixXd> & X) {
   
@@ -112,6 +149,8 @@ Eigen::MatrixXd corEigen(Eigen::Map<Eigen::MatrixXd> & X) {
   return cor;
 }
 
+// Cross-correlation implementation in Eigen
+//' @rdname corFamily
 // [[Rcpp::export]]
 Eigen::MatrixXd crosscorEigen(Eigen::Map<Eigen::MatrixXd> & X,
                               Eigen::Map<Eigen::MatrixXd> & Y) {
