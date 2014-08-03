@@ -1,6 +1,4 @@
-#' @rdname pxcor
-#' @return \code{pxcov} retuns a numeric  matrix of partial cross covariances
-#'   between \code{X} and \code{Y} given \code{Z}.
+#' @rdname corcov
 #' @export
 pxcov <- function(X, Y, Z) {
   pxcovSimple <- function(x, y, Z) {

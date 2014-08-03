@@ -1,36 +1,38 @@
-#' Compute the correlation matrix
+#' Covariance and correlation
 #'
-#' This function offers the interface to compute the correlation  
-#' matrix between the columns of \code{X}.
-#' 
-#' @aliases pcor pcov cor cov
+#' These functions offers a interface to compute arbitrary order partial
+#' (or semi-partial) variance-covariance or correlation matrix as well as
+#' partial cross variance-covariances or correlations.
+#'
+#' @rdname corcov
+#' @aliases cor cov pcor pcov xcor xcov pxcor pxcov correlation covariance
 #' @param X A numeric matrix with observations in rows and variables/features
 #'   in columns.
+#' @param Y A numeric matrix with the same number of rows as \code{X}.
+#' @param Z A numeric matrix with the same number of rows as \code{X}. This is
+#'   the 
+#' @param method A character of length 1. The unbiased estimate divided with
+#'   \code{n-1} and wheras ML uses \code{n}.
 #' @return 
-#'   \code{cor}: If \code{Y} is not supplied the a square symmetric correlation  
-#'   matrix of size \code{ncol(X)} is returned. If \code{Y} is given the 
-#'   cross-correlation matrix of size \code{ncol(X)} times \code{ncol(Y)} is 
-#'   returned.
+#'   All functions return a matrix of correlations or covariances.
 #' @details 
-#'   Functions like \code{\link{cov}}. The \code{i}'th and \code{j}'th 
-#'   entry of the output matrix  is the correlation between \code{X[i, ]} and 
-#'   \code{Y[j, ]}. When \code{Y} is not supplied, then the output is equivalent
-#'   to \code{Y} = \code{X}.
+#'   Give some details!
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 #' @seealso \code{\link{corFamily}} (the workhorse functions)
 #' @examples
-#' X <- replicate(2, rnorm(10))
-#' dimnames(X) <- list(paste0("obs", 1:nrow(X)), paste0("var", 1:ncol(X)))
+#' n <- 20
+#' X <- createData(4, n)
+#' Y <- createData(2, n)
+#' Z <- createData(11, n)
 #' 
 #' cor(X)
 #' cov(X, method = "ML")
 #' cov(X, method = "Unbiased")
+#' xcor(X, Y, Z)
+#' #pcor pcov cor cov pxcor pxcov xcov xcor 
 #' @export
 cor <- function(X) {
-
-    ans <- corArma(X = X) 
-    colnames(ans) <- 
-    rownames(ans) <- colnames(X)
-
+  ans <- corArma(X = X) 
+  colnames(ans) <- rownames(ans) <- colnames(X)
   return(ans)
 }
