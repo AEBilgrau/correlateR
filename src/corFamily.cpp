@@ -4,13 +4,16 @@
 
 #include "aux_functions.h"
 
+//// [[Rcpp::depends(RcppArmadillo)]] // Uncomment when sourceCpp()ing
+//// [[Rcpp::depends(RcppEigen)]]
 
-//' Compute correlation matrix
-//'
-//' Various functions to compute the marginal (or unconditional) correlations 
-//' (and cross-covariance) estimates efficiently. They are (almost) equivalent 
-//' implementations of \code{\link{cor}} in Rcpp, RcppArmadillo, and 
-//' RcppEigen.
+//' Marginal correlation matrix
+//' 
+//' Various workhorse functions to compute the marginal (or unconditional) 
+//' correlations (and cross-correlation) estimates efficiently. 
+//' They are (almost) 
+//' equivalent implementations of \code{\link{stats::cor}} in Rcpp, 
+//' RcppArmadillo, and RcppEigen.
 //' 
 //' @rdname corFamily
 //' @aliases corFamily
@@ -37,7 +40,7 @@
 //'   This also includes the diagonal unlike the behaviour of 
 //'   \code{stats::cor(X)}.
 //' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
-//' @seealso \code{\link{correlation}} \code{\link{cor}}
+//' @export
 // [[Rcpp::export]]
 Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix & X) {
   
@@ -69,6 +72,7 @@ Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix & X) {
 
 // Cross-correlation implementation in Rcpp
 //' @rdname corFamily
+//' @export
 // [[Rcpp::export]]
 Rcpp::NumericMatrix xcorRcpp(Rcpp::NumericMatrix & X,
                              Rcpp::NumericMatrix & Y) {
@@ -105,9 +109,9 @@ Rcpp::NumericMatrix xcorRcpp(Rcpp::NumericMatrix & X,
 
 
 
-
 // Correlation implementation in armadillo
 //' @rdname corFamily
+//' @export
 // [[Rcpp::export]]
 arma::mat corArma(const arma::mat & X) {
   //arma::mat cor = arma::cor(X, 0);
@@ -118,6 +122,7 @@ arma::mat corArma(const arma::mat & X) {
 
 // Cross-correlation implementation in armadillo
 //' @rdname corFamily
+//' @export
 // [[Rcpp::export]]
 arma::mat xcorArma(const arma::mat & X,
                    const arma::mat & Y) {
@@ -129,6 +134,7 @@ arma::mat xcorArma(const arma::mat & X,
 
 // Correlation implementation in Eigen
 //' @rdname corFamily
+//' @export
 // [[Rcpp::export]]
 Eigen::MatrixXd corEigen(Eigen::Map<Eigen::MatrixXd> & X) {
   
@@ -151,6 +157,7 @@ Eigen::MatrixXd corEigen(Eigen::Map<Eigen::MatrixXd> & X) {
 
 // Cross-correlation implementation in Eigen
 //' @rdname corFamily
+//' @export
 // [[Rcpp::export]]
 Eigen::MatrixXd xcorEigen(Eigen::Map<Eigen::MatrixXd> & X,
                           Eigen::Map<Eigen::MatrixXd> & Y) {

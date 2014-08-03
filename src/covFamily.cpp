@@ -7,19 +7,40 @@
 //// [[Rcpp::depends(RcppArmadillo)]] // Uncomment when sourceCpp()ing
 //// [[Rcpp::depends(RcppEigen)]]
 
-//using namespace Rcpp;
-//using namespace arma;
-//using namespace Eigen;
-
-
-/*
-  Various functions to compute the marginal (or unconditional) covariance 
-  (and cross-covariance) estimates. The functions feature both the maximum
-  likelihood and the biased corrected estimates.
-*/
-
-
-// Covariance implementation in Rcpp
+//' Marginal covariance matrix
+//' 
+//' Various workhorse functions to compute the marginal (or unconditional) 
+//' covariance (and cross-covariance) estimates. The functions feature both the 
+//' maximum likelihood and the biased corrected estimates. They are (almost) 
+//' equivalent implementations of \code{\link{stats::cov}} in Rcpp, 
+//' RcppArmadillo, and RcppEigen.
+//' 
+//' @rdname covFamily
+//' @aliases covFamily
+//'   corRcpp xcorRcpp corArma xcorArma corEigen xcorEigen
+//' @param X A numeric matrix.
+//' @param Y A numeric matrix of compatible dimension with the \code{X}, i.e. 
+//'   \code{nrow(X)} equals \code{nrow(Y)}.
+//' @return
+//'   The \code{corXX} familiy returns a numeric correlation matrix of size 
+//'   \code{ncol(X)} times \code{ncol(X)}.
+//'   
+//'   The \code{xcorXX} family returns a numeric cross-covariance matrix 
+//'   of size \code{ncol(X)} times \code{ncol(Y)}.
+//' @details
+//'   Functions almost like \code{\link{cor}}.
+//'   For the \code{xcorXX} functions, the \code{i}'th and \code{j}'th 
+//'   entry of the output matrix is the correlation between \code{X[i, ]} and 
+//'   \code{X[j, ]}.
+//'   Likewise, for the \code{xcorXX} functions, the \code{i}'th and
+//'   \code{j}'th entry of the output is the correlation between \code{X[i, ]} 
+//'   and \code{Y[j, ]}.
+//' @note 
+//'   NA's in \code{X} or \code{Y} will yield NA's in the correlation matrix.
+//'   This also includes the diagonal unlike the behaviour of 
+//'   \code{stats::cor(X)}.
+//' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+//' @export
 // [[Rcpp::export]]
 Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix & X,
                             const int norm_type) {
@@ -45,6 +66,8 @@ Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix & X,
 
 
 // Cross-covariance implementation in Rcpp
+//' @rdname covFamily
+//' @export
 // [[Rcpp::export]]
 Rcpp::NumericMatrix xcovRcpp(Rcpp::NumericMatrix & X,
                                  Rcpp::NumericMatrix & Y,
@@ -71,7 +94,9 @@ Rcpp::NumericMatrix xcovRcpp(Rcpp::NumericMatrix & X,
 }
 
 
-// covariance "Implementation"" in Armadillio
+// Covariance "implementation"" in Armadillio
+//' @rdname covFamily
+//' @export
 // [[Rcpp::export]]
 arma::mat covArma(const arma::mat & X,
                   const int norm_type) {
@@ -79,7 +104,9 @@ arma::mat covArma(const arma::mat & X,
 }
 
 
-// Cross-covariance "Implementation"" in Armadillio
+// Cross-covariance "implementation"" in Armadillio
+//' @rdname covFamily
+//' @export
 // [[Rcpp::export]]
 arma::mat xcovArma(const arma::mat & X,
                        const arma::mat & Y,
@@ -89,6 +116,8 @@ arma::mat xcovArma(const arma::mat & X,
 
 
 // covariance in Eigen
+//' @rdname covFamily
+//' @export
 // [[Rcpp::export]]
 Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd> & X,
                          const int norm_type = 0) {
@@ -106,6 +135,8 @@ Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd> & X,
 
 
 // Cross-covariance in Eigen
+//' @rdname covFamily
+//' @export
 // [[Rcpp::export]]
 Eigen::MatrixXd xcovEigen(Eigen::Map<Eigen::MatrixXd> & X,
                               Eigen::Map<Eigen::MatrixXd> & Y,
