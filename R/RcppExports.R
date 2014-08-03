@@ -10,8 +10,7 @@
 #' 
 #' @rdname corFamily
 #' @aliases corFamily
-#'   corRcpp crosscorRcpp corArma crosscorArma corEigen crosscorEigen
-#'   crosscor
+#'   corRcpp xcorRcpp corArma xcorArma corEigen xcorEigen
 #' @param X A numeric matrix.
 #' @param Y A numeric matrix of compatible dimension with the \code{X}, i.e. 
 #'   \code{nrow(X)} equals \code{nrow(Y)}.
@@ -19,14 +18,14 @@
 #'   The \code{corXX} familiy returns a numeric correlation matrix of size 
 #'   \code{ncol(X)} times \code{ncol(X)}.
 #'   
-#'   The \code{crosscorXX} family returns a numeric cross-correlation matrix 
+#'   The \code{xcorXX} family returns a numeric cross-correlation matrix 
 #'   of size \code{ncol(X)} times \code{ncol(Y)}.
 #' @details
 #'   Functions almost like \code{\link{cor}}.
-#'   For the \code{crosscorXX} functions, the \code{i}'th and \code{j}'th 
+#'   For the \code{xcorXX} functions, the \code{i}'th and \code{j}'th 
 #'   entry of the output matrix is the correlation between \code{X[i, ]} and 
 #'   \code{X[j, ]}.
-#'   Likewise, for the \code{crosscorXX} functions, the \code{i}'th and
+#'   Likewise, for the \code{xcorXX} functions, the \code{i}'th and
 #'   \code{j}'th entry of the output is the correlation between \code{X[i, ]} 
 #'   and \code{Y[j, ]}.
 #' @note 
@@ -40,8 +39,8 @@ corRcpp <- function(X) {
 }
 
 #' @rdname corFamily
-crosscorRcpp <- function(X, Y) {
-    .Call('correlateR_crosscorRcpp', PACKAGE = 'correlateR', X, Y)
+xcorRcpp <- function(X, Y) {
+    .Call('correlateR_xcorRcpp', PACKAGE = 'correlateR', X, Y)
 }
 
 #' @rdname corFamily
@@ -50,8 +49,8 @@ corArma <- function(X) {
 }
 
 #' @rdname corFamily
-crosscorArma <- function(X, Y) {
-    .Call('correlateR_crosscorArma', PACKAGE = 'correlateR', X, Y)
+xcorArma <- function(X, Y) {
+    .Call('correlateR_xcorArma', PACKAGE = 'correlateR', X, Y)
 }
 
 #' @rdname corFamily
@@ -60,31 +59,31 @@ corEigen <- function(X) {
 }
 
 #' @rdname corFamily
-crosscorEigen <- function(X, Y) {
-    .Call('correlateR_crosscorEigen', PACKAGE = 'correlateR', X, Y)
+xcorEigen <- function(X, Y) {
+    .Call('correlateR_xcorEigen', PACKAGE = 'correlateR', X, Y)
 }
 
 covRcpp <- function(X, norm_type) {
     .Call('correlateR_covRcpp', PACKAGE = 'correlateR', X, norm_type)
 }
 
-crosscovRcpp <- function(X, Y, norm_type) {
-    .Call('correlateR_crosscovRcpp', PACKAGE = 'correlateR', X, Y, norm_type)
+xcovRcpp <- function(X, Y, norm_type) {
+    .Call('correlateR_xcovRcpp', PACKAGE = 'correlateR', X, Y, norm_type)
 }
 
 covArma <- function(X, norm_type) {
     .Call('correlateR_covArma', PACKAGE = 'correlateR', X, norm_type)
 }
 
-crosscovArma <- function(X, Y, norm_type) {
-    .Call('correlateR_crosscovArma', PACKAGE = 'correlateR', X, Y, norm_type)
+xcovArma <- function(X, Y, norm_type) {
+    .Call('correlateR_xcovArma', PACKAGE = 'correlateR', X, Y, norm_type)
 }
 
 covEigen <- function(X, norm_type = 0L) {
     .Call('correlateR_covEigen', PACKAGE = 'correlateR', X, norm_type)
 }
 
-crosscovEigen <- function(X, Y, norm_type = 0L) {
-    .Call('correlateR_crosscovEigen', PACKAGE = 'correlateR', X, Y, norm_type)
+xcovEigen <- function(X, Y, norm_type = 0L) {
+    .Call('correlateR_xcovEigen', PACKAGE = 'correlateR', X, Y, norm_type)
 }
 

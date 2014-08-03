@@ -7,3 +7,5 @@ useDynLib(correlateR)
 # we would just need to use the LinkingTo but this is not
 # enough.”
 importFrom(Rcpp, evalCpp)
+importFrom(RcppEigen, fastLmPure)
+

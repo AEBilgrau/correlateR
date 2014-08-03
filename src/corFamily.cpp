@@ -14,8 +14,7 @@
 //' 
 //' @rdname corFamily
 //' @aliases corFamily
-//'   corRcpp crosscorRcpp corArma crosscorArma corEigen crosscorEigen
-//'   crosscor
+//'   corRcpp xcorRcpp corArma xcorArma corEigen xcorEigen
 //' @param X A numeric matrix.
 //' @param Y A numeric matrix of compatible dimension with the \code{X}, i.e. 
 //'   \code{nrow(X)} equals \code{nrow(Y)}.
@@ -23,14 +22,14 @@
 //'   The \code{corXX} familiy returns a numeric correlation matrix of size 
 //'   \code{ncol(X)} times \code{ncol(X)}.
 //'   
-//'   The \code{crosscorXX} family returns a numeric cross-correlation matrix 
+//'   The \code{xcorXX} family returns a numeric cross-correlation matrix 
 //'   of size \code{ncol(X)} times \code{ncol(Y)}.
 //' @details
 //'   Functions almost like \code{\link{cor}}.
-//'   For the \code{crosscorXX} functions, the \code{i}'th and \code{j}'th 
+//'   For the \code{xcorXX} functions, the \code{i}'th and \code{j}'th 
 //'   entry of the output matrix is the correlation between \code{X[i, ]} and 
 //'   \code{X[j, ]}.
-//'   Likewise, for the \code{crosscorXX} functions, the \code{i}'th and
+//'   Likewise, for the \code{xcorXX} functions, the \code{i}'th and
 //'   \code{j}'th entry of the output is the correlation between \code{X[i, ]} 
 //'   and \code{Y[j, ]}.
 //' @note 
@@ -71,8 +70,8 @@ Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix & X) {
 // Cross-correlation implementation in Rcpp
 //' @rdname corFamily
 // [[Rcpp::export]]
-Rcpp::NumericMatrix crosscorRcpp(Rcpp::NumericMatrix & X,
-                                 Rcpp::NumericMatrix & Y) {
+Rcpp::NumericMatrix xcorRcpp(Rcpp::NumericMatrix & X,
+                             Rcpp::NumericMatrix & Y) {
   
   const int m_X = X.ncol();
   const int m_Y = Y.ncol();
@@ -120,8 +119,8 @@ arma::mat corArma(const arma::mat & X) {
 // Cross-correlation implementation in armadillo
 //' @rdname corFamily
 // [[Rcpp::export]]
-arma::mat crosscorArma(const arma::mat & X,
-                       const arma::mat & Y) {
+arma::mat xcorArma(const arma::mat & X,
+                   const arma::mat & Y) {
   return arma::cor(X, Y, 0);
 }
 
@@ -153,8 +152,8 @@ Eigen::MatrixXd corEigen(Eigen::Map<Eigen::MatrixXd> & X) {
 // Cross-correlation implementation in Eigen
 //' @rdname corFamily
 // [[Rcpp::export]]
-Eigen::MatrixXd crosscorEigen(Eigen::Map<Eigen::MatrixXd> & X,
-                              Eigen::Map<Eigen::MatrixXd> & Y) {
+Eigen::MatrixXd xcorEigen(Eigen::Map<Eigen::MatrixXd> & X,
+                          Eigen::Map<Eigen::MatrixXd> & Y) {
   
   // Computing degrees of freedom
   // n - 1 is the unbiased estimate whereas n is the MLE

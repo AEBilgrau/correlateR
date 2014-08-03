@@ -20,8 +20,8 @@ test_that("Covariance is computed correctly", {
   expect_that(cov_X*(n - 1)/n, is_equivalent_to(covEigen(X, 1)))
   expect_that(cov_X,           is_equivalent_to(crosscovEigen(X, X, 0)))
   expect_that(cov_X*(n - 1)/n, is_equivalent_to(crosscovEigen(X, X, 1)))
-  expect_that(cov_X,           equals(covariance(X)))
-  expect_that(cov_X*(n - 1)/n, equals(covariance(X, method = "ML")))
+  expect_that(cov_X,           equals(cov(X)))
+  expect_that(cov_X*(n - 1)/n, equals(cov(X, method = "ML")))
 })
 
 test_that("Cross-correlation is computed correctly", {
@@ -29,8 +29,8 @@ test_that("Cross-correlation is computed correctly", {
   expect_that(cov_XY*(n - 1)/n, is_equivalent_to(crosscovArma(X, Y, 1)))
   expect_that(cov_XY,           is_equivalent_to(crosscovEigen(X, Y, 0)))
   expect_that(cov_XY*(n - 1)/n, is_equivalent_to(crosscovEigen(X, Y, 1)))
-  expect_that(cov_XY,           equals(covariance(X, Y)))
-  expect_that(cov_XY*(n - 1)/n, equals(covariance(X, Y, method = "ML")))
+  expect_that(cov_XY,           equals(cov(X, Y)))
+  expect_that(cov_XY*(n - 1)/n, equals(cov(X, Y, method = "ML")))
 })
 
 

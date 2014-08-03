@@ -4,23 +4,22 @@
 \alias{corEigen}
 \alias{corFamily}
 \alias{corRcpp}
-\alias{crosscor}
-\alias{crosscorArma}
-\alias{crosscorEigen}
-\alias{crosscorRcpp}
+\alias{xcorArma}
+\alias{xcorEigen}
+\alias{xcorRcpp}
 \title{Compute correlation matrix}
 \usage{
 corRcpp(X)
 
-crosscorRcpp(X, Y)
+xcorRcpp(X, Y)
 
 corArma(X)
 
-crosscorArma(X, Y)
+xcorArma(X, Y)
 
 corEigen(X)
 
-crosscorEigen(X, Y)
+xcorEigen(X, Y)
 }
 \arguments{
 \item{X}{A numeric matrix.}
@@ -32,7 +31,7 @@ crosscorEigen(X, Y)
 The \code{corXX} familiy returns a numeric correlation matrix of size
   \code{ncol(X)} times \code{ncol(X)}.
 
-  The \code{crosscorXX} family returns a numeric cross-correlation matrix
+  The \code{xcorXX} family returns a numeric cross-correlation matrix
   of size \code{ncol(X)} times \code{ncol(Y)}.
 }
 \description{
@@ -43,10 +42,10 @@ RcppEigen.
 }
 \details{
 Functions almost like \code{\link{cor}}.
-  For the \code{crosscorXX} functions, the \code{i}'th and \code{j}'th
+  For the \code{xcorXX} functions, the \code{i}'th and \code{j}'th
   entry of the output matrix is the correlation between \code{X[i, ]} and
   \code{X[j, ]}.
-  Likewise, for the \code{crosscorXX} functions, the \code{i}'th and
+  Likewise, for the \code{xcorXX} functions, the \code{i}'th and
   \code{j}'th entry of the output is the correlation between \code{X[i, ]}
   and \code{Y[j, ]}.
 }

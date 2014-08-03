@@ -46,7 +46,7 @@ Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix & X,
 
 // Cross-covariance implementation in Rcpp
 // [[Rcpp::export]]
-Rcpp::NumericMatrix crosscovRcpp(Rcpp::NumericMatrix & X,
+Rcpp::NumericMatrix xcovRcpp(Rcpp::NumericMatrix & X,
                                  Rcpp::NumericMatrix & Y,
                                  const int norm_type) {
   
@@ -81,7 +81,7 @@ arma::mat covArma(const arma::mat & X,
 
 // Cross-covariance "Implementation"" in Armadillio
 // [[Rcpp::export]]
-arma::mat crosscovArma(const arma::mat & X,
+arma::mat xcovArma(const arma::mat & X,
                        const arma::mat & Y,
                        const int norm_type) {
   return arma::cov(X, Y, norm_type);
@@ -107,7 +107,7 @@ Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd> & X,
 
 // Cross-covariance in Eigen
 // [[Rcpp::export]]
-Eigen::MatrixXd crosscovEigen(Eigen::Map<Eigen::MatrixXd> & X,
+Eigen::MatrixXd xcovEigen(Eigen::Map<Eigen::MatrixXd> & X,
                               Eigen::Map<Eigen::MatrixXd> & Y,
                               const int norm_type = 0) {
 

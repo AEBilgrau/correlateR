@@ -18,14 +18,14 @@ test_that("Correct correlation.", {
   expect_that(cor_X, is_equivalent_to(crosscorEigen(X, X)))
   expect_that(cor_X, is_equivalent_to(corRcpp(X)))
   expect_that(cor_X, is_equivalent_to(crosscorRcpp(X, X)))
-  expect_that(cor_X, equals(correlation(X)))
+  expect_that(cor_X, equals(cor(X)))
 })
 
 test_that("Correct cross-correlation.", {
-  expect_that(cor_XY, is_equivalent_to(crosscorArma(X, Y)))
-  expect_that(cor_XY, is_equivalent_to(crosscorEigen(X, Y)))
-  expect_that(cor_XY, is_equivalent_to(crosscorRcpp(X, Y)))
-  expect_that(cor_XY, equals(correlation(X, Y)))
+  expect_that(cor_XY, is_equivalent_to(xcorArma(X, Y)))
+  expect_that(cor_XY, is_equivalent_to(xcorEigen(X, Y)))
+  expect_that(cor_XY, is_equivalent_to(xcorRcpp(X, Y)))
+  expect_that(cor_XY, equals(cor(X, Y)))
 })
 
 
@@ -46,17 +46,17 @@ cor_XY <- stats::cor(X, Y)  # Standard (marginal) cross-correlation
 
 test_that("Correct correlation with NAs.", {
   expect_that(cor_X, is_equivalent_to(corArma(X)))
-  expect_that(cor_X, is_equivalent_to(crosscorArma(X, X)))
+  expect_that(cor_X, is_equivalent_to(xcorArma(X, X)))
   expect_that(cor_X, is_equivalent_to(corEigen(X)))
-  expect_that(cor_X, is_equivalent_to(crosscorEigen(X, X)))
+  expect_that(cor_X, is_equivalent_to(xcorEigen(X, X)))
   expect_that(cor_X, is_equivalent_to(corRcpp(X)))
-  expect_that(cor_X, is_equivalent_to(crosscorRcpp(X, X)))
-  expect_that(cor_X, equals(correlation(X)))
+  expect_that(cor_X, is_equivalent_to(xcorRcpp(X, X)))
+  expect_that(cor_X, equals(cor(X)))
 })
 
 test_that("Correct cross- correlation with NAs.", {
-  expect_that(cor_XY,           is_equivalent_to(crosscorArma(X, Y)))
-  expect_that(cor_XY,           is_equivalent_to(crosscorEigen(X, Y)))
-  expect_that(cor_XY,           is_equivalent_to(crosscorRcpp(X, Y)))
-  expect_that(cor_XY,           equals(correlation(X, Y)))
+  expect_that(cor_XY,           is_equivalent_to(xcorArma(X, Y)))
+  expect_that(cor_XY,           is_equivalent_to(xcorEigen(X, Y)))
+  expect_that(cor_XY,           is_equivalent_to(xcorRcpp(X, Y)))
+  expect_that(cor_XY,           equals(cor(X, Y)))
 })
