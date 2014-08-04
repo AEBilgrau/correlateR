@@ -101,7 +101,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // covRcpp
-Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix& X, const int norm_type);
+Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix& X, const int norm_type = 0);
 RcppExport SEXP correlateR_covRcpp(SEXP XSEXP, SEXP norm_typeSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
@@ -117,7 +117,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // xcovRcpp
-Rcpp::NumericMatrix xcovRcpp(Rcpp::NumericMatrix& X, Rcpp::NumericMatrix& Y, const int norm_type);
+Rcpp::NumericMatrix xcovRcpp(Rcpp::NumericMatrix& X, Rcpp::NumericMatrix& Y, const int norm_type = 0);
 RcppExport SEXP correlateR_xcovRcpp(SEXP XSEXP, SEXP YSEXP, SEXP norm_typeSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
@@ -134,7 +134,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // covArma
-arma::mat covArma(const arma::mat& X, const int norm_type);
+arma::mat covArma(const arma::mat& X, const int norm_type = 0);
 RcppExport SEXP correlateR_covArma(SEXP XSEXP, SEXP norm_typeSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;
@@ -150,7 +150,7 @@ BEGIN_RCPP
 END_RCPP
 }
 // xcovArma
-arma::mat xcovArma(const arma::mat& X, const arma::mat& Y, const int norm_type);
+arma::mat xcovArma(const arma::mat& X, const arma::mat& Y, const int norm_type = 0);
 RcppExport SEXP correlateR_xcovArma(SEXP XSEXP, SEXP YSEXP, SEXP norm_typeSEXP) {
 BEGIN_RCPP
     SEXP __sexp_result;

@@ -15,13 +15,13 @@
 \alias{xcovRcpp}
 \title{Marginal covariance matrix}
 \usage{
-covRcpp(X, norm_type)
+covRcpp(X, norm_type = 0L)
 
-xcovRcpp(X, Y, norm_type)
+xcovRcpp(X, Y, norm_type = 0L)
 
-covArma(X, norm_type)
+covArma(X, norm_type = 0L)
 
-xcovArma(X, Y, norm_type)
+xcovArma(X, Y, norm_type = 0L)
 
 covEigen(X, norm_type = 0L)
 
@@ -32,6 +32,10 @@ xcovEigen(X, Y, norm_type = 0L)
 
 \item{Y}{A numeric matrix of compatible dimension with the \code{X}, i.e.
 \code{nrow(X)} equals \code{nrow(Y)}.}
+
+\item{norm.type}{an integer of length one giving the estimator. The
+default \code{0L} gives the unbised estimate while \code{1L} gives the
+MLE.}
 }
 \value{
 The \code{corXX} familiy returns a numeric correlation matrix of size

@@ -83,6 +83,9 @@ xcorEigen <- function(X, Y) {
 #' @param X A numeric matrix.
 #' @param Y A numeric matrix of compatible dimension with the \code{X}, i.e. 
 #'   \code{nrow(X)} equals \code{nrow(Y)}.
+#' @param norm.type an integer of length one giving the estimator. The 
+#'   default \code{0L} gives the unbised estimate while \code{1L} gives the 
+#'   MLE.
 #' @return
 #'   The \code{corXX} familiy returns a numeric correlation matrix of size 
 #'   \code{ncol(X)} times \code{ncol(X)}.
@@ -103,25 +106,25 @@ xcorEigen <- function(X, Y) {
 #'   \code{stats::cor(X)}.
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 #' @export
-covRcpp <- function(X, norm_type) {
+covRcpp <- function(X, norm_type = 0L) {
     .Call('correlateR_covRcpp', PACKAGE = 'correlateR', X, norm_type)
 }
 
 #' @rdname covFamily
 #' @export
-xcovRcpp <- function(X, Y, norm_type) {
+xcovRcpp <- function(X, Y, norm_type = 0L) {
     .Call('correlateR_xcovRcpp', PACKAGE = 'correlateR', X, Y, norm_type)
 }
 
 #' @rdname covFamily
 #' @export
-covArma <- function(X, norm_type) {
+covArma <- function(X, norm_type = 0L) {
     .Call('correlateR_covArma', PACKAGE = 'correlateR', X, norm_type)
 }
 
 #' @rdname covFamily
 #' @export
-xcovArma <- function(X, Y, norm_type) {
+xcovArma <- function(X, Y, norm_type = 0L) {
     .Call('correlateR_xcovArma', PACKAGE = 'correlateR', X, Y, norm_type)
 }
 

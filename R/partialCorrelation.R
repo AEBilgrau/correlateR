@@ -15,14 +15,10 @@
 #'   variables.
 #' @seealso \link{\code{correlation}} \link{\code{correlation}}
 #' @examples
-#' X <- replicate(6, rnorm(20))
-#' dimnames(X) <- list(paste0("obs", 1:nrow(X)), paste0("var", 1:ncol(X)))
-#' Y <- replicate(6, rnorm(20))
-#' dimnames(Y) <- list(paste0("obs", 1:nrow(Y)), paste0("var", 1:ncol(Y)))
-#' Z <- replicate(6, rnorm(20))
-#' dimnames(Z) <- list(paste0("obs", 1:nrow(Z)), paste0("var", 1:ncol(Z)))
-#' 
-#' S <- correlation(X)
+#' X <- createData(6, 20)
+#' Y <- createData(6, 20)
+#' Z <- createData(6, 20)
+#' S <- cor(X)
 #' arbitraryOrderCorrelation(S, z = c(2, 3, 5))
 #' @export
 arbitraryOrderCorrelation <- function(S, z) {

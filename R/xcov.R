@@ -5,7 +5,7 @@ xcov <- function(X, Y, method = c("Unbiased", "ML")) {
   method    <- match.arg(method)
   norm_type <- ifelse(method == "Unbiased", 0L, 1L)
   ans       <- xcovArma(X = X, Y = Y, norm_type = norm_type) 
-  colnames(ans) <- colnames(X)
-  rownames(ans) <- colnames(Y)
+  colnames(ans) <- colnames(Y)
+  rownames(ans) <- colnames(X)
   return(ans)
 }

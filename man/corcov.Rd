@@ -54,15 +54,16 @@ partial cross variance-covariances or correlations.
 Give some details!
 }
 \examples{
-n <- 20
-X <- createData(4, n)
-Y <- createData(2, n)
-Z <- createData(11, n)
+n <- 10
+X <- createData(n, 4)
+Y <- createData(n, 2)
+Z <- createData(n, 9)
 
 cor(X)
 cov(X, method = "ML")
 cov(X, method = "Unbiased")
-xcor(X, Y, Z)
+
+xcor(X, Y)
 #pcor pcov cor cov pxcor pxcov xcov xcor
 }
 \author{

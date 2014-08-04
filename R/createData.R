@@ -14,8 +14,8 @@
 #' @export
 createData <- function(n, m, n.na = 0) {
   X <- replicate(m, rnorm(n))
-  dimnames(X) <- list(paste0("obs", 1:n), paste0("var", 1:n))
-  if (make.NAs) {
+  dimnames(X) <- list(paste0("obs", 1:n), paste0("var", 1:m))
+  if (n.na) {
     stopifnot(n.na >= 0 && n.na <= n*m)
     X[sample(n*m, n)] <- NA
   }

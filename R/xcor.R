@@ -3,7 +3,7 @@
 xcor <- function(X, Y) {
   stopifnot(nrow(X) == nrow(Y))
   ans <- xcorArma(X = X, Y = Y) 
-  colnames(ans) <- colnames(X)
-  rownames(ans) <- colnames(Y)
+  colnames(ans) <- colnames(Y)
+  rownames(ans) <- colnames(X)
   return(ans)
 }

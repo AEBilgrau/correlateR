@@ -21,6 +21,9 @@
 //' @param X A numeric matrix.
 //' @param Y A numeric matrix of compatible dimension with the \code{X}, i.e. 
 //'   \code{nrow(X)} equals \code{nrow(Y)}.
+//' @param norm.type an integer of length one giving the estimator. The 
+//'   default \code{0L} gives the unbised estimate while \code{1L} gives the 
+//'   MLE.
 //' @return
 //'   The \code{corXX} familiy returns a numeric correlation matrix of size 
 //'   \code{ncol(X)} times \code{ncol(X)}.
@@ -43,7 +46,7 @@
 //' @export
 // [[Rcpp::export]]
 Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix & X,
-                            const int norm_type) {
+                            const int norm_type = 0) {
   
   const int n = X.nrow();
   const int m = X.ncol();
@@ -71,7 +74,7 @@ Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix & X,
 // [[Rcpp::export]]
 Rcpp::NumericMatrix xcovRcpp(Rcpp::NumericMatrix & X,
                                  Rcpp::NumericMatrix & Y,
-                                 const int norm_type) {
+                                 const int norm_type = 0) {
   
   const int n = X.nrow();
   const int m_X = X.ncol();
@@ -99,7 +102,7 @@ Rcpp::NumericMatrix xcovRcpp(Rcpp::NumericMatrix & X,
 //' @export
 // [[Rcpp::export]]
 arma::mat covArma(const arma::mat & X,
-                  const int norm_type) {
+                  const int norm_type = 0) {
   return arma::cov(X, norm_type);
 }
 
@@ -110,7 +113,7 @@ arma::mat covArma(const arma::mat & X,
 // [[Rcpp::export]]
 arma::mat xcovArma(const arma::mat & X,
                        const arma::mat & Y,
-                       const int norm_type) {
+                       const int norm_type = 0) {
   return arma::cov(X, Y, norm_type);
 }
 

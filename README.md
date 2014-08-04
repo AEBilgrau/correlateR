@@ -24,7 +24,7 @@ Naming conventions and interface
 --------------------------------
 To easily navigate the package some naming conventions has been decided upon.
 
-Lower-case `x`, `y`, `z` always denotes `numeric` vectors while the upper-case counterparts `X`, `Y`, `Z` denote `numeric` matrices where observations correspond to rows and variables/feature to columns.
+Lower-case `x`, `y`, `z` always denotes `numeric` vectors while the upper-case counterparts `X`, `Y`, `Z` denote `numeric` matrices where observations correspond to rows and variables/feature to columns. The `Z` and `z` always express the variables conditioned on. Furthermore, `S` is used to denote the empirical (marginal) covariance matrix.
 
 Function names are in camelCase except for some special cases. Otherwise `cor` is for correlation `cov` is for covariance. These are prefixed with `x` or `p` (or both) to denote cross or partial correlations/covariance respectively. For example, `pcor` is the partial correlation and `pxcov` is the partial cross covariance. The available base functions are `cor`, `xcor`, `pcor`, `xpcor`, `cov`, `xcov`, `pcov`, `xpcov`.
 
