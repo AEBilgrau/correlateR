@@ -25,7 +25,7 @@ test_that("Correct cross-correlation.", {
   expect_that(cor_XY, is_equivalent_to(xcorArma(X, Y)))
   expect_that(cor_XY, is_equivalent_to(xcorEigen(X, Y)))
   expect_that(cor_XY, is_equivalent_to(xcorRcpp(X, Y)))
-  expect_that(cor_XY, equals(cor(X, Y)))
+  expect_that(cor_XY, equals(xcor(X, Y)))
 })
 
 

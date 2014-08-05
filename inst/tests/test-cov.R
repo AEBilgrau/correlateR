@@ -29,8 +29,11 @@ test_that("Cross-correlation is computed correctly", {
   expect_that(cov_XY*(n - 1)/n, is_equivalent_to(xcovArma(X, Y, 1)))
   expect_that(cov_XY,           is_equivalent_to(xcovEigen(X, Y, 0)))
   expect_that(cov_XY*(n - 1)/n, is_equivalent_to(xcovEigen(X, Y, 1)))
-  expect_that(cov_XY,           equals(cov(X, Y)))
-  expect_that(cov_XY*(n - 1)/n, equals(cov(X, Y, method = "ML")))
+  expect_that(cov_XY,           equals(xcov(X, Y)))
+  expect_that(cov_XY*(n - 1)/n, equals(xcov(X, Y, method = "ML")))
 })
+
+# ADD TESTS WITH MISSING VALUES!
+
 
 

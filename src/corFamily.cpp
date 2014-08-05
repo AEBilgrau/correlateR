@@ -58,12 +58,11 @@ Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix & X) {
   // Computing the correlation matrix
   Rcpp::NumericMatrix cor(m, m);
   for (int i = 0; i < m; ++i) {
-    for (int j = 0; j < i; ++j) {
+    for (int j = 0; j <= i; ++j) {
       cor(i, j) = Rcpp::sum(X(Rcpp::_,i)*X(Rcpp::_,j)) *
         inv_sqrt_ss(i) * inv_sqrt_ss(j);
       cor(j, i) = cor(i, j);
     }
-    cor(i,i) = 1;
   }
 
   return cor;
