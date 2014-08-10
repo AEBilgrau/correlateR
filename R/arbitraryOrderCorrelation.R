@@ -13,7 +13,7 @@
 #'   with the partial correlations given the variabels indexed by \code{z}.
 #'   \code{NaN} are returned in the rows and columns of the conditioned 
 #'   variables.
-#' @seealso \link{\code{correlation}} \link{\code{correlation}}
+#' @seealso \code{\link{correlation}} \code{\link{correlation}}
 #' @examples
 #' X <- createData(6, 20)
 #' Y <- createData(6, 20)

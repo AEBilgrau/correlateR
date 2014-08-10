@@ -12,7 +12,7 @@
 //' Various workhorse functions to compute the marginal (or unconditional) 
 //' correlations (and cross-correlation) estimates efficiently. 
 //' They are (almost) 
-//' equivalent implementations of \code{\link{stats::cor}} in Rcpp, 
+//' equivalent implementations of \code{\link[stats]{cor}} in Rcpp, 
 //' RcppArmadillo, and RcppEigen.
 //' 
 //' @rdname corFamily
@@ -38,7 +38,7 @@
 //' @note 
 //'   NA's in \code{X} or \code{Y} will yield NA's in the correlation matrix.
 //'   This also includes the diagonal unlike the behaviour of 
-//'   \code{stats::cor(X)}.
+//'   \code{\link[stats]{cor}}.
 //' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 //' @export
 // [[Rcpp::export]]

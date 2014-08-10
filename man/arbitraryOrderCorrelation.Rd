@@ -33,6 +33,6 @@ S <- cor(X)
 arbitraryOrderCorrelation(S, z = c(2, 3, 5))
 }
 \seealso{
-\link{\code{correlation}} \link{\code{correlation}}
+\code{\link{correlation}} \code{\link{correlation}}
 }
 
