@@ -7,6 +7,22 @@
 
 using namespace Rcpp;
 
+// residual
+arma::colvec residual(const arma::mat& X, const arma::colvec& y);
+RcppExport SEXP correlateR_residual(SEXP XSEXP, SEXP ySEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
+        Rcpp::traits::input_parameter< const arma::colvec& >::type y(ySEXP );
+        arma::colvec __result = residual(X, y);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // corRcpp
 Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix& X);
 RcppExport SEXP correlateR_corRcpp(SEXP XSEXP) {
@@ -193,6 +209,41 @@ BEGIN_RCPP
         Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type Y(YSEXP );
         Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
         Eigen::MatrixXd __result = xcovEigen(X, Y, norm_type);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// pxcorArma
+arma::mat pxcorArma(const arma::mat& X, const arma::mat& Y, const arma::mat& Z);
+RcppExport SEXP correlateR_pxcorArma(SEXP XSEXP, SEXP YSEXP, SEXP ZSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
+        Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP );
+        Rcpp::traits::input_parameter< const arma::mat& >::type Z(ZSEXP );
+        arma::mat __result = pxcorArma(X, Y, Z);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// pxcovArma
+arma::mat pxcovArma(const arma::mat& X, const arma::mat& Y, const arma::mat& Z, const int norm_type = 0L);
+RcppExport SEXP correlateR_pxcovArma(SEXP XSEXP, SEXP YSEXP, SEXP ZSEXP, SEXP norm_typeSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
+        Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP );
+        Rcpp::traits::input_parameter< const arma::mat& >::type Z(ZSEXP );
+        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
+        arma::mat __result = pxcovArma(X, Y, Z, norm_type);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);

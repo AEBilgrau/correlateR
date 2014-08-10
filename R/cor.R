@@ -20,7 +20,7 @@
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 #' @seealso \code{\link{corFamily}} (the workhorse functions)
 #' @examples
-#' n <- 10
+#' n <- 11
 #' X <- createData(n, 4)
 #' Y <- createData(n, 2)
 #' Z <- createData(n, 9)
