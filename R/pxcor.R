@@ -5,7 +5,7 @@ pxcor <- function(X, Y, Z) {
     Z1 <- cbind(1, Z)
     r_xz <- fastLmPure(Z1, x)$residuals # Alternative: residuals(lm(x ~ Z))
     r_yz <- fastLmPure(Z1, y)$residuals
-    return(cor(r_xz, r_yz))
+    return(stats::cor(r_xz, r_yz))
   }
   
   ans <- matrix(NA, ncol(X), ncol(Y))

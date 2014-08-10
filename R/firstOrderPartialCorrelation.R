@@ -24,7 +24,6 @@ firstOrderPartialCorrelation <- function(S, k) {
   return(ans)
 }
 
-
 # firstOrderPartialCorrelation2 <- function(X, Y, Z) {
 # 
 #   xcor <- cor(X, Y)
@@ -37,3 +36,4 @@ firstOrderPartialCorrelation <- function(S, k) {
 #   ans[k, ] <- ans[, k] <- NaN
 #   return(ans)
 # }
+

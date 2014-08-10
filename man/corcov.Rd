@@ -63,8 +63,16 @@ cor(X)
 cov(X, method = "ML")
 cov(X, method = "Unbiased")
 
+xcov(X, Y)
 xcor(X, Y)
-#pcor pcov cor cov pxcor pxcov xcov xcor
+
+pcov(X, z = numeric(0))  # == cov(X)
+pcov(X, z = 1:3)
+pcor(X, z = numeric(0))
+pcor(X, z = 3)
+
+pxcov(X, Y, Z)
+pxcor(X, Y, Z)
 }
 \author{
 Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
