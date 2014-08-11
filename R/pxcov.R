@@ -1,18 +1,10 @@
 #' @rdname corcov
 #' @export
-pxcov <- function(X, Y, Z) {
-  pxcovSimple <- function(x, y, Z) {
-    Z1 <- cbind(1, Z)
-    r_xz <- fastLmPure(Z1, x)$residuals # Alternative: residuals(lm(x ~ Z))
-    r_yz <- fastLmPure(Z1, y)$residuals
-    return(stats::cov(r_xz, r_yz))
-  }
-  
-  ans <- matrix(NA, ncol(X), ncol(Y))
-  for (i in 1:ncol(X)) {
-    for (j in 1:ncol(Y)) {
-      ans[i,j] <- pxcovSimple(X[, i], Y[, j], Z = Z)
-    }
-  }
+pxcov <- function(X, Y, Z, method = c("Unbiased", "ML")) {
+  method <- match.arg(method)
+  norm_type <- ifelse(method == "Unbiased", 0L, 1L)
+  ans <- pxcovArma(X = X, Y = Y, Z = Z, norm_type = norm_type) 
+  colnames(ans) <- colnames(Y)
+  rownames(ans) <- colnames(X)
   return(ans)
 }

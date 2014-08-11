@@ -16,9 +16,14 @@ Rcpp::NumericMatrix centerNumericMatrix(Rcpp::NumericMatrix & X) {
   return X;
 }
 
-// Analogous to lm(y ~ X)$residuals
+// Analogous to lm(y ~ X)$residuals,
 // [[Rcpp::export]]
 arma::colvec residual(const arma::mat & X, const arma::colvec & y) {
+    // Return y if X is degenerate
+    if (X.n_rows == 0 || X.n_cols == 0) {
+      return y;
+    }
+    
     // Construct design matrix (add intercept)
     arma::mat ones = arma::ones<arma::mat>(X.n_rows, 1);
     

@@ -20,9 +20,9 @@ pcor(X, z)
 
 pcov(X, z)
 
-pxcor(X, Y, Z)
+pxcor(X, Y, Z, method = c("Unbiased", "ML"))
 
-pxcov(X, Y, Z)
+pxcov(X, Y, Z, method = c("Unbiased", "ML"))
 
 xcor(X, Y)
 

@@ -21,3 +21,4 @@ arma::mat pxcorArma(const arma::mat& X,
   
   return ans;
 }
+
