@@ -26,7 +26,9 @@ The packages is features (or, is planned to feature):
 * `?` Part (or semi-partial) covariances and correlation (?) ✗
 * `s` Sparse estimation methods ✗
 * `r` Robust estimation methods ✗
-* Interface using formulas! ✗
+* `~` Interface using formulas ✗
+* `cov2cor` `cor2cov` Conversion between -`cov` and -`cor` functions. ✗
+* `S2pcor` `pcor2S` Computation of partial correlation from marginal correlation and reverse. ✗
 * ... and more! (??)
 
 
