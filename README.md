@@ -7,28 +7,29 @@ The R-package `correlateR` features fast, robust, and efficient (as well as inef
 The package is designed to perform well in both high and low dimensional cases as well as both on dense and sparse matrices.
 
 The packages is features (or, is planned to feature):
-* `cor` Correlation ✓
-* `cov` Covariance ✓
-* `xcov` Cross-covariance ✓
+* `cor` Marginal (unconditional) correlation (aka auto-correlation) ✓
+* `cov` Marginal (unconditional) covariance (aka auto-correlation) ✓
 * `xcor` Cross-correlation ✓
+* `xcov` Cross-covariance ✓
 * `pcor` Partial correlation (arbitrary order) ✓
 * `pcov` Partial covariance (arbitrary order) ✓
 * `pxcor` Partial cross-correlation (arbitrary order) ✓
 * `pxcov` Partial cross-covariance (arbitrary order) ✓
 * `scor` Sparse correlation ✗
 * `scov` Sparse covariance ✗
-* `sxcov` Sparse cross-covariance ✗
 * `sxcor` Sparse cross-correlation ✗
+* `sxcov` Sparse cross-covariance ✗
 * `spcor` Sparse partial correlation (arbitrary order) ✗
 * `spcov` Sparse partial covariance (arbitrary order) ✗
 * `spxcor` Sparse partial cross-correlation (arbitrary order) ✗
 * `spxcov` Sparse partial cross-covariance (arbitrary order) ✗
-* `?` Part (or semi-partial) covariances and correlation (?) ✗
+* `?` Part (semi-partial) correlation and covariances (?) ✗
 * `s` Sparse estimation methods ✗
 * `r` Robust estimation methods ✗
 * `~` Interface using formulas ✗
-* `cov2cor` `cor2cov` Conversion between -`cov` and -`cor` functions. ✗
-* `S2pcor` `pcor2S` Computation of partial correlation from marginal correlation and reverse. ✗
+* Conversion between `cov` and `cor` and `pcor` functions. ✗
+    - `cov2cor`, `cor2cov`, `cor2pcor`, `pcor2cor`(?)
+* Conditional and unconditional independence test ✗
 * ... and more! (??)
 
 

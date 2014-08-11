@@ -144,6 +144,14 @@ xcovEigen <- function(X, Y, norm_type = 0L) {
     .Call('correlateR_xcovEigen', PACKAGE = 'correlateR', X, Y, norm_type)
 }
 
+pcorArma <- function(X, z) {
+    .Call('correlateR_pcorArma', PACKAGE = 'correlateR', X, z)
+}
+
+pcovArma <- function(X, z) {
+    .Call('correlateR_pcovArma', PACKAGE = 'correlateR', X, z)
+}
+
 pxcorArma <- function(X, Y, Z) {
     .Call('correlateR_pxcorArma', PACKAGE = 'correlateR', X, Y, Z)
 }

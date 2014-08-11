@@ -215,6 +215,38 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
+// pcorArma
+arma::mat pcorArma(const arma::mat& X, const arma::uvec& z);
+RcppExport SEXP correlateR_pcorArma(SEXP XSEXP, SEXP zSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
+        Rcpp::traits::input_parameter< const arma::uvec& >::type z(zSEXP );
+        arma::mat __result = pcorArma(X, z);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// pcovArma
+arma::mat pcovArma(const arma::mat& X, const arma::uvec& z);
+RcppExport SEXP correlateR_pcovArma(SEXP XSEXP, SEXP zSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
+        Rcpp::traits::input_parameter< const arma::uvec& >::type z(zSEXP );
+        arma::mat __result = pcovArma(X, z);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // pxcorArma
 arma::mat pxcorArma(const arma::mat& X, const arma::mat& Y, const arma::mat& Z);
 RcppExport SEXP correlateR_pxcorArma(SEXP XSEXP, SEXP YSEXP, SEXP ZSEXP) {
