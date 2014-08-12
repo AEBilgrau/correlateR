@@ -73,6 +73,31 @@ xcorEigen <- function(X, Y) {
     .Call('correlateR_xcorEigen', PACKAGE = 'correlateR', X, Y)
 }
 
+#' Convert covariance matrix to correlation
+#' 
+#' This functions converts a covariance matrix \code{S} to a correlation matrix
+#' fast and efficiently.
+#' 
+#' @rdname cov2cor
+#' @aliases cov2cor
+#' @param S A square covariance matrix.
+#' @return A square correlation matrix.
+#' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @examples
+#' X <- createData(n = 11, m = 4)
+#' S <- cov(X)
+#' stats::cov2cor(S)
+#' cov2corArma(S)
+#' if (require(microbenchmark)) {
+#'   microbenchmark(A = cov2corArma(S),
+#'                  B = stats::cov2cor(S),
+#'                  C = cov2cor(S))
+#' }
+#' @export
+cov2corArma <- function(S) {
+    .Call('correlateR_cov2corArma', PACKAGE = 'correlateR', S)
+}
+
 #' Marginal covariance matrix
 #' 
 #' Various workhorse functions to compute the marginal (or unconditional) 

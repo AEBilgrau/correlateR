@@ -1,7 +1,7 @@
-#include <RcppArmadillo.h>
-#include <RcppEigen.h>
+// Only include aux_functions.h which pulls in RcppArmadillo.h,
+// RcppEigen.h, and Rcpp.h
 
-#include "aux_functions.h"
+#include "auxiliary_functions.h"
 
 
 // [[Rcpp::export]]

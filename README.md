@@ -57,10 +57,24 @@ The package is still under heavy development and should be considered unstable. 
 modifications!
 
 
-Alternatives
-------------
-Some alterative packages are: 
-* `corpcor`: Only features estimation of the full partial correlations.
-* `ppcor`: 
+Using correlateR
+----------------
+A small tutorial goes here!
 
-------------
+
+Alternative packages
+--------------------
+There are some alternative packages on CRAN form which some inspiration have been drawn. 
+* `corpcor`: Only features estimation of the full partial correlations.
+* `ppcor`: Partial and semi-partial correlations
+
+### Benchmarking
+A benchmarking of the functions goes here.
+
+
+Reference
+---------
+References goes here!
+
+
+--------------------------------------------------------------------------------

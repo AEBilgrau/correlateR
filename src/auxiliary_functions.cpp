@@ -2,7 +2,7 @@
 #include <RcppArmadillo.h>
 #include <RcppEigen.h>
 
-#include "aux_functions.h"
+#include "auxiliary_functions.h"
 
 double square(const double x) {
    return x * x;

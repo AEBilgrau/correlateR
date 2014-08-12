@@ -116,6 +116,21 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
+// cov2corArma
+arma::mat cov2corArma(arma::mat S);
+RcppExport SEXP correlateR_cov2corArma(SEXP SSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP );
+        arma::mat __result = cov2corArma(S);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // covRcpp
 Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix& X, const int norm_type = 0);
 RcppExport SEXP correlateR_covRcpp(SEXP XSEXP, SEXP norm_typeSEXP) {

@@ -32,8 +32,8 @@
 #' xcov(X, Y)
 #' xcor(X, Y)
 #' 
-#' pcov(X, z = numeric(0))  # == cov(X)
-#' pcov(X, z = 1:3)
+#' pcov(X, z = numeric(0)) 
+#' pcov(X, z = 1:2)
 #' pcor(X, z = numeric(0))
 #' pcor(X, z = 3)
 #' 

@@ -1,5 +1,5 @@
-#ifndef AUX_FUNCTIONS_H
-#define AUX_FUNCTIONS_H
+#ifndef AUXILIARY_FUNCTIONS_H
+#define AUXILIARY_FUNCTIONS_H
 
 #include <RcppArmadillo.h>
 #include <RcppEigen.h>
@@ -12,4 +12,4 @@ Rcpp::NumericMatrix centerNumericMatrix(Rcpp::NumericMatrix & X);
 // Compute residuals in linear model
 arma::colvec residual(const arma::mat & X, const arma::colvec & y);
 
-#endif // AUX_FUNCTIONS_H
+#endif // AUXILIARY_FUNCTIONS_H
