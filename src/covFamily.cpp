@@ -11,12 +11,12 @@
 //' Various workhorse functions to compute the marginal (or unconditional) 
 //' covariance (and cross-covariance) estimates. The functions feature both the 
 //' maximum likelihood and the biased corrected estimates. They are (almost) 
-//' equivalent implementations of \code{\link{stats::cov}} in Rcpp, 
+//' equivalent implementations of \code{\link[stats]{stats::cov}} in Rcpp, 
 //' RcppArmadillo, and RcppEigen.
 //' 
 //' @rdname covFamily
 //' @aliases covFamily
-//'   corRcpp xcorRcpp corArma xcorArma corEigen xcorEigen
+//'   covRcpp xcovRcpp covArma xcovArma covEigen xcovEigen
 //' @param X A numeric matrix.
 //' @param Y A numeric matrix of compatible dimension with the \code{X}, i.e. 
 //'   \code{nrow(X)} equals \code{nrow(Y)}.
