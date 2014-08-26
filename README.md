@@ -7,30 +7,31 @@ The R-package `correlateR` features fast, robust, and efficient (as well as inef
 The package is designed to perform well in both high and low dimensional cases as well as both on dense and sparse matrices.
 
 The packages is features (or, is planned to feature):
-* `cor` Marginal (unconditional) correlation (aka auto-correlation) ✓
-* `cov` Marginal (unconditional) covariance (aka auto-correlation) ✓
-* `xcor` Cross-correlation ✓
-* `xcov` Cross-covariance ✓
-* `pcor` Partial correlation (arbitrary order) ✓
-* `pcov` Partial covariance (arbitrary order) ✓
-* `pxcor` Partial cross-correlation (arbitrary order) ✓
-* `pxcov` Partial cross-covariance (arbitrary order) ✓
-* `scor` Sparse correlation ✗
-* `scov` Sparse covariance ✗
-* `sxcor` Sparse cross-correlation ✗
-* `sxcov` Sparse cross-covariance ✗
-* `spcor` Sparse partial correlation (arbitrary order) ✗
-* `spcov` Sparse partial covariance (arbitrary order) ✗
-* `spxcor` Sparse partial cross-correlation (arbitrary order) ✗
-* `spxcov` Sparse partial cross-covariance (arbitrary order) ✗
-* `?` Part (semi-partial) correlation and covariances (?) ✗
-* `s` Sparse estimation methods ✗
-* `r` Robust estimation methods ✗
-* `~` Interface using formulas ✗
-* Conversion between `cov` and `cor` and `pcor` functions. ✗
-    - `cov2cor`, `cor2cov`, `cor2pcor`, `pcor2cor`(?)
-* Conditional and unconditional independence test ✗
-* ... and more! (??)
+ - [x] `cor` Marginal (unconditional) correlation (aka auto-correlation)
+ - [x] `cov` Marginal (unconditional) covariance (aka auto-correlation)
+ - [x] `xcor` Cross-correlation
+ - [x] `xcov` Cross-covariance
+ - [x] `pcor` Partial correlation (arbitrary order)
+ - [x] `pcov` Partial covariance (arbitrary order)
+ - [x] `pxcor` Partial cross-correlation (arbitrary order)
+ - [x] `pxcov` Partial cross-covariance (arbitrary order)
+ - [ ] `scor` Sparse correlation
+ - [ ] `scov` Sparse covariance
+ - [ ] `sxcor` Sparse cross-correlation
+ - [ ] `sxcov` Sparse cross-covariance
+ - [ ] `spcor` Sparse partial correlation (arbitrary order)
+ - [ ] `spcov` Sparse partial covariance (arbitrary order)
+ - [ ] `spxcor` Sparse partial cross-correlation (arbitrary order)
+ - [ ] `spxcov` Sparse partial cross-covariance (arbitrary order)
+ - [ ] `?` Part (semi-partial) correlation and covariances (?)
+ - [ ] `s` Sparse estimation methods
+ - [ ] `r` Robust estimation methods
+ - [ ] `~` Interface using formulas
+ - [ ] Conversion between `cov` and `cor` and `pcor` functions.
+    - [ ] `cov2cor`, `cor2cov`, `cor2pcor`, `pcor2cor`(?)
+ - [ ] Conditional and unconditional independence test
+    - [ ] `pcor.test`
+ - [ ] ... and more! (??)
 
 
 Naming conventions and interface
