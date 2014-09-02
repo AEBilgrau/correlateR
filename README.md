@@ -7,8 +7,32 @@ The R-package `correlateR` features fast, robust, and efficient (as well as inef
 The package is designed to perform well in both high and low dimensional cases as well as both on dense and sparse matrices.
 
 The packages is features (or, is planned to feature):
- - [x] `cor` Marginal (unconditional) correlation (aka auto-correlation)
- - [x] `cov` Marginal (unconditional) covariance (aka auto-correlation)
+
+ - [x] `cor`/`cov` Marginal (unconditional) correlation/covariance. These basic 
+       functions can be prefixed to yield other correlation/covariance 
+       estimates. This covariance is also known as the auto-correlation, the 
+       variance-covariance, or simply the variance (in the generalized sense).
+    - [x] `p`-prefix: *p*artial (arbitrary order) correlation and covariance.
+    - [x] `x`-prefix: *cross* correlation and covariance.
+    - [ ] `P`-prefix: *P*art (semi-partial) correlation and covariances (?)
+    - [ ] `s`-prefix: *s*parse shrinkage estimation methods (?)
+    - [ ] `r`-prefix: *r*obust estimation methods. E.g. Minimum Covariance 
+          Determinant
+    - [x] `S`-prefix: *S*hrinkage estimation. (Or, `d` for *d*ense shrinkage?) 
+ - [ ] Interface using formulas `~`.
+ - [ ] Conversion between `cov` and `cor` and `pcor` functions.
+    - [ ] `cov2cor`, `cor2cov`, `cor2pcor`, `pcor2cor`(?)
+ - [ ] Conditional and unconditional independence test
+    - [ ] `cor.text`, `pcor.test`
+    - [ ] Also with cross, sparse, shrinked, robust, etc., versions
+ - [ ] Canonical correlation analysis (CCA)
+    - [ ] Also with cross, sparse, shrinked, robust, etc., versions
+ - [ ] `pre` (alternative to `cov`) direct estimation of the precision matrix
+       or concentration matrix.
+    - [ ]  Also with cross, sparse, robust, etc., versions
+ - [ ] ... and more! (??)
+ 
+Hence the following core-functons are available:
  - [x] `xcor` Cross-correlation
  - [x] `xcov` Cross-covariance
  - [x] `pcor` Partial correlation (arbitrary order)
@@ -23,15 +47,7 @@ The packages is features (or, is planned to feature):
  - [ ] `spcov` Sparse partial covariance (arbitrary order)
  - [ ] `spxcor` Sparse partial cross-correlation (arbitrary order)
  - [ ] `spxcov` Sparse partial cross-covariance (arbitrary order)
- - [ ] `?` Part (semi-partial) correlation and covariances (?)
- - [ ] `s` Sparse estimation methods
- - [ ] `r` Robust estimation methods
- - [ ] `~` Interface using formulas
- - [ ] Conversion between `cov` and `cor` and `pcor` functions.
-    - [ ] `cov2cor`, `cor2cov`, `cor2pcor`, `pcor2cor`(?)
- - [ ] Conditional and unconditional independence test
-    - [ ] `pcor.test`
- - [ ] ... and more! (??)
+
 
 
 Naming conventions and interface
