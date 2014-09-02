@@ -2,10 +2,10 @@ context("Marginal covariance tests")
 
 # Testing data
 n <- 50
-X <- replicate(10, rnorm(n))
-dimnames(X) <- list(paste0("obs", 1:n), paste0("dim", 1:ncol(X)))
-Y <- replicate(15, rnorm(n))
-dimnames(Y) <- list(paste0("obs", 1:n), paste0("dim", 1:ncol(Y)))
+m_X <- 10
+m_Y <-15
+X <- createData(n, m_X)
+Y <- createData(n, m_Y)
 
 # Gold standard:
 cov_X <- stats::cov(X)  # Standard covariance

@@ -5,7 +5,7 @@ Version: 0.1
 Date: 2014-07-24
 Author: Anders Ellern Bilgrau
 Maintainer: Anders Ellern Bilgrau <abilgrau@math.aau.dk>
-URL: http://github.com/AEBilgrau/correlateR
+URL: https://github.com/AEBilgrau/correlateR
 BugReports: https://github.com/AEBilgrau/correlateR/issues
 Description: Fast, robust, and efficient estimation of marginal, partial, and
     semi-partial (part) correlations and covariances.
@@ -17,4 +17,3 @@ Depends:
 LinkingTo: Rcpp, RcppArmadillo, RcppEigen
 Suggests:
     testthat (>= 0.3)
-URL: https://github.com/AEBilgrau/correlateR
