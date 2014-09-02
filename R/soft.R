@@ -1,7 +1,7 @@
 #' The soft thresholding function
 #' 
 #' The soft thresholding function given by
-#' \deqn{\text{soft}(a, c) = \text{sgn}(a)\cdot(|a| - c)_+}{
+#' \deqn{soft(a, c) = sgn(a)\cdot(|a| - c)_+}{
 #'       soft(a, c) = sgn(a)*max(|a| - c, 0)}
 #' @param a A vector/matrix to apply the soft thresholding to.
 #' @param c A numeric giving the soft threshold.

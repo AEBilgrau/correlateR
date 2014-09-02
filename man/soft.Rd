@@ -15,7 +15,7 @@ A vector/matrix the same size as \code{a}.
 }
 \description{
 The soft thresholding function given by
-\deqn{\text{soft}(a, c) = \text{sgn}(a)\cdot(|a| - c)_+}{
+\deqn{soft(a, c) = sgn(a)\cdot(|a| - c)_+}{
       soft(a, c) = sgn(a)*max(|a| - c, 0)}
 }
 \examples{
