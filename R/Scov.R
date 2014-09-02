@@ -1,24 +1,25 @@
 #' Shrinkage covariance estimation
 #'
-#' This algorithm seeks to find a covariance (usually dense) estimate
-#' that (asymptotically) minimizes the mean-squared error (MSE) obtained by 
-#' linear shrinkage problem as proposed by Leodit and Wolf (LW). 
+#' This algorithm seeks to find a covariance (dense) estimate
+#' that (asymptotically) minimizes the mean-squared error (MSE) obtained by
+#' linear shrinkage problem as proposed by Ledoit and Wolf (LW).
 #' It is effectively a interpolation/mix of the sample ML
-#' estimate of the covariance matrix, \eqn{S}, and the most well-conditioned 
+#' estimate of the covariance matrix, \eqn{S}, and the most well-conditioned
 #' (and naive) estimate \eqn{F = 1/p tr(S) I}.
-#' The algorithm seeks a solution to the problem:
-#'   \deqn{\min_{\rho}E[ || \Sigma_O - \Sigma ||^2 ]}{%
-#'         mininimize E[ || Sigma_O - Sigma ||^2 ] w.r.t. rho}
-#'   \deqn{s.t. \Sigma_O = (1 - \rho)S + \rho F}{%
-#'         s.t. Sigma_O = (1-rho)*S + rho*F}
-#' using various methods
-#' 
+#'
 #' @details
 #'   The improved estimate using Rao-Blackwell theorem, abbreviated RBLW, and
-#'   the oracle approximating shrinkage (OAS) are also implemented. 
-#'   The intepolated \eqn{\rho}{rho} value used is always 
+#'   the oracle approximating shrinkage (OAS) are also implemented. The 
+#'   algorithm seeks a solution to the problem:
+#'     \deqn{\min_{\rho}E[ || \Sigma_O - \Sigma ||^2 ]}{%
+#'           mininimize E[ || Sigma_O - Sigma ||^2 ] w.r.t. rho}
+#'     \deqn{s.t. \Sigma_O = (1 - \rho)S + \rho F}{%
+#'           s.t. Sigma_O = (1-rho)*S + rho*F}
+#'   using various methods
+#'   The intepolated \eqn{\rho}{rho} value used is always
 #'   \eqn{\min(\rho, 1)}{min(rho,1)}.
 #'   More information can be found in the given reference.
+#'
 #' @param X The data matrix of size \code{n} by \code{p}.
 #' @param method The method of estimating the optimal interpolating parameter.
 #'   The default is OAS.
@@ -26,16 +27,18 @@
 #'   A \code{p} by \code{p} numeric matrix with two extra attributes giving
 #'   the used mixture (\eqn{\rho}{rho}) and the method.
 #' @references
-#'   Ledoit, O., & Wolf, M. (2004). A well-conditioned estimator for 
-#'   large-dimensional covariance matrices. Journal of Multivariate Analysis, 
+#'   Ledoit, O., & Wolf, M. (2004). A well-conditioned estimator for
+#'   large-dimensional covariance matrices. Journal of Multivariate Analysis,
 #'   88(2), 365–411. doi:10.1016/S0047-259X(03)00096-4
-#'   
-#'   Chen, Y., & Wiesel, A. (2010). Shrinkage algorithms for MMSE covariance 
-#'   estimation. Signal Processing, IEEE, 58(734), 1–28. 
-#'   Methodology; Computation. 
-#'   Retrieved from \url{http://arxiv.org/abs/0907.4698}
-#'   
-#'   For more, see
+#'
+#'   Chen, Y., & Wiesel, A. (2010). Shrinkage algorithms for MMSE covariance
+#'   estimation. Signal Processing, IEEE, 58(734), 1–28.
+#'   Methodology; Computation.
+#'   \url{http://arxiv.org/abs/0907.4698}
+#'
+#'   Schäfer, J., & Strimmer, K. (2005). A shrinkage approach to large-scale
+#'   covariance matrix estimation and implications for functional genomics.
+#'   Statistical Applications in Genetics and Molecular Biology, 4(1).
 #'   \url{http://www.stat.wisc.edu/courses/st992-newton/smmb/files/expression/shrinkcov2005.pdf}
 #' @examples
 #' n <- 3
@@ -44,8 +47,9 @@
 #' Scov(X, method = "OAS")
 #' Scov(X, method = "RBLW")
 #' Scov(X, method = "LW")
+#' @aliases Scov Scor
 #' @export
-Scov <- function(X, method = c("OAS", "RBLW", "LW")) {
+Scov <- function(X, method = c("OAS", "RBLW", "LW", "SS")) {
   method <- match.arg(method)
 
   # Auxiliary functions:
@@ -77,13 +81,13 @@ Scov <- function(X, method = c("OAS", "RBLW", "LW")) {
       ((1 - 2)/p * tr(Shat^2) + tr(Shat)^2)/
       ((n + 1 - 2)/p * (tr(Shat^2) - tr(Shat)^2/p))
   } else {
-    stop("method ", method, " must be 'RBLW' or 'LW'")
+    stop("method ", method, " must one 'OAS', 'RBLW', 'LW'. ",
+         "Others (SS) are not implemented yet.")
   }
-  
+
   rho_star <- min(rho, 1)
   ans <- shrinkage(rho_star, Shat, Fhat)
   attr(ans, "rho") <- c("used.rho" = rho_star, "rho" = rho)
   attr(ans, "method") <- c(method)
   return(ans)
 }
-
