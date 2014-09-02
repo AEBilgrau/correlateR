@@ -6,24 +6,31 @@
 createData(n, m, n.na = 0)
 }
 \arguments{
-\item{n}{an integer giving the number of observations/samples.}
+\item{n}{an non-negative integer giving the number of observations/samples.}
 
-\item{m}{an integer giving the number of variables/features.}
+\item{m}{an non-negative integer giving the number of variables/features.}
 
-\item{n.na}{an integer giving the number of \code{NA}s in the output.
-Default is \code{0}.}
+\item{n.na}{an integer from \code{0} to \code{n*m} giving the number of
+\code{NA}s in the output. Default is \code{0}.}
 }
 \value{
-A \code{n} times \code{m} numeric matrix of observations.
+A \code{n} times \code{m} numeric matrix of observations from
+  zero-mean gaussian random variables.
 }
 \description{
 Creates a named matrix of toy data from an \code{m}-dimensional
-zero-mean normal distribution with identity covariance matrix.
+zero-mean normal distribution with identity covariance matrix for
+convenience.
 }
 \note{
-The \code{NA} are randomly inserted in the output.
+The \code{n.na} \code{NA}s are randomly inserted in the output.
 }
 \examples{
 createData(10, 4)
+createData(1, 2)
+
+# Also works for the degenerate cases!
+createData(3, 0)
+createData(0, 3)
 }
 
