@@ -6,7 +6,7 @@ The R-package `correlateR` features fast, robust, and efficient (as well as inef
 
 The package is designed to perform well in both high and low dimensional cases as well as both on dense and sparse matrices.
 
-The packages is features (or, is planned to feature):
+Currently, the packages is planned feature:
 
  - [x] `cor`/`cov` Marginal (unconditional) correlation/covariance. These basic 
        functions can be prefixed to yield other correlation/covariance 
@@ -14,16 +14,16 @@ The packages is features (or, is planned to feature):
        variance-covariance, or simply the variance (in the generalized sense).
     - [x] `p`-prefix: *p*artial (arbitrary order) correlation and covariance.
     - [x] `x`-prefix: *cross* correlation and covariance.
-    - [ ] `P`-prefix: *P*art (semi-partial) correlation and covariances (?)
-    - [ ] `s`-prefix: *s*parse shrinkage estimation methods (?)
+    - [ ] `P`-prefix: *P*art (semi-partial) correlation and covariances
+    - [ ] `s`-prefix: *s*parse shrinkage estimation methods
     - [ ] `r`-prefix: *r*obust estimation methods. E.g. Minimum Covariance 
           Determinant
     - [x] `S`-prefix: *S*hrinkage estimation. (Or, `d` for *d*ense shrinkage?) 
  - [ ] Interface using formulas `~`.
  - [ ] Conversion between `cov` and `cor` and `pcor` functions.
-    - [ ] `cov2cor`, `cor2cov`, `cor2pcor`, `pcor2cor`(?)
+    - [ ] `cov2cor` `cor2cov` `cor2pcor` `pcor2cor`
  - [ ] Conditional and unconditional independence test
-    - [ ] `cor.text`, `pcor.test`
+    - [ ] `cor.text` `pcor.test` `xcor.test` `pxcor.test`
     - [ ] Also with cross, sparse, shrinked, robust, etc., versions
  - [ ] Canonical correlation analysis (CCA)
     - [ ] Also with cross, sparse, shrinked, robust, etc., versions
