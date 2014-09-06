@@ -12,8 +12,8 @@ res <- correlateR::cov2cor(S)
 test_that("Correct conversion", {
   expect_that(ans,    equals(res))
   expect_that(cor(X), equals(res))
-  expect_that(max(res) <=   1 + .Machine$double.eps, is_true())
-  expect_that(min(res) >= - 1 - .Machine$double.eps, is_true())
+  expect_that(max(res) <=   1 + 2*.Machine$double.eps, is_true())
+  expect_that(min(res) >= - 1 - 2*.Machine$double.eps, is_true())
 })
 
 test_that("Fast computation.", {
