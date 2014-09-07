@@ -50,14 +50,14 @@ Scov(X, method = "LW")
 \references{
 Ledoit, O., & Wolf, M. (2004). A well-conditioned estimator for
   large-dimensional covariance matrices. Journal of Multivariate Analysis,
-  88(2), 365–411. doi:10.1016/S0047-259X(03)00096-4
+  88(2), 365-411. doi:10.1016/S0047-259X(03)00096-4
 
   Chen, Y., & Wiesel, A. (2010). Shrinkage algorithms for MMSE covariance
-  estimation. Signal Processing, IEEE, 58(734), 1–28.
+  estimation. Signal Processing, IEEE, 58(734), 1-28.
   Methodology; Computation.
   \url{http://arxiv.org/abs/0907.4698}
 
-  Schäfer, J., & Strimmer, K. (2005). A shrinkage approach to large-scale
+  Schafer, J., & Strimmer, K. (2005). A shrinkage approach to large-scale
   covariance matrix estimation and implications for functional genomics.
   Statistical Applications in Genetics and Molecular Biology, 4(1).
   \url{http://www.stat.wisc.edu/courses/st992-newton/smmb/files/expression/shrinkcov2005.pdf}
