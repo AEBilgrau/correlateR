@@ -11,23 +11,22 @@
 //' Various workhorse functions to compute the marginal (or unconditional) 
 //' covariance (and cross-covariance) estimates. The functions feature both the 
 //' maximum likelihood and the biased corrected estimates. They are (almost) 
-//' equivalent implementations of \code{\link[stats]{stats::cov}} in Rcpp, 
-//' RcppArmadillo, and RcppEigen.
+//' equivalent implementations of \code{\link[stats]{cov}} (\code{stats::cov}) 
+//' in Rcpp, RcppArmadillo, and RcppEigen.
 //' 
 //' @rdname covFamily
-//' @aliases covFamily
-//'   covRcpp xcovRcpp covArma xcovArma covEigen xcovEigen
+//' @aliases covFamily covRcpp xcovRcpp covArma xcovArma covEigen xcovEigen
 //' @param X A numeric matrix.
 //' @param Y A numeric matrix of compatible dimension with the \code{X}, i.e. 
 //'   \code{nrow(X)} equals \code{nrow(Y)}.
-//' @param norm.type an integer of length one giving the estimator. The 
+//' @param norm_type an integer of length one giving the estimator. The 
 //'   default \code{0L} gives the unbised estimate while \code{1L} gives the 
 //'   MLE.
 //' @return
-//'   The \code{corXX} familiy returns a numeric correlation matrix of size 
+//'   The \code{cor}-familiy returns a numeric correlation matrix of size 
 //'   \code{ncol(X)} times \code{ncol(X)}.
 //'   
-//'   The \code{xcorXX} family returns a numeric cross-covariance matrix 
+//'   The \code{xcor}-family returns a numeric cross-covariance matrix 
 //'   of size \code{ncol(X)} times \code{ncol(Y)}.
 //' @details
 //'   Functions almost like \code{\link{cor}}.

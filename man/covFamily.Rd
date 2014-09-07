@@ -27,23 +27,23 @@ xcovEigen(X, Y, norm_type = 0L)
 \item{Y}{A numeric matrix of compatible dimension with the \code{X}, i.e.
 \code{nrow(X)} equals \code{nrow(Y)}.}
 
-\item{norm.type}{an integer of length one giving the estimator. The
+\item{norm_type}{an integer of length one giving the estimator. The
 default \code{0L} gives the unbised estimate while \code{1L} gives the
 MLE.}
 }
 \value{
-The \code{corXX} familiy returns a numeric correlation matrix of size
+The \code{cor}-familiy returns a numeric correlation matrix of size
   \code{ncol(X)} times \code{ncol(X)}.
 
-  The \code{xcorXX} family returns a numeric cross-covariance matrix
+  The \code{xcor}-family returns a numeric cross-covariance matrix
   of size \code{ncol(X)} times \code{ncol(Y)}.
 }
 \description{
 Various workhorse functions to compute the marginal (or unconditional)
 covariance (and cross-covariance) estimates. The functions feature both the
 maximum likelihood and the biased corrected estimates. They are (almost)
-equivalent implementations of \code{\link[stats]{stats::cov}} in Rcpp,
-RcppArmadillo, and RcppEigen.
+equivalent implementations of \code{\link[stats]{cov}} (\code{stats::cov})
+in Rcpp, RcppArmadillo, and RcppEigen.
 }
 \details{
 Functions almost like \code{\link{cor}}.
