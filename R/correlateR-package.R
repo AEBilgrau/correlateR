@@ -8,4 +8,7 @@
 #' @docType package
 #' @name correlateR-package
 #' @aliases correlateR-package correlater correlateR
+#' @useDynLib correlateR
+#' @importFrom Rcpp evalCpp
+#' @importFrom RcppEigen fastLmPure
 NULL

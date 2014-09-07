@@ -13,6 +13,7 @@
 #' X <- createData(4, 10)
 #' S <- cor(X)
 #' firstOrderPartialCorrelation(S, 2)
+#' @export
 firstOrderPartialCorrelation <- function(S, k) {
   stopifnot(k %in% seq_len(ncol(S)))
   
