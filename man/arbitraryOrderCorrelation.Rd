@@ -6,9 +6,6 @@
 arbitraryOrderCorrelation(S, z)
 }
 \arguments{
-\item{X}{A numeric matrix with observations in rows and variables
-in columns.}
-
 \item{S}{A numeric correlation matrix}
 
 \item{z}{A integer vector of indicies of the variabels to condition on. I.e.

@@ -10,7 +10,7 @@
 #'   in columns.
 #' @param Y A numeric matrix with the same number of rows as \code{X}.
 #' @param Z A numeric matrix with the same number of rows as \code{X}. This is
-#'   the 
+#'   the matrix of variables to condition on.
 #' @param method A character of length 1. The unbiased estimate divided with
 #'   \code{n-1} and wheras ML uses \code{n}.
 #' @return 

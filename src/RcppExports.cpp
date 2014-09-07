@@ -7,22 +7,6 @@
 
 using namespace Rcpp;
 
-// residual
-arma::colvec residual(const arma::mat& X, const arma::colvec& y);
-RcppExport SEXP correlateR_residual(SEXP XSEXP, SEXP ySEXP) {
-BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const arma::colvec& >::type y(ySEXP );
-        arma::colvec __result = residual(X, y);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
-END_RCPP
-}
 // corRcpp
 Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix& X);
 RcppExport SEXP correlateR_corRcpp(SEXP XSEXP) {

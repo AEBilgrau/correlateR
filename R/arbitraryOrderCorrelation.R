@@ -3,8 +3,8 @@
 #' Compute arbitrary \code{k}th order partial correlations using recursion. 
 #' This implementation is very inefficient.
 #' 
-##' @param X A numeric matrix with observations in rows and variables
-##'   in columns.
+# @param X A numeric matrix with observations in rows and variables
+#   in columns.
 #' @param S A numeric correlation matrix
 #' @param z A integer vector of indicies of the variabels to condition on. I.e.
 #'   length(z) is the order of the partial correlations. If \code{z} has 

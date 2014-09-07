@@ -16,8 +16,7 @@ Rcpp::NumericMatrix centerNumericMatrix(Rcpp::NumericMatrix & X) {
   return X;
 }
 
-// Analogous to lm(y ~ X)$residuals,
-// [[Rcpp::export]]
+// Analogous to lm(y ~ X)$residuals.
 arma::colvec residual(const arma::mat & X, const arma::colvec & y) {
     // Return y if X is degenerate
     if (X.n_rows == 0 || X.n_cols == 0) {

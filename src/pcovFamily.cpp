@@ -6,7 +6,6 @@
 // [[Rcpp::export]]
 arma::mat pcovArma(const arma::mat& X, const arma::uvec& z) {
   
-
   int m = X.n_cols;
   arma::uvec zz = z - 1;  // Remember, shift index by one!
   arma::mat ans(m, m);
@@ -16,7 +15,7 @@ arma::mat pcovArma(const arma::mat& X, const arma::uvec& z) {
       arma::colvec rx = residual(X.cols(zz), X.col(i));
       arma::colvec ry = residual(X.cols(zz), X.col(j));
       ans(i, j) = arma::as_scalar(arma::cov(rx, ry));
-      ans(j, i) = ans(i, j);
+      ans(j, i) = ans(i, j);  // Autocorvariance is symmetric
     }
   }
 

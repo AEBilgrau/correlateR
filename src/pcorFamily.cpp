@@ -3,7 +3,6 @@
 
 #include "auxiliary_functions.h"
 
-
 // [[Rcpp::export]]
 arma::mat pcorArma(const arma::mat& X, const arma::uvec& z) {
   
@@ -15,8 +14,8 @@ arma::mat pcorArma(const arma::mat& X, const arma::uvec& z) {
 
       arma::colvec rx = residual(X.cols(zz), X.col(i));
       arma::colvec ry = residual(X.cols(zz), X.col(j));
-      ans(i,j) = arma::as_scalar(arma::cor(rx, ry));
-      ans(j,i) = ans(i,j); // Autocorrelation is symmetric
+      ans(i, j) = arma::as_scalar(arma::cor(rx, ry));
+      ans(j, i) = ans(i,j);  // Autocorrelation is symmetric
       
     }
   }
