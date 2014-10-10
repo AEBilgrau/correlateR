@@ -112,10 +112,9 @@ Rcpp::NumericMatrix xcorRcpp(Rcpp::NumericMatrix & X,
 //' @export
 // [[Rcpp::export]]
 arma::mat corArma(const arma::mat & X) {
-  //arma::mat cor = arma::cor(X, 0);
-  // Ensure 1 in the diagonal if NAs in X
-  //cor.diag() = arma::ones<arma::vec>(cor.n_rows); 
-  return arma::cor(X, 0);
+  arma::mat cor = arma::cor(X, 0);
+  cor.diag() /= cor.diag();   // Ensure 1 in the diagonal (if not NaN)
+  return cor;
 }
 
 // Cross-correlation implementation in armadillo
