@@ -18,8 +18,8 @@
 #' @details The test and confidence interval is based Fisher's Z transform.
 #' @seealso \code{\link[stats]{cor.test}}
 #' @examples
-#' X <- createData(10, 4)
-#' Y <- createData(10, 6)
+#' X <- createData(10, 2)
+#' Y <- createData(10, 4)
 #' test.xcor(X, Y)
 #' test.xcor(X[,1], Y[,1])
 #' @export test.xcor

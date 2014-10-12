@@ -10,6 +10,12 @@
 #' @param conf.level confidence level for the returned confidence interval.
 #' @return A list of values resulting from the test.
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @examples
+#' est <- matrix(3, 2, 1)
+#' mean <- matrix(0, 2, 1)
+#' sd <- matrix(1, 2, 1)
+#' correlateR:::fisher.test.cor(estimate = est, mean = mean, se = sd,
+#'                              alternative = "two.sided", conf.level = 0.95)
 #' @keywords internal
 fisher.test.cor <- function(estimate, mean, se, alternative, conf.level) {
   z <- (estimate - mean)/se
