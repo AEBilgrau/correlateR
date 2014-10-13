@@ -1,4 +1,3 @@
-
 #' Compute the scatter matrix
 #'
 #' This functions is a fast computation of the scatter matrix and cross-scatter
@@ -6,9 +5,9 @@
 #'   \deqn{\sum_{i = 1}^n(x_i-\mu)(x_i-\mu)^T}{XX^T} and \eqn{XY^T}{XY^T} 
 #' respectively.
 #' 
-#' @param X a \code{n} by \code{p1} numeric matrix with observations in the rows
+#' @param X An \code{n} by \code{p1} numeric matrix with observations in the rows
 #'   and variables in the columns.
-#' @param Y a \code{n} by \code{p2} as \code{X}.
+#' @param Y An \code{n} by \code{p2} as \code{X}.
 #' @return The scatter matrix or cross-scatter matrix.
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 #' @examples
@@ -20,13 +19,13 @@
 #' 
 #' xscatter(X, Y)
 #' n*xcov(X, Y, method = "ML")  # == (n - 1)*xcov(X, Y)
-#' @export
+#' @keywords internal
 scatter <- function(X) {
   return(crossprod(center(X)))
 }
 
 #' @rdname scatter
-#' @export
+#' @keywords internal
 xscatter <- function(X, Y) {
   return(crossprod(center(X), center(Y)))
 }
