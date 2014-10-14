@@ -9,10 +9,10 @@ scatter(X)
 xscatter(X, Y)
 }
 \arguments{
-\item{X}{a \code{n} by \code{p1} numeric matrix with observations in the rows
+\item{X}{An \code{n} by \code{p1} numeric matrix with observations in the rows
 and variables in the columns.}
 
-\item{Y}{a \code{n} by \code{p2} as \code{X}.}
+\item{Y}{An \code{n} by \code{p2} as \code{X}.}
 }
 \value{
 The scatter matrix or cross-scatter matrix.
@@ -36,4 +36,5 @@ n*xcov(X, Y, method = "ML")  # == (n - 1)*xcov(X, Y)
 \author{
 Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 }
+\keyword{internal}
 

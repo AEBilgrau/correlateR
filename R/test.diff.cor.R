@@ -39,12 +39,12 @@
 #' print(cor1 <- cor(X1))
 #' print(cor2 <- cor(X2))
 #' 
-#' difftest.cor(X1, X2)
-#' difftest.cor(cor1 = cor1, cor2 = cor2, n1 = n1, n2 = n2)
+#' test.diff.cor(X1, X2)
+#' test.diff.cor(cor1 = cor1, cor2 = cor2, n1 = n1, n2 = n2)
 #' 
-#' difftest.cor(X1, X2, alternative = "less")
-#' @export difftest.cor
-difftest.cor <- function(X1, X2,
+#' test.diff.cor(X1, X2, alternative = "less")
+#' @export test.diff.cor
+test.diff.cor <- function(X1, X2,
                          cor1 = cor(X1), cor2 = cor(X2), 
                          n1 = nrow(X1), n2 = nrow(X2), 
                          alternative = c("two.sided", "less", "greater"),
@@ -55,7 +55,7 @@ difftest.cor <- function(X1, X2,
   }
   alternative <- match.arg(alternative)
   
-  # Fisher Z transform the correlations (atanh is Fisher's z transformation)
+  # Fisher z transform the correlations (atanh is Fisher's z transformation)
   Z1 <- atanh(cor1)
   Z2 <- atanh(cor2)
   
@@ -83,26 +83,42 @@ difftest.cor <- function(X1, X2,
 #' @return A numeric vector giving correlation for each group, 
 #'   size-estimate and standard error, confidence intervals and p-values.
 #' @details
-#'              H0: cor(x1, y1) =  cor(x2, y2) \cr
-#' two.sided => H1: cor(x1, y1) != cor(x2, y2) (i.e., z1 - z2 1= 0) \cr
-#' greater   => H1: cor(x1, y1) >  cor(x2, y2) (i.e., z1 - z2 > 0) \cr
-#' less      => H1: cor(x1, y1) <  cor(x2, y2) (i.e., z1 - z2 < 0)
+#' The \code{alternative} argument specifies the alternative hypothesis given 
+#' below.
+#' \tabular{rcl}{
+#'                    \tab   \tab
+#' H0: \code{cor(x1, y1) =  cor(x2, y2)} \cr
+#' \code{"two.sided"} \tab =>\tab 
+#' H1: \code{cor(x1, y1) != cor(x2, y2)} \cr
+#' \code{"greater"}   \tab =>\tab 
+#' H1: \code{cor(x1, y1) > cor(x2, y2)} \cr
+#' \code{"less"}      \tab =>\tab 
+#' H1: \code{cor(x1, y1) < cor(x2, y2)} 
+#' }
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 #' @seealso \code{\link[stats]{cor.test}} in \code{stats}
 #' @examples
 #' x1 <- rnorm(100)
 #' y1 <- rnorm(100)
 #' x2 <- rnorm(110)
-#' y2 <- 4*x2 + 0.5*rnorm(110)
+#' y2 <- 4*x2 + 0.5*rnorm(110) + 1
 #' 
+#' plot(x1, y1, xlim = range(x1, x2), ylim = range(y1, y2))
+#' abline(lm(y1 ~ x1))
+#' points(x2, y2, col = "red")
+#' abline(lm(y2 ~ x2), col = "red")
+#' 
+#' diff.test <- correlateR:::test.diff.cor2
 #' round(data.frame(
-#'   two = correlateR:::difftest2.cor(x1, y1, x2, y2),
-#'   les =  correlateR:::difftest2.cor(x1, y1, x2, y2, alternative = "less"),
-#'   gre = correlateR:::difftest2.cor(x1, y1, x2, y2, alternative = "greater"),
-#'   two2 = correlateR:::difftest2.cor(x2, y2, x1, y1)
-#'   ),2)
+#'   two = diff.test(x1, y1, x2, y2, alternative = "two.sided"),
+#'   les = diff.test(x1, y1, x2, y2, alternative = "less"),
+#'   gre = diff.test(x1, y1, x2, y2, alternative = "greater")), 2)
+#'   
+#' round(diff.test(x1, y1, x1, y1, alternative = "two.sided"), 3)
+#' round(diff.test(x1, y1, x1, y1, alternative = "less"), 3)
+#' round(diff.test(x1, y1, x1, y1, alternative = "less"), 3)
 #' @keywords internal
-difftest2.cor <- function(x1, y1, x2, y2,
+test.diff.cor2 <- function(x1, y1, x2, y2,
                            alternative = c("two.sided", "less", "greater"),
                            conf.level = 0.95) {
   alternative <- match.arg(alternative)

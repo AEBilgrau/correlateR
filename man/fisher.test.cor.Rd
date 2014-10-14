@@ -23,6 +23,13 @@ A list of values resulting from the test.
 \description{
 Test hypothesis about the correlation using fisher's z-transform (atanh).
 }
+\examples{
+est <- matrix(3, 2, 1)
+mean <- matrix(0, 2, 1)
+sd <- matrix(1, 2, 1)
+correlateR:::fisher.test.cor(estimate = est, mean = mean, se = sd,
+                             alternative = "two.sided", conf.level = 0.95)
+}
 \author{
 Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 }

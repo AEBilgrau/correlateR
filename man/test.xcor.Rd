@@ -32,8 +32,8 @@ Test for Pearson correlation between paired samples across many variables.
 The test and confidence interval is based Fisher's Z transform.
 }
 \examples{
-X <- createData(10, 4)
-Y <- createData(10, 6)
+X <- createData(10, 2)
+Y <- createData(10, 4)
 test.xcor(X, Y)
 test.xcor(X[,1], Y[,1])
 }
