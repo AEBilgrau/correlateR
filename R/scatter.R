@@ -14,10 +14,10 @@
 #' n <- 11
 #' X <- createData(n, 4)
 #' Y <- createData(n, 2)
-#' scatter(X)
+#' correlateR:::scatter(X)
 #' (n-1)*cov(X)
 #' 
-#' xscatter(X, Y)
+#' correlateR:::xscatter(X, Y)
 #' n*xcov(X, Y, method = "ML")  # == (n - 1)*xcov(X, Y)
 #' @keywords internal
 scatter <- function(X) {
