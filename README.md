@@ -12,13 +12,13 @@ Currently, the packages is planned feature:
        functions can be prefixed to yield other correlation/covariance 
        estimates. This covariance is also known as the auto-correlation, the 
        variance-covariance, or simply the variance (in the generalized sense).
-    - [x] `p`-prefix: *p*artial (arbitrary order) correlation and covariance.
-    - [x] `x`-prefix: *cross* correlation and covariance.
-    - [ ] `P`-prefix: *P*art (semi-partial) correlation and covariances
-    - [ ] `s`-prefix: *s*parse shrinkage estimation methods
-    - [ ] `r`-prefix: *r*obust estimation methods. E.g. Minimum Covariance 
+    - [x] `p`-prefix: partial (arbitrary order) correlation and covariance.
+    - [x] `x`-prefix: cross correlation and covariance.
+    - [ ] `P`-prefix: Part (semi-partial) correlation and covariances
+    - [ ] `s`-prefix: sparse shrinkage estimation methods
+    - [ ] `r`-prefix: robust estimation methods. E.g. Minimum Covariance 
           Determinant
-    - [x] `S`-prefix: *S*hrinkage estimation. (Or, `d` for *d*ense shrinkage?) 
+    - [x] `S`-prefix: **S**hrinkage estimation. (Or, `d` for dense shrinkage?) 
  - [ ] Interface using formulas `~`.
  - [ ] Conversion between `cov` and `cor` and `pcor` functions.
     - [ ] `cov2cor` `cor2cov` `cor2pcor` `pcor2cor`
