@@ -8,6 +8,7 @@ double square(const double x) {
    return x * x;
 }
 
+// Function for centering matrix
 Rcpp::NumericMatrix centerNumericMatrix(Rcpp::NumericMatrix & X) {
   const int m = X.ncol();
   for (int j = 0; j < m; ++j) {
@@ -34,3 +35,36 @@ arma::colvec residual(const arma::mat & X, const arma::colvec & y) {
     arma::colvec res = (y - coef(0)) - X*coef.subvec(1, coef.n_elem - 1);
     return res;
 }
+
+// Multivariate (p-dimensional) log gamma function
+// See Bmisc for further details
+Rcpp::NumericVector lgammap(const Rcpp::NumericVector & x, const int p = 1) {
+  const double c0 = log(M_PI)*p*(p - 1)/4;
+  Rcpp::NumericVector ans(x.size(), c0);
+  for (int j = 0; j < p; ++j) {
+    ans += Rcpp::lgamma(x - j/2.0f);
+  }
+  return ans;
+}
+
+
+// Compute log determinant
+// 
+// Compute the sign and log of the determinant. Faster than \code{determinant}.
+// 
+// @param x A numeric matrix.
+// @return Returns a 1 by 2 matrix where the first element is the log of the 
+//  determinant and the second element is the sign of the determinant.
+// @seealso \code{\link{determinant}}
+// @author Anders Ellern Bilgrau
+// @examples
+// y <- matrix(rnorm(100), 10, 10)
+// determinant(y)
+// correlateR:::logdet_arma(y)
+arma::vec logdet_arma(const arma::mat & x) {
+  arma::vec val_sign(2); // First element value and second element is sign
+  log_det(val_sign(0), val_sign(1), x);
+  return val_sign;
+}
+
+

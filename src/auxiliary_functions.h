@@ -12,4 +12,10 @@ Rcpp::NumericMatrix centerNumericMatrix(Rcpp::NumericMatrix & X);
 // Compute residuals in linear model
 arma::colvec residual(const arma::mat & X, const arma::colvec & y);
 
+// Multivaraite log-gamma function
+Rcpp::NumericVector lgammap(const Rcpp::NumericVector & x, const int p);
+
+// Log determinant of matrix
+arma::vec logdet_arma(const arma::mat & x);
+
 #endif // AUXILIARY_FUNCTIONS_H
