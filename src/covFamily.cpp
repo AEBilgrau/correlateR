@@ -110,8 +110,8 @@ arma::mat covArma(const arma::mat & X,
 //' @export
 // [[Rcpp::export]]
 arma::mat xcovArma(const arma::mat & X,
-                       const arma::mat & Y,
-                       const int norm_type = 0) {
+                   const arma::mat & Y,
+                   const int norm_type = 0) {
   return arma::cov(X, Y, norm_type);
 }
 
@@ -140,8 +140,8 @@ Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd> & X,
 //' @export
 // [[Rcpp::export]]
 Eigen::MatrixXd xcovEigen(Eigen::Map<Eigen::MatrixXd> & X,
-                              Eigen::Map<Eigen::MatrixXd> & Y,
-                              const int norm_type = 0) {
+                          Eigen::Map<Eigen::MatrixXd> & Y,
+                          const int norm_type = 0) {
 
     // Computing degrees of freedom
     // n - 1 is the unbiased estimate whereas n is the MLE
@@ -154,6 +154,7 @@ Eigen::MatrixXd xcovEigen(Eigen::Map<Eigen::MatrixXd> & X,
     // Return the X^T * X is the scatter matrix
     return X.transpose() * Y / df;
 }
+
 
 
 
