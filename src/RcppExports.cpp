@@ -246,6 +246,23 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
+// pool
+arma::mat pool(const Rcpp::List& S_list, const Rcpp::NumericVector ns, const int norm_type = 0);
+RcppExport SEXP correlateR_pool(SEXP S_listSEXP, SEXP nsSEXP, SEXP norm_typeSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP );
+        Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type ns(nsSEXP );
+        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
+        arma::mat __result = pool(S_list, ns, norm_type);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // pxcorArma
 arma::mat pxcorArma(const arma::mat& X, const arma::mat& Y, const arma::mat& Z);
 RcppExport SEXP correlateR_pxcorArma(SEXP XSEXP, SEXP YSEXP, SEXP ZSEXP) {

@@ -172,6 +172,10 @@ pcovArma <- function(X, z) {
     .Call('correlateR_pcovArma', PACKAGE = 'correlateR', X, z)
 }
 
+pool <- function(S_list, ns, norm_type = 0L) {
+    .Call('correlateR_pool', PACKAGE = 'correlateR', S_list, ns, norm_type)
+}
+
 pxcorArma <- function(X, Y, Z) {
     .Call('correlateR_pxcorArma', PACKAGE = 'correlateR', X, Y, Z)
 }
