@@ -9,16 +9,6 @@ grem_get_nu <- function(Psi, nu, S, ns, interval) {
   return(res)
 } 
 
-# Compute new Psi from Psi, nu, S, ns using the EM step
-grem_em_step_old <- function(Psi, nu, S, ns) {
-  k <- length(S)
-  p <- nrow(S[[1]])
-  co <- 1/(k*nu)
-  t <- lapply(seq_along(S), function(i) (co*(ns[i] + nu))*solve(Psi + S[[i]]))
-  Psi_new <- solve(Reduce("+", t))  # Sum the matrices in t
-  return(Psi_new)
-}
-
 # Compute new Psi from nu, S, ns using moment estimate
 grem_moment_step <- function(nu, S, ns) {
   k <- length(ns)
@@ -37,6 +27,7 @@ grem_mle_step <- function(nu, S, ns) {
 }
 
 # Fit using the EM algorithm
+#' @export
 fit.grem <- function(S,
                      ns,
                      Psi.init = correlateR:::pool(S, ns),
@@ -71,6 +62,7 @@ fit.grem <- function(S,
 
 
 # MLE alg
+#' @export
 fit.grem.MLE <- function(nu.init, S, ns,
                          max.ite = 1000, eps = 1e-3,
                          verbose = FALSE) {
@@ -109,6 +101,7 @@ fit.grem.MLE <- function(nu.init, S, ns,
 }
 
 # Estimation using moment
+#' @export
 fit.grem.moment <- function(nu.init, S, ns,
                             max.ite = 1000, eps = 1e-3,
                             verbose = FALSE) {
@@ -142,6 +135,7 @@ fit.grem.moment <- function(nu.init, S, ns,
 }
 
 # Density of the GREM model
+#' @export
 dgrem <- function(x, mu, Psi, nu, logarithm = FALSE) {
   p <- nrow(Psi)
   if (is.null(dim(x))) {
