@@ -176,6 +176,10 @@ grem_loglik_arma <- function(Psi, nu, S_list, ns) {
     .Call('correlateR_grem_loglik_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
 }
 
+grem_loglik_nu_arma <- function(Psi, nu, S_list, ns) {
+    .Call('correlateR_grem_loglik_nu_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
+}
+
 grem_em_step_arma <- function(Psi, nu, S_list, ns) {
     .Call('correlateR_grem_em_step_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
 }
