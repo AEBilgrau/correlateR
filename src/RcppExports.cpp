@@ -7,6 +7,37 @@
 
 using namespace Rcpp;
 
+// lgammap
+Rcpp::NumericVector lgammap(const Rcpp::NumericVector& x, const int p = 1);
+RcppExport SEXP correlateR_lgammap(SEXP xSEXP, SEXP pSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type x(xSEXP );
+        Rcpp::traits::input_parameter< const int >::type p(pSEXP );
+        Rcpp::NumericVector __result = lgammap(x, p);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// logdet_arma
+arma::vec logdet_arma(const arma::mat& x);
+RcppExport SEXP correlateR_logdet_arma(SEXP xSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::mat& >::type x(xSEXP );
+        arma::vec __result = logdet_arma(x);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // corRcpp
 Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix& X);
 RcppExport SEXP correlateR_corRcpp(SEXP XSEXP) {
@@ -208,6 +239,42 @@ BEGIN_RCPP
         Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type Y(YSEXP );
         Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
         Eigen::MatrixXd __result = xcovEigen(X, Y, norm_type);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// grem_loglik_arma
+double grem_loglik_arma(const arma::mat& Psi, const double nu, const Rcpp::List& S_list, const Rcpp::NumericVector& ns);
+RcppExport SEXP correlateR_grem_loglik_arma(SEXP PsiSEXP, SEXP nuSEXP, SEXP S_listSEXP, SEXP nsSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP );
+        Rcpp::traits::input_parameter< const double >::type nu(nuSEXP );
+        Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP );
+        Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP );
+        double __result = grem_loglik_arma(Psi, nu, S_list, ns);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// grem_em_step_arma
+arma::mat grem_em_step_arma(const arma::mat& Psi, const double nu, const Rcpp::List& S_list, const Rcpp::NumericVector& ns);
+RcppExport SEXP correlateR_grem_em_step_arma(SEXP PsiSEXP, SEXP nuSEXP, SEXP S_listSEXP, SEXP nsSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP );
+        Rcpp::traits::input_parameter< const double >::type nu(nuSEXP );
+        Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP );
+        Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP );
+        arma::mat __result = grem_em_step_arma(Psi, nu, S_list, ns);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);

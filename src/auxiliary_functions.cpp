@@ -38,6 +38,7 @@ arma::colvec residual(const arma::mat & X, const arma::colvec & y) {
 
 // Multivariate (p-dimensional) log gamma function
 // See Bmisc for further details
+// [[Rcpp::export]]
 Rcpp::NumericVector lgammap(const Rcpp::NumericVector & x, const int p = 1) {
   const double c0 = log(M_PI)*p*(p - 1)/4;
   Rcpp::NumericVector ans(x.size(), c0);
@@ -61,6 +62,7 @@ Rcpp::NumericVector lgammap(const Rcpp::NumericVector & x, const int p = 1) {
 // y <- matrix(rnorm(100), 10, 10)
 // determinant(y)
 // correlateR:::logdet_arma(y)
+// [[Rcpp::export]]
 arma::vec logdet_arma(const arma::mat & x) {
   arma::vec val_sign(2); // First element value and second element is sign
   log_det(val_sign(0), val_sign(1), x);
