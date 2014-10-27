@@ -29,5 +29,6 @@ arma::mat cov2corArma(arma::mat S) {
   arma::colvec inv_sqrt_ss = 1/sqrt(S.diag());
   S.each_col() %= inv_sqrt_ss; // Element-wise multiplication
   S.each_row() %= inv_sqrt_ss.t();
+  S.diag() = S.diag()/S.diag().max();
   return S;
 }
