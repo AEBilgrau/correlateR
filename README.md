@@ -1,8 +1,9 @@
 correlateR
 ==========
+#### General purpose correlation and covariance estimation
 [![Build Status](https://api.travis-ci.org/AEBilgrau/correlateR.svg?branch=master)](https://travis-ci.org/AEBilgrau/correlateR)
 
-The R-package `correlateR` features fast, robust, and efficient (as well as inefficient) marginal, partial, semi-partial correlations and covariances of arbitrary conditional order. A good discussion and explanation of marginal (unconditioned), partial, and semi-partial (or, part) correlations can be found [here.](http://luna.cas.usf.edu/~mbrannic/files/regression/Partial.html) Another good resource is found [here.](http://www.johndcook.com/blog/2008/11/05/how-to-calculate-pearson-correlation-accurately/)
+The R-package `correlateR` is planned to be a comprehensive resource of functions related to correlations and covariances. It features fast, robust, and efficient (as well as inefficient) marginal, partial, semi-partial correlations and covariances of arbitrary conditional order. A good discussion and explanation of marginal (unconditioned), partial, and semi-partial (or, part) correlations can be found [here.](http://luna.cas.usf.edu/~mbrannic/files/regression/Partial.html) Another good resource is found [here.](http://www.johndcook.com/blog/2008/11/05/how-to-calculate-pearson-correlation-accurately/)
 
 The package is designed to perform well in both high and low dimensional cases as well as both on dense and sparse matrices.
 
@@ -16,8 +17,8 @@ Currently, the packages is planned feature:
     - [x] `x`-prefix: cross correlation and covariance.
     - [ ] `P`-prefix: Part (semi-partial) correlation and covariances
     - [ ] `s`-prefix: sparse shrinkage estimation methods
-    - [ ] `r`-prefix: robust estimation methods. E.g. Minimum Covariance 
-          Determinant
+    - [ ] `r`-prefix: robust estimation methods. E.g. Minimum covariance 
+          determinant, Robust midweight correlation, etc
     - [x] `S`-prefix: **S**hrinkage estimation. (Or, `d` for dense shrinkage?) 
  - [ ] Interface using formulas `~`.
  - [ ] Conversion between `cov` and `cor` and `pcor` functions.
