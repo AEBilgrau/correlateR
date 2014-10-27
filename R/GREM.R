@@ -124,6 +124,12 @@ fit.grem.moment <- function(S, ns,
   return(list("Psi" = Psi.new, "nu" = nu.new, "iterations" = i))
 }
 
+# Conversion from Psi and nu to Sigma
+#' @export
+Psi2Sigma <- function(Psi, nu) {
+  return(Psi/(nu - ncol(Psi) - 1))
+}
+
 # Density of the GREM model
 #' @export
 dgrem <- function(x, mu, Psi, nu, logarithm = FALSE) {
