@@ -19,7 +19,7 @@ Currently, the packages is planned feature:
     - [ ] `s`-prefix: sparse shrinkage estimation methods
     - [ ] `r`-prefix: robust estimation methods. E.g. Minimum covariance 
           determinant, Robust midweight correlation, etc
-    - [x] `S`-prefix: **S**hrinkage estimation. (Or, `d` for dense shrinkage?) 
+    - [x] `S`-prefix: Shrinkage estimation. (Or, `d` for dense shrinkage?) 
  - [ ] Interface using formulas `~`.
  - [ ] Conversion between `cov` and `cor` and `pcor` functions.
     - [ ] `cov2cor` `cor2cov` `cor2pcor` `pcor2cor`
