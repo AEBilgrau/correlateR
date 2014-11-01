@@ -1,4 +1,18 @@
-# Graphical Random Effects Model
+#' Estimate degrees of freedom 
+#' 
+#' Function for estimating the degrees of freedom \eqn{nu}{\nu} in the 
+#' Graphical Random Effects Model (GREM).
+#' 
+#' @param Psi A numeric matrix of size \eqn{p} times \eqn{p} giving the initial
+#'   estimate of \eqn{Psi}{\Psi}.
+#' @param nu  A single numeric number giving the degrees of freedom 
+#'   \eqn{nu}{\nu}.
+#' @param S A \code{list} of scatter matrices.
+#' @param ns Vector of group sizes.
+#' @return A single number giving the \eqn{nu}{\nu} optimizing the GREM 
+#'   likelihood with fixed \eqn{Psi}{\Psi}.
+#' @author Anders Ellern Bilgrau
+#' @keywords internal
 grem_get_nu <- function(Psi, nu, S, ns, interval) {
   # Find maxima with optimize
   loglik_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
