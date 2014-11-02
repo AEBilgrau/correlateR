@@ -3,7 +3,14 @@
 
 #include "auxiliary_functions.h"
 
-// Pooled covariance from list of covariance matrices
+//' Pooled covariance from list of scatter matrices
+//' 
+//' @param S_list A list of scatter matrices.
+//' @param nu A numeric vector giving the number of samples corresponding
+//'   to each scatter matrix.
+//' @return A numeric matrix giving the pooled variance.
+//' @author Anders Ellern Bilgrau
+//' @keywords internal
 // [[Rcpp::export]]
 arma::mat pool(const Rcpp::List & S_list,  // List of scatter matrices
                const Rcpp::NumericVector ns,

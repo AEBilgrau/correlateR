@@ -13,7 +13,8 @@ License: GPL (>=2)
 Imports:
     Rcpp (>= 0.10.6)
 Depends:
-    RcppEigen, GMCM
+    RcppEigen,
+    GMCM
 LinkingTo: Rcpp, RcppArmadillo, RcppEigen
 Suggests:
     testthat (>= 0.3)

@@ -192,6 +192,14 @@ pcovArma <- function(X, z) {
     .Call('correlateR_pcovArma', PACKAGE = 'correlateR', X, z)
 }
 
+#' Pooled covariance from list of scatter matrices
+#' 
+#' @param S_list A list of scatter matrices.
+#' @param nu A numeric vector giving the number of samples corresponding
+#'   to each scatter matrix.
+#' @return A numeric matrix giving the pooled variance.
+#' @author Anders Ellern Bilgrau
+#' @keywords internal
 pool <- function(S_list, ns, norm_type = 0L) {
     .Call('correlateR_pool', PACKAGE = 'correlateR', S_list, ns, norm_type)
 }
