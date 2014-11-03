@@ -1,6 +1,8 @@
-#' Test for differential correlation
+#' Test for difference in correlation
 #' 
 #' This functions tests the hypothesis of no difference in correlations.
+#' It uses Fisher's Z-transform (atanh) to test the null hypothesis
+#' of no difference in correlations. See details.
 #' 
 #' @param X1 A numeric matrix of observations.
 #' @param X2 A numeric matrix of observations.
@@ -14,10 +16,10 @@
 #' @param null A matrix of number giving the difference in correlation under 
 #'   the null hypothesis.
 #' @return A list of matrices or vector containing:
-#'   \item{\code{Z.scores}}{A numeric matrix of Z-scores for the hypothesis.}
-#'   \item{\code{P.values}}{A numeric matrix of the P-values.}
-#'   \item{\code{lower}}{The lower CI limit.}
-#'   \item{\code{upper}}{The upper CI limit.}
+#'   \item{\code{LCL}}{The lower confidence interval limit.}
+#'   \item{\code{UCL}}{The upper confidence interval limit.}
+#'   \item{\code{z}}{A numeric matrix of Z-scores for the hypothesis.}
+#'   \item{\code{p.val}}{A numeric matrix of the P-values.}
 #'   with an attribute giving the alternative hypothesis.
 #' @details 
 #'   The function uses Fisher's Z transform (atanh) of correlations to test
@@ -26,6 +28,7 @@
 #'   \deqn{\frac{Z1 - Z2}{\sqrt{1/(n1 - 3) + 1/(n2 - 3))}}}{
 #'              (Z1 - Z2)/ sqrt(1/(n1 - 3) + 1/(n2 - 3))}
 #'   where Z1 and Z2 are the Fisher transformed correlations.
+#'   It performs the test for all correlations in the correlation matrix.
 #' @references 
 #'   \url{http://core.ecu.edu/psyc/wuenschk/docs30/CompareCorrCoeff.pdf}
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
@@ -45,11 +48,13 @@
 #' test.diff.cor(X1, X2, alternative = "less")
 #' @export test.diff.cor
 test.diff.cor <- function(X1, X2,
-                         cor1 = cor(X1), cor2 = cor(X2), 
-                         n1 = nrow(X1), n2 = nrow(X2), 
-                         alternative = c("two.sided", "less", "greater"),
-                         conf.level = 0.95,
-                         null = 0) {
+                          cor1 = cor(X1), 
+                          cor2 = cor(X2), 
+                          n1 = nrow(X1), 
+                          n2 = nrow(X2), 
+                          alternative = c("two.sided", "less", "greater"),
+                          conf.level = 0.95,
+                          null = 0) {
   if (!missing(X1) & !missing(X2)) {
     stopifnot(ncol(X1) == ncol(X2))
   }
@@ -70,6 +75,8 @@ test.diff.cor <- function(X1, X2,
   attr(ans, "alternative") <- alternative
   return(ans)
 }
+
+
 
 #' Test for difference in correlation
 #' 
