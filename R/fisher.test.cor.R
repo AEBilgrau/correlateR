@@ -22,21 +22,21 @@ fisher.test.cor <- function(estimate, mean, se, alternative, conf.level) {
   l <- drop(matrix(1, nrow(estimate), ncol(estimate)))
   if (alternative == "two.sided") {
     q <- -qnorm((1 - conf.level)/2)
-    LCI <- tanh(estimate - q*se)
-    UCI <- tanh(estimate + q*se)
+    LCL <- tanh(estimate - q*se)
+    UCL <- tanh(estimate + q*se)
     p.val <- 2*pnorm(-abs(z))
   } else if (alternative == "greater") {
     q <- -qnorm((1 - conf.level))
-    LCI <- tanh(estimate - q*se)
-    UCI <- l
+    LCL <- tanh(estimate - q*se)
+    UCL <- l
     p.val <- 1 - pnorm(z)
   } else if (alternative == "less") {
     q <- -qnorm((1 - conf.level))
-    LCI <- -l
-    UCI <- tanh(estimate + q*se)
+    LCL <- -l
+    UCL <- tanh(estimate + q*se)
     p.val <- pnorm(z)
   } else {
     stop("alternative not found")
   }
-  return(list(LCI = LCI, UCI = UCI, z = z, p.val = p.val))
+  return(list(LCL = LCL, UCL = UCL, z = z, p.val = p.val))
 }
