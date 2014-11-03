@@ -40,7 +40,27 @@ grem_mle_step <- function(nu, S, ns) {
   return(Psi)
 }
 
-# Fit using the EM algorithm
+#' Fit using the EM algorithm
+#' 
+#' Fit the GREM using the modified EM algorithm.
+#' 
+#' @param S A \code{list} of square scatter matrices of the same size.
+#' @param ns A vector of sample sizes corresponding to the scatter matrices in 
+#'   \code{S}.
+#' @param Psi.init A \code{matrix} giving the initial estimate of 
+#'   \eqn{Psi}{Psi}.
+#' @param max.ite A numeric of length one giving the maximum number of 
+#'   iterations allowed.
+#' @param nu.init A numeric of length one giving the inital estiamte of 
+#'   \eqn{nu}{nu}.
+#' @param eps The convergence criterion.
+#' @param verbose If true, the differences in log-likelihood for each iteration
+#'   is printed out.
+#' @return A named list of length 3 with the elements:
+#'   \item{Psi}{A matrix giving the estimate of \eqn{Psi}{Psi}.}
+#'   \item{nu}{A number giving the estimate of \eqn{nu}{nu}.}
+#'   \item{iterations}{A integer giving the number of iterations used.}
+#' @seealso \code{\link{Psi2Sigma}}
 #' @export
 fit.grem <- function(S,
                      ns,
@@ -124,7 +144,7 @@ fit.grem.moment <- function(S, ns,
     Psi.new  <- grem_moment_step(nu = nu.old, S = S, ns = ns)
     if (verbose) {
       cat("ite =", i, ":", "nu.new - nu.old =", nu.new - nu.old,
-          "fac =", fac, "nu =", nu.new, "\n");
+          "nu =", nu.new, "\n");
       flush.console()
     }
     if (abs(nu.new - nu.old) < eps) {
@@ -139,6 +159,7 @@ fit.grem.moment <- function(S, ns,
 }
 
 # Conversion from Psi and nu to Sigma
+ 
 #' @export
 Psi2Sigma <- function(Psi, nu) {
   return(Psi/(nu - ncol(Psi) - 1))
