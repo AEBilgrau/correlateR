@@ -32,7 +32,9 @@
 #' @references 
 #'   \url{http://core.ecu.edu/psyc/wuenschk/docs30/CompareCorrCoeff.pdf}
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
-#' @seealso \code{\link[stats]{cor.test}}
+#' @seealso 
+#'   Similar usage to \code{\link[stats]{cor.test}} (but NOT the same thing).\cr
+#'   This is a vectorized version of \link{\code{test.diff.cor.single}}.
 #' @examples
 #' n1 <- 8
 #' n2 <- 10
@@ -103,7 +105,10 @@ test.diff.cor <- function(X1, X2,
 #' H1: \code{cor(x1, y1) < cor(x2, y2)} 
 #' }
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
-#' @seealso \code{\link[stats]{cor.test}} in \code{stats}
+#' @seealso 
+#'   Similar usage to \code{\link[stats]{cor.test}} in \code{stats}, however 
+#'   not the same! \cr
+#'   See \code{\link{cor.diff.test}} for a vectorized version.
 #' @examples
 #' x1 <- rnorm(100)
 #' y1 <- rnorm(100)
@@ -125,9 +130,10 @@ test.diff.cor <- function(X1, X2,
 #' round(diff.test(x1, y1, x1, y1, alternative = "less"), 3)
 #' round(diff.test(x1, y1, x1, y1, alternative = "less"), 3)
 #' @keywords internal
-test.diff.cor2 <- function(x1, y1, x2, y2,
-                           alternative = c("two.sided", "less", "greater"),
-                           conf.level = 0.95) {
+test.diff.cor.single <- 
+  function(x1, y1, x2, y2,
+           alternative = c("two.sided", "less", "greater"),
+           conf.level = 0.95) {
   alternative <- match.arg(alternative)
   stopifnot(length(x1) == length(y1))
   stopifnot(length(x2) == length(y2))

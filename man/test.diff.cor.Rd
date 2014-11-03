@@ -71,6 +71,7 @@ Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 \url{http://core.ecu.edu/psyc/wuenschk/docs30/CompareCorrCoeff.pdf}
 }
 \seealso{
-\code{\link[stats]{cor.test}}
+Similar usage to \code{\link[stats]{cor.test}} (but NOT the same thing).\cr
+  This is a vectorized version of \link{\code{test.diff.cor.single}}.
 }
 
