@@ -1,7 +1,7 @@
 #' Estimate degrees of freedom 
 #' 
 #' Function for estimating the degrees of freedom \eqn{nu}{\nu} in the 
-#' Graphical Random Effects Model (GREM).
+#' random covariance model (RCM).
 #' 
 #' @param Psi A numeric matrix of size \eqn{p} times \eqn{p} giving the initial
 #'   estimate of \eqn{Psi}{\Psi}.
@@ -9,14 +9,14 @@
 #'   \eqn{nu}{\nu}.
 #' @param S A \code{list} of scatter matrices.
 #' @param ns Vector of group sizes.
-#' @return A single number giving the \eqn{nu}{\nu} optimizing the GREM 
+#' @return A single number giving the \eqn{nu}{\nu} optimizing the RCM 
 #'   likelihood with fixed \eqn{Psi}{\Psi}.
 #' @author Anders Ellern Bilgrau
 #' @keywords internal
-grem_get_nu <- function(Psi, nu, S, ns, interval) {
+rcm_get_nu <- function(Psi, nu, S, ns, interval) {
   # Find maxima with optimize
   loglik_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
-    grem_loglik_nu_arma(Psi, nu, S, ns)
+    rcm_loglik_nu_arma(Psi, nu, S, ns)
   }
   interval <- c(nrow(Psi) - 1 + 1e-10, 1e6)
   res <- optimize(f = loglik_nu, interval = interval, maximum = TRUE)$maximum
@@ -24,7 +24,7 @@ grem_get_nu <- function(Psi, nu, S, ns, interval) {
 } 
 
 # Compute new Psi from nu, S, ns using moment estimate
-grem_moment_step <- function(nu, S, ns) {
+rcm_moment_step <- function(nu, S, ns) {
   k <- length(ns)
   Psi <- Reduce("+", lapply(seq_along(ns), function(i) S[[i]]/ns[i]))/k
   p <- nrow(Psi)
@@ -33,7 +33,7 @@ grem_moment_step <- function(nu, S, ns) {
 }
 
 # Compute new Psi from nu, S, ns using approximate MLE
-grem_mle_step <- function(nu, S, ns) {
+rcm_mle_step <- function(nu, S, ns) {
   n.tot <- sum(ns)
   fac <- nu + ns
   Psi <- Reduce("+", lapply(seq_along(ns), function(i) fac[i]*S[[i]]))/n.tot
@@ -42,7 +42,7 @@ grem_mle_step <- function(nu, S, ns) {
 
 #' Fit using the EM algorithm
 #' 
-#' Fit the GREM using the modified EM algorithm.
+#' Fit the RCM using the modified EM algorithm.
 #' 
 #' @param S A \code{list} of square scatter matrices of the same size.
 #' @param ns A vector of sample sizes corresponding to the scatter matrices in 
@@ -62,7 +62,7 @@ grem_mle_step <- function(nu, S, ns) {
 #'   \item{iterations}{A integer giving the number of iterations used.}
 #' @seealso \code{\link{Psi2Sigma}}
 #' @export
-fit.grem <- function(S,
+fit.rcm <- function(S,
                      ns,
                      Psi.init = correlateR:::pool(S, ns),
                      nu.init = sum(ns) + 1,
@@ -74,10 +74,10 @@ fit.grem <- function(S,
   Psi.old <- Psi.init
   nu.old  <- nu.init
   for (i in seq_len(max.ite)) {
-    ll.old  <- grem_loglik_arma(Psi.old, nu.old, S, ns)
-    Psi.new <- grem_em_step_arma(Psi.old, nu.old, S, ns)
-    nu.new  <- grem_get_nu(Psi.new, nu.old, S, ns, interval)
-    ll.new  <- grem_loglik_arma(Psi.new, nu.new, S, ns)
+    ll.old  <- rcm_loglik_arma(Psi.old, nu.old, S, ns)
+    Psi.new <- rcm_em_step_arma(Psi.old, nu.old, S, ns)
+    nu.new  <- rcm_get_nu(Psi.new, nu.old, S, ns, interval)
+    ll.new  <- rcm_loglik_arma(Psi.new, nu.new, S, ns)
     stopifnot(ll.new > ll.old)
     if (ll.new - ll.old < eps) {
       break
@@ -96,19 +96,19 @@ fit.grem <- function(S,
 
 
 # MLE alg
-fit.grem.MLE <- function(S, ns,
+fit.rcm.MLE <- function(S, ns,
                          nu.init = nrow(S[[1]]) + 2,
                          max.ite = 1000, eps = 1e-3,
                          verbose = FALSE) {
   p <- nrow(S)
   interval <- c(p - 1 + 10*.Machine$double.eps, 1e6)
   nu.old <- nu.init
-  Psi.old <- grem_mle_step(nu = nu.old, S = S, ns = ns)
+  Psi.old <- rcm_mle_step(nu = nu.old, S = S, ns = ns)
   for (i in seq_len(max.ite)) {
-    ll.old <- grem_loglik_arma(Psi.old, nu.old, S, ns)
-    nu.new  <- grem_get_nu(Psi.old, nu.old, S, ns, interval)
-    Psi.new <- grem_mle_step(nu.new, S, ns)
-    ll.new  <- grem_loglik_arma(Psi.new, nu.new, S, ns)
+    ll.old <- rcm_loglik_arma(Psi.old, nu.old, S, ns)
+    nu.new  <- rcm_get_nu(Psi.old, nu.old, S, ns, interval)
+    Psi.new <- rcm_mle_step(nu.new, S, ns)
+    ll.new  <- rcm_loglik_arma(Psi.new, nu.new, S, ns)
     stopifnot(ll.new > ll.old)
     if (ll.new - ll.old < eps) {
       break
@@ -128,20 +128,20 @@ fit.grem.MLE <- function(S, ns,
 }
 
 # Estimation using moment
-fit.grem.moment <- function(S, ns,
+fit.rcm.moment <- function(S, ns,
                             nu.init = nrow(S[[1]]) + 10,
                             max.ite = 1000, eps = 1e-3,
                             verbose = FALSE) {
   p <- nrow(S[[1]])
   interval <- c(p - 1 + 10*.Machine$double.eps, 1e6)
   nu.old   <- nu.init
-  Psi.old  <- grem_moment_step(nu = nu.old, S = S, ns = ns)
+  Psi.old  <- rcm_moment_step(nu = nu.old, S = S, ns = ns)
   for (i in seq_len(max.ite)) {
-    nu.new  <- grem_get_nu(Psi = Psi.old, nu = nu.old, S = S, ns = ns,
+    nu.new  <- rcm_get_nu(Psi = Psi.old, nu = nu.old, S = S, ns = ns,
                            interval = interval)
 #     fac <- (nu.new - p - 1)/(nu.old - p - 1)
 #     Psi.new <- Psi.old * fac
-    Psi.new  <- grem_moment_step(nu = nu.old, S = S, ns = ns)
+    Psi.new  <- rcm_moment_step(nu = nu.old, S = S, ns = ns)
     if (verbose) {
       cat("ite =", i, ":", "nu.new - nu.old =", nu.new - nu.old,
           "nu =", nu.new, "\n");
@@ -165,9 +165,9 @@ Psi2Sigma <- function(Psi, nu) {
   return(Psi/(nu - ncol(Psi) - 1))
 }
 
-# Density of the GREM model
+# Density of the RCM model
 #' @export
-dgrem <- function(x, mu, Psi, nu, logarithm = FALSE) {
+drcm <- function(x, mu, Psi, nu, logarithm = FALSE) {
   p <- nrow(Psi)
   if (is.null(dim(x))) {
     dim(x) <- c(1, p)
