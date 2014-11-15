@@ -158,8 +158,15 @@ fit.rcm.moment <- function(S, ns,
   return(list("Psi" = Psi.new, "nu" = nu.new, "iterations" = i))
 }
 
-# Conversion from Psi and nu to Sigma
- 
+#' Conversion from Psi and nu to Sigma
+#' 
+#' Computes the expected covariance matrix from Psi and nu in the random 
+#' covariance model (RCM).
+#' 
+#' @param Psi A numeric square positive semi-definite matrix.
+#' @param nu A numeric of length one giving the degrees of freedom in the RCM.
+#' @return A covariance matrix the same size as \code{Psi}.
+#' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 #' @export
 Psi2Sigma <- function(Psi, nu) {
   return(Psi/(nu - ncol(Psi) - 1))
