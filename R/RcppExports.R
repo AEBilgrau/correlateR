@@ -172,18 +172,6 @@ xcovEigen <- function(X, Y, norm_type = 0L) {
     .Call('correlateR_xcovEigen', PACKAGE = 'correlateR', X, Y, norm_type)
 }
 
-grem_loglik_arma <- function(Psi, nu, S_list, ns) {
-    .Call('correlateR_grem_loglik_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
-}
-
-grem_loglik_nu_arma <- function(Psi, nu, S_list, ns) {
-    .Call('correlateR_grem_loglik_nu_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
-}
-
-grem_em_step_arma <- function(Psi, nu, S_list, ns) {
-    .Call('correlateR_grem_em_step_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
-}
-
 pcorArma <- function(X, z) {
     .Call('correlateR_pcorArma', PACKAGE = 'correlateR', X, z)
 }
@@ -210,5 +198,17 @@ pxcorArma <- function(X, Y, Z) {
 
 pxcovArma <- function(X, Y, Z, norm_type = 0L) {
     .Call('correlateR_pxcovArma', PACKAGE = 'correlateR', X, Y, Z, norm_type)
+}
+
+rcm_loglik_arma <- function(Psi, nu, S_list, ns) {
+    .Call('correlateR_rcm_loglik_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
+}
+
+rcm_loglik_nu_arma <- function(Psi, nu, S_list, ns) {
+    .Call('correlateR_rcm_loglik_nu_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
+}
+
+rcm_em_step_arma <- function(Psi, nu, S_list, ns) {
+    .Call('correlateR_rcm_em_step_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
 }
 

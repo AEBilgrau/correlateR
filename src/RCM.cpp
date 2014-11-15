@@ -3,9 +3,9 @@
 
 #include "auxiliary_functions.h"
 
-// The GREM log-likelihood function
+// The RCM log-likelihood function
 // [[Rcpp::export]]
-double grem_loglik_arma(const arma::mat & Psi, 
+double rcm_loglik_arma(const arma::mat & Psi, 
                         const double nu, 
                         const Rcpp::List & S_list,  
                         const Rcpp::NumericVector & ns) { 
@@ -31,9 +31,9 @@ double grem_loglik_arma(const arma::mat & Psi,
 }
 
 // Log-likelihood as a function of nu (slightly faster in optimization than
-// using grem_loglik_arma)
+// using rcm_loglik_arma)
 // [[Rcpp::export]]
-double grem_loglik_nu_arma(const arma::mat & Psi, 
+double rcm_loglik_nu_arma(const arma::mat & Psi, 
                            const double nu, 
                            const Rcpp::List & S_list,  
                            const Rcpp::NumericVector & ns){
@@ -53,9 +53,9 @@ double grem_loglik_nu_arma(const arma::mat & Psi,
   return t1 + t2 + t3;
 }
 
-// The GREM EM-step
+// The RCM EM-step
 // [[Rcpp::export]]
-arma::mat grem_em_step_arma(const arma::mat & Psi, 
+arma::mat rcm_em_step_arma(const arma::mat & Psi, 
                             const double nu, 
                             const Rcpp::List & S_list,  
                             const Rcpp::NumericVector & ns) {
