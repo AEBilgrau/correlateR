@@ -48,7 +48,7 @@ abline(lm(y1 ~ x1))
 points(x2, y2, col = "red")
 abline(lm(y2 ~ x2), col = "red")
 
-diff.test <- correlateR:::test.diff.cor2
+diff.test <- correlateR:::test.diff.cor.single
 round(data.frame(
   two = diff.test(x1, y1, x2, y2, alternative = "two.sided"),
   les = diff.test(x1, y1, x2, y2, alternative = "less"),
@@ -64,7 +64,7 @@ Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 \seealso{
 Similar usage to \code{\link[stats]{cor.test}} in \code{stats}, however
   not the same! \cr
-  See \code{\link{cor.diff.test}} for a vectorized version.
+  See \code{\link{test.diff.cor}} for a vectorized version.
 }
 \keyword{internal}
 

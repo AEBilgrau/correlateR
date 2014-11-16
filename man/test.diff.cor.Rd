@@ -72,6 +72,6 @@ Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 }
 \seealso{
 Similar usage to \code{\link[stats]{cor.test}} (but NOT the same thing).\cr
-  This is a vectorized version of \link{\code{test.diff.cor.single}}.
+  This is a vectorized version of \code{\link{test.diff.cor.single}}.
 }
 
