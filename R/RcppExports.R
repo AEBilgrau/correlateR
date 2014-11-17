@@ -208,6 +208,20 @@ rcm_loglik_nu_arma <- function(Psi, nu, S_list, ns) {
     .Call('correlateR_rcm_loglik_nu_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
 }
 
+#' The RCM EM-step
+#' 
+#' A armadillo-based function to perform the E and M step in the 
+#' EM algorithm of the RCM. This functions assumes \code{nu} to be fixed.
+#' 
+#' @param Psi A numeric matrix.
+#' @param nu A numeric of length 1 giving the degrees of freedom in the RCM.
+#' @param S_list A \code{list} of scatter matrices for each dataset/group
+#'   of the same size a \code{Psi}.
+#' @param ns A numeric vector the same lengths as \code{S_list} giving the
+#'   number of samples for each dataset.
+#' @return A numeric matrix the same size as \code{Psi} giving the updated
+#'   \code{Psi}.
+#' @keywords internal 
 rcm_em_step_arma <- function(Psi, nu, S_list, ns) {
     .Call('correlateR_rcm_em_step_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
 }
