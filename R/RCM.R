@@ -172,7 +172,31 @@ Psi2Sigma <- function(Psi, nu) {
   return(Psi/(nu - ncol(Psi) - 1))
 }
 
-# Density of the RCM model
+#' Density of the RCM model
+#' 
+#' The density of the RCM model when the mean \code{mu} is non-zero. Used for
+#' the HDA analysis.
+#' 
+#' @param x A numeric matrix of size n by m with observations in the rows and
+#'   variables in the columns.
+#' @param mu A numeric vector of length m giving the mean values of the RCM in
+#'   HDA.
+#' @param Psi A numeric matrix giving the parameter of the RCM.
+#' @param nu A numeric of length 1 giving the degrees of freedom.
+#' @param lograithm A boolean of length 1. If \code{TRUE}, the log density is 
+#'   returned. Defaults to \code{FALSE}.
+#' @return 
+#'   Returns a vector of length n where the \eqn{i}th corresponds to the density
+#'   evaluated in the \eqn{i}th row in \code{x}.
+#' @examples
+#' n <- 10
+#' m <- 5
+#' x <- matrix(rnorm(n*m), n, m)
+#' mu <- rnorm(m)
+#' Psi <- cov(matrix(rnorm(n*m), n, m))
+#' nu <- 15
+#' drcm(x, mu, Psi, nu)
+#' drcm(x, mu, Psi, nu, logarithm = TRUE)
 #' @export
 drcm <- function(x, mu, Psi, nu, logarithm = FALSE) {
   p <- nrow(Psi)
