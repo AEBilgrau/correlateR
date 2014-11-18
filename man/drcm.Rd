@@ -16,7 +16,7 @@ HDA.}
 
 \item{nu}{A numeric of length 1 giving the degrees of freedom.}
 
-\item{lograithm}{A boolean of length 1. If \code{TRUE}, the log density is
+\item{logarithm}{A boolean of length 1. If \code{TRUE}, the log density is
 returned. Defaults to \code{FALSE}.}
 }
 \value{

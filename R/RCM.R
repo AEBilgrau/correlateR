@@ -183,7 +183,7 @@ Psi2Sigma <- function(Psi, nu) {
 #'   HDA.
 #' @param Psi A numeric matrix giving the parameter of the RCM.
 #' @param nu A numeric of length 1 giving the degrees of freedom.
-#' @param lograithm A boolean of length 1. If \code{TRUE}, the log density is 
+#' @param logarithm A boolean of length 1. If \code{TRUE}, the log density is 
 #'   returned. Defaults to \code{FALSE}.
 #' @return 
 #'   Returns a vector of length n where the \eqn{i}th corresponds to the density
