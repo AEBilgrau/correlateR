@@ -74,24 +74,10 @@ Lower-case `x`, `y`, `z` always denotes `numeric` vectors while the upper-case c
 Function names are in camelCase except for some special cases. Otherwise `cor` is for correlation `cov` is for covariance. These are prefixed with `x` or `p` (or both) to denote cross or partial correlations/covariance respectively. For example, `pcor` is the partial correlation and `pxcov` is the partial cross covariance. 
 
 
-Using correlateR
-----------------
-A small tutorial goes here!
-
-
 Alternative packages
 --------------------
 There are some alternative packages on CRAN form which some inspiration have been drawn. 
 * `corpcor`: Only features estimation of the full partial correlations.
 * `ppcor`: Partial and semi-partial correlations
-
-### Benchmarking
-A benchmarking of the functions goes here.
-
-
-Reference
----------
-References goes here!
-
 
 --------------------------------------------------------------------------------
