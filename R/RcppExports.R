@@ -200,6 +200,19 @@ pxcovArma <- function(X, Y, Z, norm_type = 0L) {
     .Call('correlateR_pxcovArma', PACKAGE = 'correlateR', X, Y, Z, norm_type)
 }
 
+#' The RCM log-likelihood function
+#' 
+#' Fast evaluation of the RCM log-likelihood function.
+#' 
+#' @param Psi A numeric matrix.
+#' @param nu A numeric of length 1 giving the degrees of freedom.
+#' @param S_list A \code{list} of scatter matrices of the same size as 
+#'   \code{Psi} for each group.
+#' @param ns A numeric of the same length as \code{S_list} giving the 
+#'   number of samples in each group.
+#' @return The value of the log-likelihood.
+#' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @keywords internal
 rcm_loglik_arma <- function(Psi, nu, S_list, ns) {
     .Call('correlateR_rcm_loglik_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
 }
