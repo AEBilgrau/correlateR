@@ -4,18 +4,18 @@
 \alias{rwishart}
 \title{Wishart and inverse-Wishart distributions}
 \usage{
-rwishart(n, sigma = diag(3), nu = 10L)
+rwishart(n, sigma = diag(3), nu = 10)
 
-rinvwishart(n, Psi = diag(3), nu = 10L)
+rinvwishart(n, psi = diag(3), nu = 10)
 }
 \arguments{
 \item{n}{The number of realizations.}
 
 \item{sigma}{A \code{p} by \code{p} symmetric postive-definite matrix.}
 
-\item{nu}{An integer giving the degrees of freedom.}
+\item{nu}{An numeric of length one giving the degrees of freedom.}
 
-\item{Psi}{A square symmetric postive-definite matrix.}
+\item{psi}{A square symmetric postive-definite matrix.}
 }
 \value{
 \code{rwishart} returns an \code{p} by \code{p} by \code{n}
@@ -31,11 +31,7 @@ Barlett decomposition.
 }
 \examples{
 rwishart(n = 2)
-rWishart(n = 2, df = 10L, Sigma = diag(3))
 rwishart(n = 3, diag(4), nu = 4)
-n <- 1000
-a <- replicate(n,diag(3)) - rwishart(n)/10L
-hist(a)
 rinvwishart(n = 2)
 }
 \seealso{
