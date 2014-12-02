@@ -11,26 +11,29 @@ rinvwishart(n, Psi = diag(3), nu = 10L)
 \arguments{
 \item{n}{The number of realizations.}
 
-\item{sigma}{A square symmetric postive-definite matrix.}
+\item{sigma}{A \code{p} by \code{p} symmetric postive-definite matrix.}
 
 \item{nu}{An integer giving the degrees of freedom.}
 
 \item{Psi}{A square symmetric postive-definite matrix.}
 }
 \value{
-\code{rwishart} returns a matrix drawn from the Wishart distribution.
+\code{rwishart} returns an \code{p} by \code{p} by \code{n}
+  3-dimensional array where each slice is a draw from the Wishart
+  distribution.
 
-\code{rinvwishart} returns a matrix drawn from the inverse
-  Wishart distribution.
+For \code{rinvwishart} each slice is a draw from the inverse Wishart
+  distribution.
 }
 \description{
-Generate data from a Wishart and inverse-Wishart distribution.
+Generate data from Wishart and inverse-Wishart distributions using the
+Barlett decomposition.
 }
 \examples{
 rwishart(n = 2)
 rWishart(n = 2, df = 10L, Sigma = diag(3))
 rwishart(n = 3, diag(4), nu = 4)
-n <- 10000
+n <- 1000
 a <- replicate(n,diag(3)) - rwishart(n)/10L
 hist(a)
 rinvwishart(n = 2)

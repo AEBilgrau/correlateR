@@ -1,18 +1,21 @@
 #' Wishart and inverse-Wishart distributions
 #'
-#' Generate data from a Wishart and inverse-Wishart distribution.
+#' Generate data from Wishart and inverse-Wishart distributions using the 
+#' Barlett decomposition.
 #'
 #' @param n The number of realizations.
-#' @param sigma A square symmetric postive-definite matrix.
+#' @param sigma A \code{p} by \code{p} symmetric postive-definite matrix.
 #' @param nu An integer giving the degrees of freedom.
-#' @return \code{rwishart} returns a matrix drawn from the Wishart distribution.
+#' @return \code{rwishart} returns an \code{p} by \code{p} by \code{n} 
+#'   3-dimensional array where each slice is a draw from the Wishart 
+#'   distribution.
 #' @seealso 
 #'   \code{\link{rWishart}} from the \pkg{stats}-package.
 #' @examples
 #' rwishart(n = 2)
 #' rWishart(n = 2, df = 10L, Sigma = diag(3))
 #' rwishart(n = 3, diag(4), nu = 4)
-#' n <- 10000
+#' n <- 1000
 #' a <- replicate(n,diag(3)) - rwishart(n)/10L
 #' hist(a)
 #' @export
@@ -22,14 +25,21 @@ rwishart <- function(n, sigma = diag(3), nu = 10L) {
   if (nu <= p - 1) {
     warning("For the matrix to be invertible n > p - 1 must hold")
   }
-  ans <- replicate(n, crossprod(rmvnormal(nu, mu = rep(0, p), sigma = sigma)))
+  L <- chol(sigma)
+  A <- matrix(0, p, p)
+  ans <- replicate(n, {
+    A[lower.tri(A)] <- rnorm(p*(p-1)/2)
+    diag(A) <- sqrt(rchisq(p, nu - seq_len(p) + 1))
+    crossprod(L %*% A)
+  })
   return(ans)
 }
 
+
 #' @rdname rwishart
 #' @param Psi A square symmetric postive-definite matrix.
-#' @return \code{rinvwishart} returns a matrix drawn from the inverse
-#'   Wishart distribution.
+#' @return For \code{rinvwishart} each slice is a draw from the inverse Wishart 
+#'   distribution.
 #' @examples
 #' rinvwishart(n = 2)
 #' @export
