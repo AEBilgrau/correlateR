@@ -6,11 +6,11 @@
 # @param X A numeric matrix with observations in rows and variables
 #   in columns.
 #' @param S A numeric correlation matrix
-#' @param z A integer vector of indicies of the variabels to condition on. I.e.
+#' @param z A integer vector of indices of the variarbles to condition on. I.e.
 #'   length(z) is the order of the partial correlations. If \code{z} has 
 #'   length 0 the marginal correlations are returned.
 #' @return A numeric matrix of the same size as the correlation matrix
-#'   with the partial correlations given the variabels indexed by \code{z}.
+#'   with the partial correlations given the variables indexed by \code{z}.
 #'   \code{NaN} are returned in the rows and columns of the conditioned 
 #'   variables.
 #' @seealso \code{\link{correlation}} \code{\link{correlation}}
