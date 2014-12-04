@@ -3,6 +3,7 @@
 export(Psi2Sigma)
 export(Scor)
 export(Scov)
+export(SimulateRCMData)
 export(arbitraryOrderCorrelation)
 export(cor)
 export(corArma)

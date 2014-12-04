@@ -61,12 +61,12 @@ rcm_mle_step <- function(nu, S, ns) {
 #' @seealso \code{\link{Psi2Sigma}}
 #' @export
 fit.rcm <- function(S,
-                     ns,
-                     Psi.init = correlateR:::pool(S, ns),
-                     nu.init = sum(ns) + 1,
-                     max.ite = 1000, 
-                     eps = 1e-3,
-                     verbose = FALSE) {
+                    ns,
+                    Psi.init = correlateR:::pool(S, ns),
+                    nu.init = sum(ns) + 1,
+                    max.ite = 1000, 
+                    eps = 1e-3,
+                    verbose = FALSE) {
   p <- nrow(S)
   Psi.old <- Psi.init
   nu.old  <- nu.init
@@ -216,3 +216,40 @@ drcm <- function(x, mu, Psi, nu, logarithm = FALSE) {
   attributes(ans) <- NULL
   return(ans)
 }
+
+#' Simulate data from RCM
+#' 
+#' Generate data from the hierachical random covariance model.
+#' 
+#' @param ns A numeric vector giving the sample sizes in each study.
+#' @param psi The underlying \eqn{Psi} parameter. If \code{nu} is \code{Inf} 
+#'   this is used as \eqn{Sigma} parameter in all Wishart distribution.
+#' @param nu A numeric of length one giving the underlying \eqn{nu} parameter.
+#' @return A \code{list} of matrices of the same size as \code{psi} giving
+#'   observed scatter matrices from the RCM.
+#' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @examples
+#' ns <- c(20, 14, 10)
+#' psi <- diag(3)
+#' SimulateRCMData(ns, psi, nu = 10)
+#' 
+#' SimulateRCMData(ns, psi, nu = 1e20)
+#' # is NOT the same as
+#' SimulateRCMData(ns, psi, nu = Inf)
+#' # which is almost the same as
+#' SimulateRCMData(ns, psi*(1e20 - 3 - 1), nu = 1e20)
+#' @export
+SimulateRCMData <- function(ns, psi, nu) {
+  stopifnot(length(ns) > 0)
+  k <- length(ns)
+  if (nu == Inf) {
+    S <- lapply(seq_len(k), function(i) drop(rwishart(1, psi, ns[i])))
+    return(S)
+  } else {
+    sigmas <- rinvwishart(n = k, psi = psi, nu = nu)
+    S <- lapply(seq_len(k), function(i) drop(rwishart(1, sigmas[, , i], ns[i])))
+    return(S)
+  }
+}
+
+
