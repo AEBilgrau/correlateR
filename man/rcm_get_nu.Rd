@@ -3,14 +3,11 @@
 \alias{rcm_get_nu}
 \title{Estimate degrees of freedom}
 \usage{
-rcm_get_nu(Psi, nu, S, ns)
+rcm_get_nu(Psi, S, ns)
 }
 \arguments{
 \item{Psi}{A numeric matrix of size \eqn{p} times \eqn{p} giving the initial
 estimate of \eqn{Psi}{\Psi}.}
-
-\item{nu}{A single numeric number giving the degrees of freedom
-\eqn{nu}{\nu}.}
 
 \item{S}{A \code{list} of scatter matrices.}
 

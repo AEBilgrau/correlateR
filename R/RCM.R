@@ -5,15 +5,13 @@
 #' 
 #' @param Psi A numeric matrix of size \eqn{p} times \eqn{p} giving the initial
 #'   estimate of \eqn{Psi}{\Psi}.
-#' @param nu  A single numeric number giving the degrees of freedom 
-#'   \eqn{nu}{\nu}.
 #' @param S A \code{list} of scatter matrices.
 #' @param ns Vector of group sizes.
 #' @return A single number giving the \eqn{nu}{\nu} optimizing the RCM 
 #'   likelihood with fixed \eqn{Psi}{\Psi}.
 #' @author Anders Ellern Bilgrau
 #' @keywords internal
-rcm_get_nu <- function(Psi, nu, S, ns) {
+rcm_get_nu <- function(Psi, S, ns) {
   # Find maxima with optimize
   loglik_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
     rcm_loglik_nu_arma(Psi, nu, S, ns)
@@ -75,7 +73,7 @@ fit.rcm <- function(S,
   for (i in seq_len(max.ite)) {
     ll.old  <- rcm_loglik_arma(Psi.old, nu.old, S, ns)
     Psi.new <- rcm_em_step_arma(Psi.old, nu.old, S, ns)
-    nu.new  <- rcm_get_nu(Psi.new, nu.old, S, ns)
+    nu.new  <- rcm_get_nu(Psi.new, S, ns)
     ll.new  <- rcm_loglik_arma(Psi.new, nu.new, S, ns)
     stopifnot(ll.new > ll.old)
     if (ll.new - ll.old < eps) {
@@ -105,7 +103,7 @@ fit.rcm.MLE <- function(S, ns,
   Psi.old <- rcm_mle_step(nu = nu.old, S = S, ns = ns)
   for (i in seq_len(max.ite)) {
     ll.old <- rcm_loglik_arma(Psi.old, nu.old, S, ns)
-    nu.new  <- rcm_get_nu(Psi.old, nu.old, S, ns)
+    nu.new  <- rcm_get_nu(Psi.old, S, ns)
     Psi.new <- rcm_mle_step(nu.new, S, ns)
     ll.new  <- rcm_loglik_arma(Psi.new, nu.new, S, ns)
     stopifnot(ll.new > ll.old)
@@ -136,7 +134,7 @@ fit.rcm.moment <- function(S, ns,
   nu.old   <- nu.init
   Psi.old  <- rcm_moment_step(nu = nu.old, S = S, ns = ns)
   for (i in seq_len(max.ite)) {
-    nu.new  <- rcm_get_nu(Psi = Psi.old, nu = nu.old, S = S, ns = ns)
+    nu.new  <- rcm_get_nu(Psi = Psi.old, S = S, ns = ns)
     Psi.new  <- rcm_moment_step(nu = nu.old, S = S, ns = ns)
     if (verbose) {
       cat("ite =", i, ":", "nu.new - nu.old =", nu.new - nu.old,
