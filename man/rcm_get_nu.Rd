@@ -3,7 +3,7 @@
 \alias{rcm_get_nu}
 \title{Estimate degrees of freedom}
 \usage{
-rcm_get_nu(Psi, nu, S, ns, interval)
+rcm_get_nu(Psi, nu, S, ns)
 }
 \arguments{
 \item{Psi}{A numeric matrix of size \eqn{p} times \eqn{p} giving the initial

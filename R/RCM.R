@@ -13,7 +13,7 @@
 #'   likelihood with fixed \eqn{Psi}{\Psi}.
 #' @author Anders Ellern Bilgrau
 #' @keywords internal
-rcm_get_nu <- function(Psi, nu, S, ns, interval) {
+rcm_get_nu <- function(Psi, nu, S, ns) {
   # Find maxima with optimize
   loglik_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
     rcm_loglik_nu_arma(Psi, nu, S, ns)
@@ -70,13 +70,12 @@ fit.rcm <- function(S,
                      eps = 1e-3,
                      verbose = FALSE) {
   p <- nrow(S)
-  interval <- c(p - 1 + 10*.Machine$double.eps, 1e6)
   Psi.old <- Psi.init
   nu.old  <- nu.init
   for (i in seq_len(max.ite)) {
     ll.old  <- rcm_loglik_arma(Psi.old, nu.old, S, ns)
     Psi.new <- rcm_em_step_arma(Psi.old, nu.old, S, ns)
-    nu.new  <- rcm_get_nu(Psi.new, nu.old, S, ns, interval)
+    nu.new  <- rcm_get_nu(Psi.new, nu.old, S, ns)
     ll.new  <- rcm_loglik_arma(Psi.new, nu.new, S, ns)
     stopifnot(ll.new > ll.old)
     if (ll.new - ll.old < eps) {
@@ -101,12 +100,12 @@ fit.rcm.MLE <- function(S, ns,
                          max.ite = 1000, eps = 1e-3,
                          verbose = FALSE) {
   p <- nrow(S)
-  interval <- c(p - 1 + 10*.Machine$double.eps, 1e6)
+  #interval <- c(p - 1 + 10*.Machine$double.eps, 1e6)
   nu.old <- nu.init
   Psi.old <- rcm_mle_step(nu = nu.old, S = S, ns = ns)
   for (i in seq_len(max.ite)) {
     ll.old <- rcm_loglik_arma(Psi.old, nu.old, S, ns)
-    nu.new  <- rcm_get_nu(Psi.old, nu.old, S, ns, interval)
+    nu.new  <- rcm_get_nu(Psi.old, nu.old, S, ns)
     Psi.new <- rcm_mle_step(nu.new, S, ns)
     ll.new  <- rcm_loglik_arma(Psi.new, nu.new, S, ns)
     stopifnot(ll.new > ll.old)
@@ -133,14 +132,11 @@ fit.rcm.moment <- function(S, ns,
                             max.ite = 1000, eps = 1e-3,
                             verbose = FALSE) {
   p <- nrow(S[[1]])
-  interval <- c(p - 1 + 10*.Machine$double.eps, 1e6)
+  #interval <- c(p - 1 + 10*.Machine$double.eps, 1e6)
   nu.old   <- nu.init
   Psi.old  <- rcm_moment_step(nu = nu.old, S = S, ns = ns)
   for (i in seq_len(max.ite)) {
-    nu.new  <- rcm_get_nu(Psi = Psi.old, nu = nu.old, S = S, ns = ns,
-                           interval = interval)
-#     fac <- (nu.new - p - 1)/(nu.old - p - 1)
-#     Psi.new <- Psi.old * fac
+    nu.new  <- rcm_get_nu(Psi = Psi.old, nu = nu.old, S = S, ns = ns)
     Psi.new  <- rcm_moment_step(nu = nu.old, S = S, ns = ns)
     if (verbose) {
       cat("ite =", i, ":", "nu.new - nu.old =", nu.new - nu.old,
