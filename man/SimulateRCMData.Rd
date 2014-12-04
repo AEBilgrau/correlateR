@@ -18,7 +18,7 @@ A \code{list} of matrices of the same size as \code{psi} giving
   observed scatter matrices from the RCM.
 }
 \description{
-Generate data from the hierachical random covariance model.
+Generate data from the hierarchical random covariance model (RCM).
 }
 \examples{
 ns <- c(20, 14, 10)

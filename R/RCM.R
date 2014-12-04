@@ -219,7 +219,7 @@ drcm <- function(x, mu, Psi, nu, logarithm = FALSE) {
 
 #' Simulate data from RCM
 #' 
-#' Generate data from the hierachical random covariance model.
+#' Generate data from the hierarchical random covariance model (RCM).
 #' 
 #' @param ns A numeric vector giving the sample sizes in each study.
 #' @param psi The underlying \eqn{Psi} parameter. If \code{nu} is \code{Inf} 
