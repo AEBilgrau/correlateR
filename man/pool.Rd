@@ -8,6 +8,10 @@ pool(S_list, ns, norm_type = 0L)
 \arguments{
 \item{S_list}{A list of scatter matrices.}
 
+\item{norm_type}{A integer of length one equalling \code{0} or \code{1}.
+If \code{0} the bias correction is used. If \code{1} the ML estimate is
+used.}
+
 \item{nu}{A numeric vector giving the number of samples corresponding
 to each scatter matrix.}
 }

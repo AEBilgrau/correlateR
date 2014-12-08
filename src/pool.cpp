@@ -8,6 +8,9 @@
 //' @param S_list A list of scatter matrices.
 //' @param nu A numeric vector giving the number of samples corresponding
 //'   to each scatter matrix.
+//' @param norm_type A integer of length one equalling \code{0} or \code{1}. 
+//'   If \code{0} the bias correction is used. If \code{1} the ML estimate is 
+//'   used.
 //' @return A numeric matrix giving the pooled variance.
 //' @author Anders Ellern Bilgrau
 //' @keywords internal
