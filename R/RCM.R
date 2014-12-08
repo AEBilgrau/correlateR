@@ -12,11 +12,10 @@
 #' @author Anders Ellern Bilgrau
 #' @keywords internal
 rcm_get_nu <- function(Psi, S, ns) {
-  # Find maxima with optimize
   loglik_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
     rcm_loglik_nu_arma(Psi, nu, S, ns)
   }
-  interval <- c(nrow(Psi) - 1 + 1e-10, 1e6)
+  interval <- c(nrow(Psi) - 1 + 1e-10, 1e6) 
   res <- optimize(f = loglik_nu, interval = interval, maximum = TRUE)$maximum
   return(res)
 } 
@@ -24,10 +23,10 @@ rcm_get_nu <- function(Psi, S, ns) {
 # Compute new Psi from nu, S, ns using moment estimate
 rcm_moment_step <- function(nu, S, ns) {
   k <- length(ns)
-  Psi <- Reduce("+", lapply(seq_along(ns), function(i) S[[i]]/ns[i]))/k
-  p <- nrow(Psi)
+  mean.sigma <- Reduce("+", lapply(seq_along(ns), function(i) S[[i]]/ns[i]))/k
+  p <- nrow(mean.sigma)
   fac <- nu - p - 1
-  return(fac*Psi)
+  return(fac*mean.sigma)
 }
 
 # Compute new Psi from nu, S, ns using approximate MLE
@@ -59,6 +58,14 @@ rcm_mle_step <- function(nu, S, ns) {
 #'   \item{nu}{A number giving the estimate of \eqn{nu}{nu}.}
 #'   \item{iterations}{A integer giving the number of iterations used.}
 #' @seealso \code{\link{Psi2Sigma}}
+#' @examples
+#' ns <- c(200, 150, 100)
+#' Psi <- cor(createData(10, 5))
+#' nu <- 30
+#' 
+#' S <- createRCMData(ns, Psi, nu)
+#' 
+#' print(res <- fit.rcm(S, ns, verbose = TRUE))
 #' @export
 fit.rcm <- function(S,
                     ns,
@@ -98,7 +105,6 @@ fit.rcm.MLE <- function(S, ns,
                          max.ite = 1000, eps = 1e-3,
                          verbose = FALSE) {
   p <- nrow(S)
-  #interval <- c(p - 1 + 10*.Machine$double.eps, 1e6)
   nu.old <- nu.init
   Psi.old <- rcm_mle_step(nu = nu.old, S = S, ns = ns)
   for (i in seq_len(max.ite)) {
@@ -118,9 +124,7 @@ fit.rcm.MLE <- function(S, ns,
       flush.console()
     } 
   }
-  
   if (i == max.ite) warning("max iterations (", max.ite, ") hit!")
-  
   return(list("Psi" = Psi.new, "nu" = nu.new, "iterations" = i))
 }
 
@@ -231,25 +235,27 @@ drcm <- function(x, mu, Psi, nu, logarithm = FALSE) {
 #' @examples
 #' ns <- c(20, 14, 10)
 #' psi <- diag(3)
-#' SimulateRCMData(ns, psi, nu = 10)
+#' createRCMData(ns, psi, nu = 10)
 #' 
-#' SimulateRCMData(ns, psi, nu = 1e20)
+#' createRCMData(ns, psi, nu = 1e20)
 #' # is NOT the same as
-#' SimulateRCMData(ns, psi, nu = Inf)
+#' createRCMData(ns, psi, nu = Inf)
 #' # which is almost the same as
-#' SimulateRCMData(ns, psi*(1e20 - 3 - 1), nu = 1e20)
+#' createRCMData(ns, psi*(1e20 - 3 - 1), nu = 1e20)
 #' @export
-SimulateRCMData <- function(ns, psi, nu) {
+createRCMData <- function(ns, psi, nu) {
   stopifnot(length(ns) > 0)
   k <- length(ns)
   if (nu == Inf) {
     S <- lapply(seq_len(k), function(i) drop(rwishart(1, psi, ns[i])))
-    return(S)
   } else {
     sigmas <- rinvwishart(n = k, psi = psi, nu = nu)
     S <- lapply(seq_len(k), function(i) drop(rwishart(1, sigmas[, , i], ns[i])))
-    return(S)
   }
+  for (i in seq_along(S)) {
+    dimnames(S[[i]]) <- dimnames(Psi)
+  }
+  return(S)
 }
 
 

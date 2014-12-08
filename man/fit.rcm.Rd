@@ -35,6 +35,15 @@ A named list of length 3 with the elements:
 \description{
 Fit the RCM using the modified EM algorithm.
 }
+\examples{
+ns <- c(200, 150, 100)
+Psi <- cor(createData(10, 5))
+nu <- 30
+
+S <- createRCMData(ns, Psi, nu)
+
+print(res <- fit.rcm(S, ns, verbose = TRUE))
+}
 \seealso{
 \code{\link{Psi2Sigma}}
 }
