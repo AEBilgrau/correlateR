@@ -253,7 +253,7 @@ createRCMData <- function(ns, psi, nu) {
     S <- lapply(seq_len(k), function(i) drop(rwishart(1, sigmas[, , i], ns[i])))
   }
   for (i in seq_along(S)) {
-    dimnames(S[[i]]) <- dimnames(Psi)
+    dimnames(S[[i]]) <- dimnames(psi)
   }
   return(S)
 }
