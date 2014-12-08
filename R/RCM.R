@@ -5,35 +5,42 @@
 #' 
 #' @param Psi A numeric matrix of size \eqn{p} times \eqn{p} giving the initial
 #'   estimate of \eqn{Psi}{\Psi}.
-#' @param S A \code{list} of scatter matrices.
+#' @param S_list A \code{list} of scatter matrices.
 #' @param ns Vector of group sizes.
 #' @return A single number giving the \eqn{nu}{\nu} optimizing the RCM 
 #'   likelihood with fixed \eqn{Psi}{\Psi}.
 #' @author Anders Ellern Bilgrau
 #' @keywords internal
-rcm_get_nu <- function(Psi, S, ns) {
+rcm_get_nu <- function(Psi, S_list, ns) {
   loglik_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
-    rcm_loglik_nu_arma(Psi, nu, S, ns)
+    rcm_loglik_nu_arma(Psi, nu, S_list, ns)
   }
   interval <- c(nrow(Psi) - 1 + 1e-10, 1e6) 
   res <- optimize(f = loglik_nu, interval = interval, maximum = TRUE)$maximum
   return(res)
 } 
 
-# Compute new Psi from nu, S, ns using moment estimate
-rcm_moment_step <- function(nu, S, ns) {
+# Compute new Psi from nu, S, ns using pooled moment estimate
+rcm_pool_step <- function(nu, S_list, ns, ...) {
+  pool.sigma <- pool(S_list = S_list, ns = ns, norm_type = 1)
+  fac <- nu - nrow(pool.sigma) - 1
+  return(fac*pool.sigma)
+}
+
+# Compute new Psi from nu, S, ns using mean moment estimate
+rcm_mean_step <- function(nu, S_list, ns, ...) {
   k <- length(ns)
-  mean.sigma <- Reduce("+", lapply(seq_along(ns), function(i) S[[i]]/ns[i]))/k
-  p <- nrow(mean.sigma)
-  fac <- nu - p - 1
+  mean.sigma <- 
+    Reduce("+", lapply(seq_along(ns), function(i) S_list[[i]]/ns[i]))/k
+  fac <- nu - nrow(mean.sigma) - 1
   return(fac*mean.sigma)
 }
 
 # Compute new Psi from nu, S, ns using approximate MLE
-rcm_mle_step <- function(nu, S, ns) {
+rcm_mle_step <- function(nu, S_list, ns, ...) {
   n.tot <- sum(ns)
-  fac <- nu + ns
-  Psi <- Reduce("+", lapply(seq_along(ns), function(i) fac[i]*S[[i]]))/n.tot
+  df <- nu + ns
+  Psi <- Reduce("+", lapply(seq_along(ns), function(i) df[i]*S_list[[i]]))/n.tot
   return(Psi)
 }
 
@@ -45,11 +52,13 @@ rcm_mle_step <- function(nu, S, ns) {
 #' @param ns A vector of sample sizes corresponding to the scatter matrices in 
 #'   \code{S}.
 #' @param Psi.init A \code{matrix} giving the initial estimate of 
-#'   \eqn{Psi}{Psi}.
+#'   \eqn{Psi}{Psi}. Default starting value is the scaled pooled sample
+#'   covariance matrix.
 #' @param max.ite A numeric of length one giving the maximum number of 
-#'   iterations allowed.
+#'   iterations allowed. Default is \code{sum(ns) + 1}.
 #' @param nu.init A numeric of length one giving the inital estiamte of 
 #'   \eqn{nu}{nu}.
+#' @param method The method to be used.
 #' @param eps The convergence criterion.
 #' @param verbose If true, the differences in log-likelihood for each iteration
 #'   is printed out.
@@ -59,97 +68,61 @@ rcm_mle_step <- function(nu, S, ns) {
 #'   \item{iterations}{A integer giving the number of iterations used.}
 #' @seealso \code{\link{Psi2Sigma}}
 #' @examples
-#' ns <- c(200, 150, 100)
-#' Psi <- cor(createData(10, 5))
+#' ns <- c(20, 15, 10)
+#' print(Psi <- drop(rwishart(1)))
 #' nu <- 30
-#' 
 #' S <- createRCMData(ns, Psi, nu)
-#' 
 #' print(res <- fit.rcm(S, ns, verbose = TRUE))
+#' 
+#' do.call(Psi2Sigma, fit.rcm(S, ns, method = "EM")[-3])
+#' do.call(Psi2Sigma, fit.rcm(S, ns, method = "pool")[-3])
+#' do.call(Psi2Sigma, fit.rcm(S, ns, method = "mean")[-3])
+#' do.call(Psi2Sigma, fit.rcm(S, ns, method = "approxMLE")[-3])
+#' Psi2Sigma(Psi, nu)
 #' @export
 fit.rcm <- function(S,
                     ns,
-                    Psi.init = correlateR:::pool(S, ns),
-                    nu.init = sum(ns) + 1,
+                    Psi.init,
+                    nu.init,
+                    method = c("EM", "pool", "mean", "approxMLE"),
                     max.ite = 1000, 
                     eps = 1e-3,
                     verbose = FALSE) {
-  p <- nrow(S)
-  Psi.old <- Psi.init
+  method <- match.arg(method)
+  p <- nrow(S[[1]])
+  if (missing(nu.init)) {
+    nu.init <- sum(ns) + 1
+  }
+  if (missing(Psi.init)) {
+    Psi.init <- (nu.init - p - 1)*pool(S, ns)
+  }
   nu.old  <- nu.init
+  Psi.old <- Psi.init
+  updatePsi <- switch(method, "EM" = rcm_em_step_arma, "pool" = rcm_pool_step, 
+                      "mean" = rcm_mean_step, "approxMLE" = rcm_mle_step)
+  if (method == "em") {
+    conv <- function(x) {
+      stopifnot(ll.new > ll.old)
+      return(x)
+    }
+  } else {
+    conv <- abs
+  }
+  
   for (i in seq_len(max.ite)) {
     ll.old  <- rcm_loglik_arma(Psi.old, nu.old, S, ns)
-    Psi.new <- rcm_em_step_arma(Psi.old, nu.old, S, ns)
+    Psi.new <- updatePsi(Psi = Psi.old, nu = nu.old, S_list = S, ns = ns)
     nu.new  <- rcm_get_nu(Psi.new, S, ns)
     ll.new  <- rcm_loglik_arma(Psi.new, nu.new, S, ns)
-    stopifnot(ll.new > ll.old)
-    if (ll.new - ll.old < eps) {
+    if (conv(ll.new - ll.old) < eps) {
       break
     } else {
       Psi.old <- Psi.new
       nu.old <- nu.new
     }
     if (verbose) {
-      cat("ite =", i, ":", "ll.new - ll.old =", ll.new - ll.old, "\n");
+      cat("it =", i, ": ll.new - ll.old =", signif(ll.new - ll.old, 3), "\n")
       flush.console()
-    }
-  }
-  if (i == max.ite) warning("max iterations (", max.ite, ") hit!")
-  return(list("Psi" = Psi.new, "nu" = nu.new, "iterations" = i))
-}
-
-
-# MLE alg
-fit.rcm.MLE <- function(S, ns,
-                         nu.init = nrow(S[[1]]) + 2,
-                         max.ite = 1000, eps = 1e-3,
-                         verbose = FALSE) {
-  p <- nrow(S)
-  nu.old <- nu.init
-  Psi.old <- rcm_mle_step(nu = nu.old, S = S, ns = ns)
-  for (i in seq_len(max.ite)) {
-    ll.old <- rcm_loglik_arma(Psi.old, nu.old, S, ns)
-    nu.new  <- rcm_get_nu(Psi.old, S, ns)
-    Psi.new <- rcm_mle_step(nu.new, S, ns)
-    ll.new  <- rcm_loglik_arma(Psi.new, nu.new, S, ns)
-    stopifnot(ll.new > ll.old)
-    if (ll.new - ll.old < eps) {
-      break
-    } else {
-      Psi.old <- Psi.new
-      nu.old  <- nu.new
-    }
-    if (verbose) {
-      cat("ite =", i, ":", "ll.new - ll.old =", ll.new - ll.old, "\n");
-      flush.console()
-    } 
-  }
-  if (i == max.ite) warning("max iterations (", max.ite, ") hit!")
-  return(list("Psi" = Psi.new, "nu" = nu.new, "iterations" = i))
-}
-
-# Estimation using moment
-fit.rcm.moment <- function(S, ns,
-                            nu.init = nrow(S[[1]]) + 10,
-                            max.ite = 1000, eps = 1e-3,
-                            verbose = FALSE) {
-  p <- nrow(S[[1]])
-  #interval <- c(p - 1 + 10*.Machine$double.eps, 1e6)
-  nu.old   <- nu.init
-  Psi.old  <- rcm_moment_step(nu = nu.old, S = S, ns = ns)
-  for (i in seq_len(max.ite)) {
-    nu.new  <- rcm_get_nu(Psi = Psi.old, S = S, ns = ns)
-    Psi.new  <- rcm_moment_step(nu = nu.old, S = S, ns = ns)
-    if (verbose) {
-      cat("ite =", i, ":", "nu.new - nu.old =", nu.new - nu.old,
-          "nu =", nu.new, "\n");
-      flush.console()
-    }
-    if (abs(nu.new - nu.old) < eps) {
-      break
-    } else {
-      Psi.old <- Psi.new
-      nu.old  <- nu.new
     }
   }
   if (i == max.ite) warning("max iterations (", max.ite, ") hit!")

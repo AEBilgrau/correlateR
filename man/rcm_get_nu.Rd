@@ -3,13 +3,13 @@
 \alias{rcm_get_nu}
 \title{Estimate degrees of freedom}
 \usage{
-rcm_get_nu(Psi, S, ns)
+rcm_get_nu(Psi, S_list, ns)
 }
 \arguments{
 \item{Psi}{A numeric matrix of size \eqn{p} times \eqn{p} giving the initial
 estimate of \eqn{Psi}{\Psi}.}
 
-\item{S}{A \code{list} of scatter matrices.}
+\item{S_list}{A \code{list} of scatter matrices.}
 
 \item{ns}{Vector of group sizes.}
 }
