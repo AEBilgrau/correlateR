@@ -91,13 +91,11 @@ fit.rcm <- function(S,
   method <- match.arg(method)
   p <- nrow(S[[1]])
   if (missing(nu.init)) {
-    nu.init <- sum(ns) + 100
+    nu.init <- sum(ns) + 1
   }
   if (missing(Psi.init)) {
-    Psi.init <- (nu.init - p - 1)*pool(S, ns)
+    Psi.init <- (nu.init - p + 1)*pool(S, ns)
   }
-  nu.old  <- nu.init
-  Psi.old <- Psi.init
   updatePsi <- switch(method, 
                       "EM" = rcm_em_step_arma, "pool" = rcm_pool_step, 
                       "mean" = rcm_mean_step, "approxMLE" = rcm_mle_step)
@@ -110,11 +108,13 @@ fit.rcm <- function(S,
     conv <- abs
   }
   
-  ll.old  <- rcm_loglik_arma(Psi.old, nu.old, S, ns)
+  Psi.old <- Psi.init
+  nu.old <- nu.init
+  ll.old  <- rcm_loglik_arma(Psi = Psi.old, nu = nu.old, S_list = S, ns = ns)
   for (i in seq_len(max.ite)) {
     Psi.new <- updatePsi(Psi = Psi.old, nu = nu.old, S_list = S, ns = ns)
-    nu.new  <- rcm_get_nu(Psi.new, S, ns)
-    ll.new  <- rcm_loglik_arma(Psi.new, nu.new, S, ns)
+    nu.new  <- rcm_get_nu(Psi = Psi.new, S_list = S, ns = ns)
+    ll.new  <- rcm_loglik_arma(Psi = Psi.new, nu = nu.new, S_list = S, ns = ns)
     if (conv(ll.new - ll.old) < eps) {
       break
     } else {
@@ -124,7 +124,6 @@ fit.rcm <- function(S,
     }
     if (verbose) {
       cat("it =", i, ": ll.new - ll.old =", signif(ll.new - ll.old, 3), "\n")
-      flush.console()
     }
   }
   if (i == max.ite) warning("max iterations (", max.ite, ") hit!")

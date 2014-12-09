@@ -45,10 +45,10 @@ nu <- 30
 S <- createRCMData(ns, Psi, nu)
 print(res <- fit.rcm(S, ns, verbose = TRUE))
 
-do.call(Psi2Sigma, fit.rcm(S, ns, method = "EM")[-3])
-do.call(Psi2Sigma, fit.rcm(S, ns, method = "pool")[-3])
-do.call(Psi2Sigma, fit.rcm(S, ns, method = "mean")[-3])
-do.call(Psi2Sigma, fit.rcm(S, ns, method = "approxMLE")[-3])
+with(fit.rcm(S, ns, method = "EM"),        Psi2Sigma(Psi, nu))
+with(fit.rcm(S, ns, method = "pool"),      Psi2Sigma(Psi, nu))
+with(fit.rcm(S, ns, method = "mean"),      Psi2Sigma(Psi, nu))
+with(fit.rcm(S, ns, method = "approxMLE"), Psi2Sigma(Psi, nu))
 Psi2Sigma(Psi, nu)
 }
 \seealso{
