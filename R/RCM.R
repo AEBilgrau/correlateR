@@ -30,7 +30,7 @@ rcm_pool_step <- function(nu, S_list, ns, ...) {
 # Compute new Psi from nu, S, ns using mean moment estimate
 rcm_mean_step <- function(nu, S_list, ns, ...) {
   k <- length(ns)
-  mean.sigma <- 
+  mean.sigma <-
     Reduce("+", lapply(seq_along(ns), function(i) S_list[[i]]/ns[i]))/k
   fac <- nu - nrow(mean.sigma) - 1
   return(fac*mean.sigma)
@@ -74,10 +74,10 @@ rcm_mle_step <- function(nu, S_list, ns, ...) {
 #' S <- createRCMData(ns, Psi, nu)
 #' print(res <- fit.rcm(S, ns, verbose = TRUE))
 #' 
-#' do.call(Psi2Sigma, fit.rcm(S, ns, method = "EM")[-3])
-#' do.call(Psi2Sigma, fit.rcm(S, ns, method = "pool")[-3])
-#' do.call(Psi2Sigma, fit.rcm(S, ns, method = "mean")[-3])
-#' do.call(Psi2Sigma, fit.rcm(S, ns, method = "approxMLE")[-3])
+#' with(fit.rcm(S, ns, method = "EM"),        Psi2Sigma(Psi, nu))
+#' with(fit.rcm(S, ns, method = "pool"),      Psi2Sigma(Psi, nu))
+#' with(fit.rcm(S, ns, method = "mean"),      Psi2Sigma(Psi, nu))
+#' with(fit.rcm(S, ns, method = "approxMLE"), Psi2Sigma(Psi, nu))
 #' Psi2Sigma(Psi, nu)
 #' @export
 fit.rcm <- function(S,
@@ -91,26 +91,27 @@ fit.rcm <- function(S,
   method <- match.arg(method)
   p <- nrow(S[[1]])
   if (missing(nu.init)) {
-    nu.init <- sum(ns) + 1
+    nu.init <- sum(ns) + 100
   }
   if (missing(Psi.init)) {
     Psi.init <- (nu.init - p - 1)*pool(S, ns)
   }
   nu.old  <- nu.init
   Psi.old <- Psi.init
-  updatePsi <- switch(method, "EM" = rcm_em_step_arma, "pool" = rcm_pool_step, 
+  updatePsi <- switch(method, 
+                      "EM" = rcm_em_step_arma, "pool" = rcm_pool_step, 
                       "mean" = rcm_mean_step, "approxMLE" = rcm_mle_step)
   if (method == "em") {
     conv <- function(x) {
-      stopifnot(ll.new > ll.old)
+      stopifnot(x > 0)
       return(x)
     }
   } else {
     conv <- abs
   }
   
+  ll.old  <- rcm_loglik_arma(Psi.old, nu.old, S, ns)
   for (i in seq_len(max.ite)) {
-    ll.old  <- rcm_loglik_arma(Psi.old, nu.old, S, ns)
     Psi.new <- updatePsi(Psi = Psi.old, nu = nu.old, S_list = S, ns = ns)
     nu.new  <- rcm_get_nu(Psi.new, S, ns)
     ll.new  <- rcm_loglik_arma(Psi.new, nu.new, S, ns)
@@ -118,7 +119,8 @@ fit.rcm <- function(S,
       break
     } else {
       Psi.old <- Psi.new
-      nu.old <- nu.new
+      nu.old  <- nu.new
+      ll.old  <- ll.new
     }
     if (verbose) {
       cat("it =", i, ": ll.new - ll.old =", signif(ll.new - ll.old, 3), "\n")
