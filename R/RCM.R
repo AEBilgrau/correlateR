@@ -116,18 +116,17 @@ fit.rcm <- function(S,
     nu.new  <- rcm_get_nu(Psi = Psi.new, S_list = S, ns = ns)
     ll.new  <- rcm_loglik_arma(Psi = Psi.new, nu = nu.new, S_list = S, ns = ns)
     if (conv(ll.new - ll.old) < eps) {
-      break
+      if (i == max.ite) warning("max iterations (", max.ite, ") hit!")
+      return(list("Psi" = Psi.new, "nu" = nu.new, "iterations" = i))
     } else {
+      if (verbose) {
+        cat("it =", i, ": loglik. diff. =", signif(ll.new - ll.old, 3), "\n")
+      }
       Psi.old <- Psi.new
       nu.old  <- nu.new
       ll.old  <- ll.new
     }
-    if (verbose) {
-      cat("it =", i, ": ll.new - ll.old =", signif(ll.new - ll.old, 3), "\n")
-    }
   }
-  if (i == max.ite) warning("max iterations (", max.ite, ") hit!")
-  return(list("Psi" = Psi.new, "nu" = nu.new, "iterations" = i))
 }
 
 #' Conversion from Psi and nu to Sigma
