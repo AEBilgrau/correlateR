@@ -49,15 +49,15 @@ rcm_mle_step <- function(nu, S_list, ns, ...) {
 #' Fit the RCM using the modified EM algorithm.
 #' 
 #' @param S A \code{list} of square scatter matrices of the same size.
-#' @param ns A vector of sample sizes corresponding to the scatter matrices in 
-#'   \code{S}.
+#' @param ns A vector of group or sample sizes corresponding to the scatter 
+#'   matrices in \code{S}.
 #' @param Psi.init A \code{matrix} giving the initial estimate of 
 #'   \eqn{Psi}{Psi}. Default starting value is the scaled pooled sample
 #'   covariance matrix.
 #' @param max.ite A numeric of length one giving the maximum number of 
-#'   iterations allowed. Default is \code{sum(ns) + 1}.
-#' @param nu.init A numeric of length one giving the inital estiamte of 
-#'   \eqn{nu}{nu}.
+#'   iterations allowed. Default is 1000.
+#' @param nu.init A numeric of length one giving the inital estimate of 
+#'   \eqn{nu}{nu}. Default is \code{sum(ns)}.
 #' @param method The method to be used.
 #' @param eps The convergence criterion.
 #' @param verbose If true, the differences in log-likelihood for each iteration
@@ -68,11 +68,10 @@ rcm_mle_step <- function(nu, S_list, ns, ...) {
 #'   \item{iterations}{A integer giving the number of iterations used.}
 #' @seealso \code{\link{Psi2Sigma}}
 #' @examples
-#' ns <- c(20, 15, 10)
+#' ns <- rep(11, 3)
 #' print(Psi <- drop(rwishart(1)))
 #' nu <- 30
 #' S <- createRCMData(ns, Psi, nu)
-#' print(res <- fit.rcm(S, ns, verbose = TRUE))
 #' 
 #' with(fit.rcm(S, ns, method = "EM"),        Psi2Sigma(Psi, nu))
 #' with(fit.rcm(S, ns, method = "pool"),      Psi2Sigma(Psi, nu))
@@ -91,17 +90,17 @@ fit.rcm <- function(S,
   method <- match.arg(method)
   p <- nrow(S[[1]])
   if (missing(nu.init)) {
-    nu.init <- sum(ns) + 1
+    nu.init <- sum(ns)
   }
   if (missing(Psi.init)) {
-    Psi.init <- (nu.init - p + 1)*pool(S, ns)
+    Psi.init <- (nu.init - p - 1)*pool(S, ns)
   }
   updatePsi <- switch(method, 
                       "EM" = rcm_em_step_arma, "pool" = rcm_pool_step, 
                       "mean" = rcm_mean_step, "approxMLE" = rcm_mle_step)
-  if (method == "em") {
+  if (method == "EM") {
     conv <- function(x) {
-      stopifnot(x > 0)
+      if (x < 0) warning("log-likelihood increased in last iteration!")
       return(x)
     }
   } else {
@@ -116,17 +115,19 @@ fit.rcm <- function(S,
     nu.new  <- rcm_get_nu(Psi = Psi.new, S_list = S, ns = ns)
     ll.new  <- rcm_loglik_arma(Psi = Psi.new, nu = nu.new, S_list = S, ns = ns)
     if (conv(ll.new - ll.old) < eps) {
-      if (i == max.ite) warning("max iterations (", max.ite, ") hit!")
-      return(list("Psi" = Psi.new, "nu" = nu.new, "iterations" = i))
+      break
     } else {
       if (verbose) {
-        cat("it =", i, ": loglik. diff. =", signif(ll.new - ll.old, 3), "\n")
+        cat(sprintf("it = %g : L = %.3f : diff = %.3f\n", 
+                    i, ll.new, ll.new - ll.old))
       }
       Psi.old <- Psi.new
       nu.old  <- nu.new
       ll.old  <- ll.new
     }
   }
+  if (i == max.ite) warning("max iterations (", max.ite, ") hit!")
+  return(list("Psi" = Psi.new, "nu" = nu.new, "iterations" = i))
 }
 
 #' Conversion from Psi and nu to Sigma

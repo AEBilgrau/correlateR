@@ -9,20 +9,20 @@ fit.rcm(S, ns, Psi.init, nu.init, method = c("EM", "pool", "mean",
 \arguments{
 \item{S}{A \code{list} of square scatter matrices of the same size.}
 
-\item{ns}{A vector of sample sizes corresponding to the scatter matrices in
-\code{S}.}
+\item{ns}{A vector of group or sample sizes corresponding to the scatter
+matrices in \code{S}.}
 
 \item{Psi.init}{A \code{matrix} giving the initial estimate of
 \eqn{Psi}{Psi}. Default starting value is the scaled pooled sample
 covariance matrix.}
 
-\item{nu.init}{A numeric of length one giving the inital estiamte of
-\eqn{nu}{nu}.}
+\item{nu.init}{A numeric of length one giving the inital estimate of
+\eqn{nu}{nu}. Default is \code{sum(ns)}.}
 
 \item{method}{The method to be used.}
 
 \item{max.ite}{A numeric of length one giving the maximum number of
-iterations allowed. Default is \code{sum(ns) + 1}.}
+iterations allowed. Default is 1000.}
 
 \item{eps}{The convergence criterion.}
 
@@ -39,11 +39,10 @@ A named list of length 3 with the elements:
 Fit the RCM using the modified EM algorithm.
 }
 \examples{
-ns <- c(20, 15, 10)
+ns <- rep(11, 3)
 print(Psi <- drop(rwishart(1)))
 nu <- 30
 S <- createRCMData(ns, Psi, nu)
-print(res <- fit.rcm(S, ns, verbose = TRUE))
 
 with(fit.rcm(S, ns, method = "EM"),        Psi2Sigma(Psi, nu))
 with(fit.rcm(S, ns, method = "pool"),      Psi2Sigma(Psi, nu))
