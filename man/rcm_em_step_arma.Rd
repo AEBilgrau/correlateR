@@ -24,5 +24,10 @@ A numeric matrix the same size as \code{Psi} giving the updated
 A armadillo-based function to perform the E and M step in the
 EM algorithm of the RCM. This functions assumes \code{nu} to be fixed.
 }
+\examples{
+ns <-  c(5, 5, 5)
+S <- createRCMData(ns = ns, psi = diag(4), nu = 30)
+correlateR:::rcm_em_step_arma(Psi = diag(4), nu = 15, S_list = S, ns = ns)
+}
 \keyword{internal}
 

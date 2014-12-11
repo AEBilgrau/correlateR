@@ -25,12 +25,13 @@ double rcm_loglik_arma(const arma::mat & Psi,
   const int p = Psi.n_rows;
   const Rcpp::NumericVector nu_half(1, nu/2.0f); // Vector of length 1
   const Rcpp::NumericVector cs = (nu + ns)/2.0f;
-  const double logdetPsi = logdet_arma(Psi)(0);
+  const arma::mat sPsi = (nu - p - 1.0f)*Psi;
+  const double logdetPsi = logdet_arma( sPsi )(0);
   
   arma::vec logdetPsiPlusS(k);
   for (int i = 0; i < k; ++i) {
     arma::mat Si = S_list[i];
-    logdetPsiPlusS(i) = logdet_arma( Psi + Si )(0);
+    logdetPsiPlusS(i) = logdet_arma( sPsi + Si )(0);
   }
 
   const double c1 = sum(((ns * p)/2.0f) * log(2.0f));
@@ -51,13 +52,14 @@ double rcm_loglik_nu_arma(const arma::mat & Psi,
                           const Rcpp::NumericVector & ns){
   const int k = S_list.size();
   const int p = Psi.n_rows;
-  const double logdetPsi = logdet_arma(Psi)(0);
+  const arma::mat sPsi = (nu - p - 1.0f)*Psi;
+  const double logdetPsi = logdet_arma(sPsi)(0);
   const Rcpp::NumericVector nu_half(1, nu/2.0f);
   
   arma::vec logdetPsiPlusSi(k);
   for (int i = 0; i < k; ++i) {
     arma::mat Si = S_list[i];
-    logdetPsiPlusSi(i) = logdet_arma( Psi + Si )(0);
+    logdetPsiPlusSi(i) = logdet_arma( sPsi + Si )(0);
   }
   const double t1 = nu/2*(k*logdetPsi - sum(logdetPsiPlusSi));
   const double t2 = sum(lgammap((nu + ns)/2.0f, p));
@@ -78,6 +80,10 @@ double rcm_loglik_nu_arma(const arma::mat & Psi,
 //'   number of samples for each dataset.
 //' @return A numeric matrix the same size as \code{Psi} giving the updated
 //'   \code{Psi}.
+//' @examples
+//' ns <-  c(5, 5, 5)
+//' S <- createRCMData(ns = ns, psi = diag(4), nu = 30)
+//' correlateR:::rcm_em_step_arma(Psi = diag(4), nu = 15, S_list = S, ns = ns)
 //' @keywords internal 
 // [[Rcpp::export]]
 arma::mat rcm_em_step_arma(const arma::mat & Psi, 
@@ -87,12 +93,12 @@ arma::mat rcm_em_step_arma(const arma::mat & Psi,
   int k = S_list.size();
   const int p = Psi.n_rows;
   const double co = 1.0f/(k*nu);
-  
+  const arma::mat sPsi = (nu - p - 1.0f)*Psi;
   arma::mat inv_ans(p, p, arma::fill::zeros);
   for (int i = 0; i < k; ++i) {
-      double tmp = co*(ns[i] + nu);
+      double tmp = co*( ns[i] + nu );
       arma::mat S = S_list[i];
-      inv_ans += tmp * arma::inv(Psi + S);
+      inv_ans += tmp * arma::inv( sPsi + S );
   }
   return arma::inv(inv_ans);
 }
