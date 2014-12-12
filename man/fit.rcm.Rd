@@ -3,8 +3,8 @@
 \alias{fit.rcm}
 \title{Fit using the EM algorithm}
 \usage{
-fit.rcm(S, ns, Psi.init, nu.init, method = c("EM", "pool", "mean",
-  "approxMLE"), max.ite = 1000, eps = 0.001, verbose = FALSE)
+fit.rcm(S, ns, Psi.init, nu.init, method = c("EM", "pool", "approxMLE"),
+  max.ite = 1000, eps = 0.001, verbose = FALSE)
 }
 \arguments{
 \item{S}{A \code{list} of square scatter matrices of the same size.}
@@ -46,7 +46,6 @@ S <- createRCMData(ns, Psi, nu)
 
 with(fit.rcm(S, ns, method = "EM"),        Psi2Sigma(Psi, nu))
 with(fit.rcm(S, ns, method = "pool"),      Psi2Sigma(Psi, nu))
-with(fit.rcm(S, ns, method = "mean"),      Psi2Sigma(Psi, nu))
 with(fit.rcm(S, ns, method = "approxMLE"), Psi2Sigma(Psi, nu))
 Psi2Sigma(Psi, nu)
 }

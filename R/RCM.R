@@ -7,40 +7,66 @@
 #'   estimate of \eqn{Psi}{\Psi}.
 #' @param S_list A \code{list} of scatter matrices.
 #' @param ns Vector of group sizes.
-#' @return A single number giving the \eqn{nu}{\nu} optimizing the RCM 
-#'   likelihood with fixed \eqn{Psi}{\Psi}.
+#' @return A list giving the \eqn{nu}{\nu} optimizing the RCM
+#'   likelihood with fixed \eqn{Psi}{\Psi} and other stuff.
 #' @author Anders Ellern Bilgrau
+#' @note \code{rcm_get_nu} optimizes via \code{\link{optimize}}.
+#' @examples
+#' p <- 3
+#' Psi <- diag(p)
+#' ns <- c(5, 5, 5)
+#' true.nu <- 7
+#' nus <- seq(p+1+1e-5, 10, by = 0.01)
+#' S_list <- createRCMData(ns = ns, psi = Psi, nu = true.nu)
+#' eval.ll <- c()
+#' for (i in seq_along(nus)) {
+#'   eval.ll[i] <- correlateR:::rcm_loglik_nu_arma(Psi, nus[i], S_list, ns)
+#' }
+#' plot(nus, eval.ll, type = "l", ylim = c(-30, 0))
+#' abline(v = true.nu, col = "red", lwd = 2)
+#' 
+#' # Get nu
+#' print(ans <- correlateR:::rcm_get_nu(Psi, S_list, ns))
+#' print(ans2 <- correlateR:::rcm_get_nu2(Psi, S_list, ns))
+#' 
+#' abline(v = ans$maximum, col = "orange", lwd = 2, lty = 2)
+#' abline(v = ans2$estimate, col = "blue", lwd = 2. lty = 3)
+#' 
+#' \dontrun{
+#' library("microbenchmark")
+#' microbenchmark(correlateR:::rcm_get_nu(Psi, S_list, ns),
+#'                correlateR:::rcm_get_nu2(Psi, S_list, ns))
+#' }
 #' @keywords internal
 rcm_get_nu <- function(Psi, S_list, ns) {
   loglik_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
-    rcm_loglik_nu_arma(Psi, nu, S_list, ns)
+    return(rcm_loglik_nu_arma(Psi, nu, S_list, ns))
   }
-  interval <- c(nrow(Psi) - 1 + 1e-10, 1e6) 
-  res <- optimize(f = loglik_nu, interval = interval, maximum = TRUE)$maximum
-  return(res)
+  interval <- c(nrow(Psi) + 1 + sqrt(.Machine$double.eps), 1e6) 
+  return(optimize(f = loglik_nu, interval = interval, maximum = TRUE))
 } 
 
-# Compute new Psi from nu, S, ns using pooled moment estimate
-rcm_pool_step <- function(nu, S_list, ns, ...) {
-  pool.sigma <- pool(S_list = S_list, ns = ns, norm_type = 1)
-  fac <- nu - nrow(pool.sigma) - 1
-  return(fac*pool.sigma)
-}
+#' @rdname rcm_get_nu
+#' @note \code{rcm_get_nu2} optimizes via \code{\link{nlm}}.
+rcm_get_nu2 <- function(Psi, S_list, ns) {
+  loglik_nu2 <- function(nu) { # log-likelihood as a function of nu, fixed Psi
+    return(-1*rcm_loglik_nu_arma(Psi, nu, S_list, ns))
+  }
+  st <- nrow(Psi) + 1 + 0.5 + sqrt(.Machine$double.eps)
+  return(nlm(f = loglik_nu2, p = st, hessian = TRUE))
+} 
 
-# Compute new Psi from nu, S, ns using mean moment estimate
-rcm_mean_step <- function(nu, S_list, ns, ...) {
-  k <- length(ns)
-  mean.sigma <-
-    Reduce("+", lapply(seq_along(ns), function(i) S_list[[i]]/ns[i]))/k
-  fac <- nu - nrow(mean.sigma) - 1
-  return(fac*mean.sigma)
+# Compute new Psi from S, ns using pooled moment estimate
+rcm_pool_step <- function(S_list, ns, ...) {
+  Psi <- pool(S_list = S_list, ns = ns, norm_type = 1L)
+  return(Psi)
 }
 
 # Compute new Psi from nu, S, ns using approximate MLE
 rcm_mle_step <- function(nu, S_list, ns, ...) {
-  n.tot <- sum(ns)
-  df <- nu + ns
-  Psi <- Reduce("+", lapply(seq_along(ns), function(i) df[i]*S_list[[i]]))/n.tot
+  denom <- (nu - nrow(S[[1]]) - 1)*sum(ns)
+  w <- nu + ns
+  Psi <- Reduce("+", lapply(seq_along(ns), function(i) w[i]*S_list[[i]]))/denom
   return(Psi)
 }
 
@@ -75,7 +101,6 @@ rcm_mle_step <- function(nu, S_list, ns, ...) {
 #' 
 #' with(fit.rcm(S, ns, method = "EM"),        Psi2Sigma(Psi, nu))
 #' with(fit.rcm(S, ns, method = "pool"),      Psi2Sigma(Psi, nu))
-#' with(fit.rcm(S, ns, method = "mean"),      Psi2Sigma(Psi, nu))
 #' with(fit.rcm(S, ns, method = "approxMLE"), Psi2Sigma(Psi, nu))
 #' Psi2Sigma(Psi, nu)
 #' @export
@@ -83,7 +108,7 @@ fit.rcm <- function(S,
                     ns,
                     Psi.init,
                     nu.init,
-                    method = c("EM", "pool", "mean", "approxMLE"),
+                    method = c("EM", "pool", "approxMLE"),
                     max.ite = 1000, 
                     eps = 1e-3,
                     verbose = FALSE) {
@@ -95,9 +120,8 @@ fit.rcm <- function(S,
   if (missing(Psi.init)) {
     Psi.init <- (nu.init - p - 1)*pool(S, ns)
   }
-  updatePsi <- switch(method, 
-                      "EM" = rcm_em_step_arma, "pool" = rcm_pool_step, 
-                      "mean" = rcm_mean_step, "approxMLE" = rcm_mle_step)
+  updatePsi <- switch(method, "EM" = rcm_em_step_arma, "pool" = rcm_pool_step, 
+                      "approxMLE" = rcm_mle_step)
   if (method == "EM") {
     conv <- function(x) {
       if (x < 0) warning("log-likelihood increased in last iteration!")
