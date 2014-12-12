@@ -215,11 +215,21 @@ pxcovArma <- function(X, Y, Z, norm_type = 0L) {
 #'   number of samples in each group.
 #' @return The value of the log-likelihood.
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @examples
+#' ns <-  c(5, 5, 5)
+#' S <- createRCMData(ns = ns, psi = diag(4), nu = 30)
+#' correlateR:::rcm_loglik_arma(Psi = diag(4), nu = 15, S_list = S, ns = ns)
 #' @keywords internal
 rcm_loglik_arma <- function(Psi, nu, S_list, ns) {
     .Call('correlateR_rcm_loglik_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
 }
 
+#' @rdname rcm_loglik_arma
+#' @examples
+#' ns <-  c(5, 5, 5)
+#' S <- createRCMData(ns = ns, psi = diag(4), nu = 30)
+#' correlateR:::rcm_loglik_arma(Psi = diag(4), nu = 15, S_list = S, ns = ns)
+#' @keywords internal
 rcm_loglik_nu_arma <- function(Psi, nu, S_list, ns) {
     .Call('correlateR_rcm_loglik_nu_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
 }

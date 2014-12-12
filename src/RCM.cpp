@@ -15,6 +15,10 @@
 //'   number of samples in each group.
 //' @return The value of the log-likelihood.
 //' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+//' @examples
+//' ns <-  c(5, 5, 5)
+//' S <- createRCMData(ns = ns, psi = diag(4), nu = 30)
+//' correlateR:::rcm_loglik_arma(Psi = diag(4), nu = 15, S_list = S, ns = ns)
 //' @keywords internal
 // [[Rcpp::export]]
 double rcm_loglik_arma(const arma::mat & Psi, 
@@ -35,9 +39,9 @@ double rcm_loglik_arma(const arma::mat & Psi,
   }
 
   const double c1 = sum(((ns * p)/2.0f) * log(2.0f));
-  const double t1 = k*nu/2 * logdetPsi;
+  const double t1 = k*nu_half(0)*logdetPsi;
   const double t2 = Rcpp::sum( lgammap(cs, p) );
-  const double t3 = -sum(cs*Rcpp::as<Rcpp::NumericVector>(
+  const double t3 = -Rcpp::sum(cs*Rcpp::as<Rcpp::NumericVector>(
     Rcpp::wrap(logdetPsiPlusS)));
   const double t4 = -k * lgammap(nu_half, p)(0);
   return c1 + t1 + t2 + t3 + t4;
@@ -45,6 +49,12 @@ double rcm_loglik_arma(const arma::mat & Psi,
 
 // Log-likelihood as a function of nu (slightly faster in optimization than
 // using rcm_loglik_arma)
+//' @rdname rcm_loglik_arma
+//' @examples
+//' ns <-  c(5, 5, 5)
+//' S <- createRCMData(ns = ns, psi = diag(4), nu = 30)
+//' correlateR:::rcm_loglik_arma(Psi = diag(4), nu = 15, S_list = S, ns = ns)
+//' @keywords internal
 // [[Rcpp::export]]
 double rcm_loglik_nu_arma(const arma::mat & Psi, 
                           const double nu, 
@@ -55,16 +65,19 @@ double rcm_loglik_nu_arma(const arma::mat & Psi,
   const arma::mat sPsi = (nu - p - 1.0f)*Psi;
   const double logdetPsi = logdet_arma(sPsi)(0);
   const Rcpp::NumericVector nu_half(1, nu/2.0f);
+  const Rcpp::NumericVector cs = (nu + ns)/2.0f;
   
   arma::vec logdetPsiPlusSi(k);
   for (int i = 0; i < k; ++i) {
     arma::mat Si = S_list[i];
     logdetPsiPlusSi(i) = logdet_arma( sPsi + Si )(0);
   }
-  const double t1 = nu/2*(k*logdetPsi - sum(logdetPsiPlusSi));
-  const double t2 = sum(lgammap((nu + ns)/2.0f, p));
-  const double t3 = -k*lgammap(nu_half, p)(0);
-  return t1 + t2 + t3;
+  const double t1 = k*nu_half(0)*logdetPsi;
+  const double t2 = sum(lgammap(cs, p));
+  const double t3 = -sum(cs*Rcpp::as<Rcpp::NumericVector>(
+    Rcpp::wrap(logdetPsiPlusSi)));
+  const double t4 = -k*lgammap(nu_half, p)(0);
+  return t1 + t2 + t3 + t4;
 }
 
 //' The RCM EM-step
