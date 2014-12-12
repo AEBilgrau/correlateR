@@ -103,16 +103,57 @@ arma::mat rcm_em_step_arma(const arma::mat & Psi,
                            const double nu, 
                            const Rcpp::List & S_list,  
                            const Rcpp::NumericVector & ns) {
-  int k = S_list.size();
+  const int k = S_list.size();
   const int p = Psi.n_rows;
-  const double co = 1.0f/(k*nu);
-  const arma::mat sPsi = (nu - p - 1.0f)*Psi;
+  const double c = k*nu;//*(nu - p - 1.0f);
   arma::mat inv_ans(p, p, arma::fill::zeros);
+  const arma::mat sPsi = (1.0f/(nu - p - 1.0f))*Psi;
   for (int i = 0; i < k; ++i) {
-      double tmp = co*( ns[i] + nu );
-      arma::mat S = S_list[i];
-      inv_ans += tmp * arma::inv( sPsi + S );
+      double fac = ( ns[i] + nu );
+      arma::mat Si = S_list[i];
+      inv_ans += fac * arma::inv( sPsi + Si );
   }
-  return arma::inv(inv_ans);
+  return c * arma::inv(inv_ans);
 }
+
+
+/*** R
+
+
+library("correlateR")
+ns <-  c(5, 5, 5)
+Psi <- diag(3)
+nu <- 20
+S <- createRCMData(ns = ns, psi = Psi, nu = nu)
+
+PsiHat <- drop(rwishart(1, diag(3), nu = 10))
+
+a <- correlateR:::rcm_loglik_arma(Psi = PsiHat, ns = ns, S_list = S, nu = nu) 
+cat(sprintf("%0.10f\t%0.10f\n", b, NA))
+for (i in 1:20) {
+  PsiHat <- correlateR:::rcm_em_step_arma(Psi = PsiHat, nu = nu, S_list = S, ns = ns)
+  b <- correlateR:::rcm_loglik_arma(Psi = PsiHat, ns = ns, S_list = S, nu = nu)
+  cat(sprintf("%0.10f\t%0.10f\n", b, b-a))
+}
+
+emStep <- function(Psi, nu, S, ns) {
+  p <- nrow(Psi)
+  k <- length(S)
+  co <- 1/(k*nu)
+  tmp <- matrix(0, p, p)
+  for (i in 1:k) {
+    tmp <- tmp + (ns[i]+nu)*solve( 1/(nu - p - 1)*Psi + S[[i]] )    
+  }
+  return(solve(co*tmp))
+}
+(Psi3 <- emStep(Psi = Psi, nu = nu, S = S, ns = ns))
+correlateR:::rcm_loglik_arma(Psi = Psi3, ns = ns, S_list = S, nu = nu)
+
+
+
+emStep(Psi, nu, S, ns)
+correlateR:::rcm_em_step_arma(Psi = Psi, nu = nu, S_list = S, ns = ns)
+
+
+*/
 
