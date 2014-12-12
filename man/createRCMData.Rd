@@ -8,28 +8,27 @@ createRCMData(ns, psi, nu)
 \arguments{
 \item{ns}{A numeric vector giving the sample sizes in each study.}
 
-\item{psi}{The underlying \eqn{Psi} parameter. If \code{nu} is \code{Inf}
-this is used as \eqn{Sigma} parameter in all Wishart distribution.}
+\item{psi}{The underlying \eqn{Psi} parameter which is the mean
+covariance matrix. If \code{nu} is \code{Inf}
+this is used as \eqn{Sigma} parameter in all Wishart distributions.}
 
 \item{nu}{A numeric of length one giving the underlying \eqn{nu} parameter.}
 }
 \value{
 A \code{list} of matrices of the same size as \code{psi} giving
-  observed scatter matrices from the RCM.
+  observed scatter matrices from the RCM.\cr
+  The realized covariance matrices are appended as an attribute.
 }
 \description{
 Generate data from the hierarchical random covariance model (RCM).
 }
 \examples{
-ns <- c(20, 14, 10)
+ns <- c(20, 10)
 psi <- diag(3)
 createRCMData(ns, psi, nu = 10)
 
 createRCMData(ns, psi, nu = 1e20)
-# is NOT the same as
 createRCMData(ns, psi, nu = Inf)
-# which is almost the same as
-createRCMData(ns, psi*(1e20 - 3 - 1), nu = 1e20)
 }
 \author{
 Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>

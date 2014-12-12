@@ -210,35 +210,36 @@ drcm <- function(x, mu, Psi, nu, logarithm = FALSE) {
 #' Generate data from the hierarchical random covariance model (RCM).
 #' 
 #' @param ns A numeric vector giving the sample sizes in each study.
-#' @param psi The underlying \eqn{Psi} parameter. If \code{nu} is \code{Inf} 
-#'   this is used as \eqn{Sigma} parameter in all Wishart distribution.
+#' @param psi The underlying \eqn{Psi} parameter which is the mean 
+#'   covariance matrix. If \code{nu} is \code{Inf} 
+#'   this is used as \eqn{Sigma} parameter in all Wishart distributions.
 #' @param nu A numeric of length one giving the underlying \eqn{nu} parameter.
 #' @return A \code{list} of matrices of the same size as \code{psi} giving
-#'   observed scatter matrices from the RCM.
+#'   observed scatter matrices from the RCM.\cr
+#'   The realized covariance matrices are appended as an attribute.
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 #' @examples
-#' ns <- c(20, 14, 10)
+#' ns <- c(20, 10)
 #' psi <- diag(3)
 #' createRCMData(ns, psi, nu = 10)
 #' 
 #' createRCMData(ns, psi, nu = 1e20)
-#' # is NOT the same as
 #' createRCMData(ns, psi, nu = Inf)
-#' # which is almost the same as
-#' createRCMData(ns, psi*(1e20 - 3 - 1), nu = 1e20)
 #' @export
 createRCMData <- function(ns, psi, nu) {
   stopifnot(length(ns) > 0)
   k <- length(ns)
+  p <- nrow(psi)
   if (nu == Inf) {
-    S <- lapply(seq_len(k), function(i) drop(rwishart(1, psi, ns[i])))
+    sigmas <- replicate(k, psi)
   } else {
-    sigmas <- rinvwishart(n = k, psi = psi, nu = nu)
-    S <- lapply(seq_len(k), function(i) drop(rwishart(1, sigmas[, , i], ns[i])))
+    sigmas <- rinvwishart(n = k, psi = (nu-p-1)*psi, nu = nu)
   }
+  S <- lapply(seq_len(k), function(i) drop(rwishart(1, sigmas[, , i], ns[i])))
   for (i in seq_along(S)) {
     dimnames(S[[i]]) <- dimnames(psi)
   }
+  attributes(S)$sigmas <- sigmas
   return(S)
 }
 
