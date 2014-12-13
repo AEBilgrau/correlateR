@@ -4,7 +4,7 @@
 \title{Fit using the EM algorithm}
 \usage{
 fit.rcm(S, ns, Psi.init, nu.init, method = c("EM", "pool", "approxMLE"),
-  max.ite = 1000, eps = 0.001, verbose = FALSE)
+  conf.lvl = 0.95, max.ite = 1000, eps = 0.001, verbose = FALSE)
 }
 \arguments{
 \item{S}{A \code{list} of square scatter matrices of the same size.}
@@ -39,15 +39,14 @@ A named list of length 3 with the elements:
 Fit the RCM using the modified EM algorithm.
 }
 \examples{
-ns <- rep(11, 3)
-print(Psi <- drop(rwishart(1)))
+ns <- c(40, 20)
+print(Psi <- drop(rwishart(1)))  # Expected covariance
 nu <- 30
 S <- createRCMData(ns, Psi, nu)
 
-with(fit.rcm(S, ns, method = "EM"),        Psi2Sigma(Psi, nu))
-with(fit.rcm(S, ns, method = "pool"),      Psi2Sigma(Psi, nu))
-with(fit.rcm(S, ns, method = "approxMLE"), Psi2Sigma(Psi, nu))
-Psi2Sigma(Psi, nu)
+fit.rcm(S, ns, method = "EM", verbose = TRUE)
+fit.rcm(S, ns, method = "pool")
+fit.rcm(S, ns, method = "approxMLE")
 }
 \seealso{
 \code{\link{Psi2Sigma}}

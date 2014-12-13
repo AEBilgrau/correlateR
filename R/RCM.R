@@ -56,12 +56,6 @@ rcm_get_nu2 <- function(Psi, S_list, ns) {
   return(nlm(f = loglik_nu2, p = st, hessian = TRUE))
 } 
 
-# Compute new Psi from S, ns using pooled moment estimate
-rcm_pool_step <- function(S_list, ns, ...) {
-  Psi <- pool(S_list = S_list, ns = ns, norm_type = 1L)
-  return(Psi)
-}
-
 # Compute new Psi from nu, S, ns using approximate MLE
 rcm_mle_step <- function(nu, S_list, ns, ...) {
   denom <- (nu - nrow(S[[1]]) - 1)*sum(ns)
@@ -94,64 +88,91 @@ rcm_mle_step <- function(nu, S_list, ns, ...) {
 #'   \item{iterations}{A integer giving the number of iterations used.}
 #' @seealso \code{\link{Psi2Sigma}}
 #' @examples
-#' ns <- rep(11, 3)
-#' print(Psi <- drop(rwishart(1)))
+#' ns <- c(40, 20, 20)
+#' print(Psi <- drop(rwishart(1)))  # Expected covariance
 #' nu <- 30
 #' S <- createRCMData(ns, Psi, nu)
 #' 
-#' with(fit.rcm(S, ns, method = "EM"),        Psi2Sigma(Psi, nu))
-#' with(fit.rcm(S, ns, method = "pool"),      Psi2Sigma(Psi, nu))
-#' with(fit.rcm(S, ns, method = "approxMLE"), Psi2Sigma(Psi, nu))
-#' Psi2Sigma(Psi, nu)
+#' a <- fit.rcm(S, ns, method = "EM", verbose = TRUE)
+#' fit.rcm(S, ns, method = "pool")
+#' fit.rcm(S, ns, method = "approxMLE")
 #' @export
 fit.rcm <- function(S,
                     ns,
                     Psi.init,
                     nu.init,
                     method = c("EM", "pool", "approxMLE"),
+                    conf.lvl = 0.95,
                     max.ite = 1000, 
                     eps = 1e-3,
                     verbose = FALSE) {
   method <- match.arg(method)
   p <- nrow(S[[1]])
+  stopifnot(sum(ns) > p)
+  
   if (missing(nu.init)) {
     nu.init <- sum(ns)
   }
-  if (missing(Psi.init)) {
-    Psi.init <- (nu.init - p - 1)*pool(S, ns)
-  }
-  updatePsi <- switch(method, "EM" = rcm_em_step_arma, "pool" = rcm_pool_step, 
-                      "approxMLE" = rcm_mle_step)
-  if (method == "EM") {
-    conv <- function(x) {
-      if (x < 0) warning("log-likelihood increased in last iteration!")
-      return(x)
-    }
-  } else {
-    conv <- abs
+  if (missing(Psi.init) && method != "pool") {
+    Psi.init <- pool(S_list = S, ns = ns, norm_type = 1L)
   }
   
-  Psi.old <- Psi.init
-  nu.old <- nu.init
-  ll.old  <- rcm_loglik_arma(Psi = Psi.old, nu = nu.old, S_list = S, ns = ns)
-  for (i in seq_len(max.ite)) {
-    Psi.new <- updatePsi(Psi = Psi.old, nu = nu.old, S_list = S, ns = ns)
-    nu.new  <- rcm_get_nu(Psi = Psi.new, S_list = S, ns = ns)
-    ll.new  <- rcm_loglik_arma(Psi = Psi.new, nu = nu.new, S_list = S, ns = ns)
-    if (conv(ll.new - ll.old) < eps) {
-      break
-    } else {
+  if (method == "EM" || method == "approxMLE") {
+    
+    updatePsi <- 
+      switch(method, "EM" = rcm_em_step_arma, "approxMLE" = rcm_mle_step)
+    
+    Psi.old <- Psi.init
+    nu.old <- nu.init
+    ll.old  <- rcm_loglik_arma(Psi = Psi.old, nu = nu.old, S_list = S, ns = ns)
+    for (i in seq_len(max.ite)) {
+      Psi.new <- updatePsi(Psi = Psi.old, nu = nu.old, S_list = S, ns = ns)
+      nu.new  <- rcm_get_nu(Psi = Psi.new, S_list = S, ns = ns)$maximum
+      ll.new  <- rcm_loglik_arma(Psi = Psi.new, nu = nu.new, S_list = S, ns=ns)
+      diff <- ll.new - ll.old
       if (verbose) {
-        cat(sprintf("it = %g : L = %.3f : diff = %.3f\n", 
-                    i, ll.new, ll.new - ll.old))
+        cat(sprintf("it = %g : L = %.3f : diff = %.3f\n", i, ll.new, diff))
       }
-      Psi.old <- Psi.new
-      nu.old  <- nu.new
-      ll.old  <- ll.new
+      if (diff > eps) {
+        Psi.old <- Psi.new
+        nu.old  <- nu.new
+        ll.old  <- ll.new
+      } else {
+        if (diff < 0) {
+          warning("Terminated with loglik difference smaller than 0!")
+        }
+        break
+      }
     }
+    if (i == max.ite) warning("max iterations (", max.ite, ") hit!")
+    nu.res <- rcm_get_nu2(Psi = Psi.new, S_list = S, ns = ns)
+    nu.new <- nu.res$estimate
+    ans <- list("Psi" = Psi.new, "nu" = nu.new, "iterations" = i)
+
+    
+  } else if (method == "pool") {
+    
+    Psi.new <- pool(S_list = S, ns = ns, norm_type = 1L)
+    nu.res <- rcm_get_nu2(Psi = Psi, S_list = S, ns = ns)
+    nu.new <- nu.res$estimate
+    ans <- list("Psi" = Psi.new, "nu" = nu.new, "iterations" = 1)
+  
+  } else {
+   
+    stop("method", method, "not found.")
+  
   }
-  if (i == max.ite) warning("max iterations (", max.ite, ") hit!")
-  return(list("Psi" = Psi.new, "nu" = nu.new, "iterations" = i))
+  
+  attributes(ans)$nu.info <- getConfidenceInterval(nu.res, lvl = conf.lvl)
+  return(ans)
+}
+
+getConfidenceInterval <- function(nlm, lvl = 0.95) {
+  est <- nlm$estimate
+  se <- 1/sqrt(-c(nlm$hessian))
+  q <- qnorm(  (1-lvl)/2)
+  ci <- est + se*c(q, -q)
+  return(c("nu" = est, "LCL" = ci[1], "UCL" = ci[2]))
 }
 
 #' Density of the RCM model
