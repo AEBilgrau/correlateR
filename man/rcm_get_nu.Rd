@@ -48,7 +48,7 @@ print(ans <- correlateR:::rcm_get_nu(Psi, S_list, ns))
 print(ans2 <- correlateR:::rcm_get_nu2(Psi, S_list, ns))
 
 abline(v = ans$maximum, col = "orange", lwd = 2, lty = 2)
-abline(v = ans2$estimate, col = "blue", lwd = 2. lty = 3)
+abline(v = ans2$estimate, col = "blue", lwd = 2, lty = 3)
 
 \dontrun{
 library("microbenchmark")

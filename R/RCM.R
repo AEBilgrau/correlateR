@@ -30,7 +30,7 @@
 #' print(ans2 <- correlateR:::rcm_get_nu2(Psi, S_list, ns))
 #' 
 #' abline(v = ans$maximum, col = "orange", lwd = 2, lty = 2)
-#' abline(v = ans2$estimate, col = "blue", lwd = 2. lty = 3)
+#' abline(v = ans2$estimate, col = "blue", lwd = 2, lty = 3)
 #' 
 #' \dontrun{
 #' library("microbenchmark")
@@ -88,12 +88,12 @@ rcm_mle_step <- function(nu, S_list, ns, ...) {
 #'   \item{iterations}{A integer giving the number of iterations used.}
 #' @seealso \code{\link{Psi2Sigma}}
 #' @examples
-#' ns <- c(40, 20, 20)
+#' ns <- c(40, 20)
 #' print(Psi <- drop(rwishart(1)))  # Expected covariance
 #' nu <- 30
 #' S <- createRCMData(ns, Psi, nu)
 #' 
-#' a <- fit.rcm(S, ns, method = "EM", verbose = TRUE)
+#' fit.rcm(S, ns, method = "EM", verbose = TRUE)
 #' fit.rcm(S, ns, method = "pool")
 #' fit.rcm(S, ns, method = "approxMLE")
 #' @export
