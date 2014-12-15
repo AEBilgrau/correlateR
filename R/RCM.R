@@ -58,7 +58,7 @@ rcm_get_nu2 <- function(Psi, S_list, ns) {
 
 # Compute new Psi from nu, S, ns using approximate MLE
 rcm_mle_step <- function(nu, S_list, ns, ...) {
-  denom <- (nu - nrow(S[[1]]) - 1)*sum(ns)
+  denom <- (nu - nrow(S_list[[1]]) - 1)*sum(ns)
   w <- nu + ns
   Psi <- Reduce("+", lapply(seq_along(ns), function(i) w[i]*S_list[[i]]))/denom
   return(Psi)
@@ -79,6 +79,7 @@ rcm_mle_step <- function(nu, S_list, ns, ...) {
 #' @param nu.init A numeric of length one giving the inital estimate of 
 #'   \eqn{nu}{nu}. Default is \code{sum(ns)}.
 #' @param method The method to be used.
+#' @param conf.lvl The confidence level. Default is 0.95.
 #' @param eps The convergence criterion.
 #' @param verbose If true, the differences in log-likelihood for each iteration
 #'   is printed out.
@@ -86,7 +87,6 @@ rcm_mle_step <- function(nu, S_list, ns, ...) {
 #'   \item{Psi}{A matrix giving the estimate of \eqn{Psi}{Psi}.}
 #'   \item{nu}{A number giving the estimate of \eqn{nu}{nu}.}
 #'   \item{iterations}{A integer giving the number of iterations used.}
-#' @seealso \code{\link{Psi2Sigma}}
 #' @examples
 #' ns <- c(40, 20)
 #' print(Psi <- drop(rwishart(1)))  # Expected covariance

@@ -21,6 +21,8 @@ covariance matrix.}
 
 \item{method}{The method to be used.}
 
+\item{conf.lvl}{The confidence level. Default is 0.95.}
+
 \item{max.ite}{A numeric of length one giving the maximum number of
 iterations allowed. Default is 1000.}
 
@@ -47,8 +49,5 @@ S <- createRCMData(ns, Psi, nu)
 fit.rcm(S, ns, method = "EM", verbose = TRUE)
 fit.rcm(S, ns, method = "pool")
 fit.rcm(S, ns, method = "approxMLE")
-}
-\seealso{
-\code{\link{Psi2Sigma}}
 }
 
