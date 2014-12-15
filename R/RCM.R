@@ -10,50 +10,61 @@
 #' @return A list giving the \eqn{nu}{\nu} optimizing the RCM
 #'   likelihood with fixed \eqn{Psi}{\Psi} and other stuff.
 #' @author Anders Ellern Bilgrau
-#' @note \code{rcm_get_nu} optimizes via \code{\link{optimize}}.
+#' @note \code{rcm_get_nu_optimize} optimizes via \code{\link{optimize}}.
 #' @examples
 #' p <- 3
 #' Psi <- diag(p)
 #' ns <- c(5, 5, 5)
 #' true.nu <- 7
-#' nus <- seq(p+1+1e-5, 10, by = 0.01)
+#' nus <- seq(p + 1.3, 1e2, l = 1000)
 #' S_list <- createRCMData(ns = ns, psi = Psi, nu = true.nu)
 #' eval.ll <- c()
 #' for (i in seq_along(nus)) {
-#'   eval.ll[i] <- correlateR:::rcm_loglik_nu_arma(Psi, nus[i], S_list, ns)
+#'   eval.ll[i] <- correlateR:::rcm_loglik_arma(Psi, nus[i], S_list, ns)
 #' }
-#' plot(nus, eval.ll, type = "l", ylim = c(-30, 0))
+#' plot(nus, eval.ll, type = "l")
 #' abline(v = true.nu, col = "red", lwd = 2)
 #' 
 #' # Get nu
-#' print(ans <- correlateR:::rcm_get_nu(Psi, S_list, ns))
-#' print(ans2 <- correlateR:::rcm_get_nu2(Psi, S_list, ns))
+#' print(ans <- correlateR:::rcm_get_nu_optimize(Psi, S_list, ns))
+#' print(ans2 <- correlateR:::rcm_get_nu_optim(Psi, S_list, ns))
 #' 
 #' abline(v = ans$maximum, col = "orange", lwd = 2, lty = 2)
-#' abline(v = ans2$estimate, col = "blue", lwd = 2, lty = 3)
+#' abline(v = ans2$par, col = "blue", lwd = 2, lty = 3)
 #' 
 #' \dontrun{
 #' library("microbenchmark")
-#' microbenchmark(correlateR:::rcm_get_nu(Psi, S_list, ns),
-#'                correlateR:::rcm_get_nu2(Psi, S_list, ns))
+#' microbenchmark(correlateR:::rcm_get_nu_optimize(Psi, S_list, ns),
+#'                correlateR:::rcm_get_nu_optim(Psi, S_list, ns))
 #' }
 #' @keywords internal
-rcm_get_nu <- function(Psi, S_list, ns) {
-  loglik_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
-    return(rcm_loglik_nu_arma(Psi, nu, S_list, ns))
+rcm_get_nu_optimize <- function(Psi, S_list, ns) {
+  loglik_of_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
+    return(rcm_loglik_arma(Psi, nu, S_list, ns))
   }
-  interval <- c(nrow(Psi) + 1 + sqrt(.Machine$double.eps), 1e6) 
-  return(optimize(f = loglik_nu, interval = interval, maximum = TRUE))
+  upper <- 1e7
+  interval <- c(nrow(Psi) + 1 + sqrt(.Machine$double.eps), upper) 
+  ans <- optimize(f = loglik_of_nu, interval = interval, maximum = TRUE)
+  if (isTRUE(all.equal(ans$maximum, upper))) {
+    stop("maximum is close to the upper edge of", upper)
+  }
+  return(ans)
 } 
 
-#' @rdname rcm_get_nu
-#' @note \code{rcm_get_nu2} optimizes via \code{\link{nlm}}.
-rcm_get_nu2 <- function(Psi, S_list, ns) {
-  loglik_nu2 <- function(nu) { # log-likelihood as a function of nu, fixed Psi
-    return(-1*rcm_loglik_nu_arma(Psi, nu, S_list, ns))
+#' @rdname rcm_get_nu_optimize
+#' @note \code{rcm_get_nu_optim} optimizes via \code{\link{optim}} and the L-BFGS-B
+#'   method.f
+rcm_get_nu_optim <- function(Psi, S_list, ns) {
+  loglik_of_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
+    return(-1*rcm_loglik_arma(Psi, nu, S_list, ns))
   }
-  st <- nrow(Psi) + 1 + 0.5 + sqrt(.Machine$double.eps)
-  return(nlm(f = loglik_nu2, p = st, hessian = TRUE))
+  st <- rcm_get_nu_optimize(Psi, S_list, ns)$maximum
+  ans <- optim(fn = loglik_of_nu, par = st, lower = nrow(Psi) + 1, 
+               method = "L-BFGS-B", hessian = TRUE)
+  if (ans$convergence != 0) {
+    warning("optim had convergence problems; code: ", ans$convergence)
+  }
+  return(ans)
 } 
 
 # Compute new Psi from nu, S, ns using approximate MLE
@@ -127,7 +138,7 @@ fit.rcm <- function(S,
     ll.old  <- rcm_loglik_arma(Psi = Psi.old, nu = nu.old, S_list = S, ns = ns)
     for (i in seq_len(max.ite)) {
       Psi.new <- updatePsi(Psi = Psi.old, nu = nu.old, S_list = S, ns = ns)
-      nu.new  <- rcm_get_nu(Psi = Psi.new, S_list = S, ns = ns)$maximum
+      nu.new  <- rcm_get_nu_optim(Psi = Psi.new, S_list = S, ns = ns)$maximum
       ll.new  <- rcm_loglik_arma(Psi = Psi.new, nu = nu.new, S_list = S, ns=ns)
       diff <- ll.new - ll.old
       if (verbose) {
@@ -145,7 +156,7 @@ fit.rcm <- function(S,
       }
     }
     if (i == max.ite) warning("max iterations (", max.ite, ") hit!")
-    nu.res <- rcm_get_nu2(Psi = Psi.new, S_list = S, ns = ns)
+    nu.res <- rcm_get_nu_optim(Psi = Psi.new, S_list = S, ns = ns)
     nu.new <- nu.res$estimate
     ans <- list("Psi" = Psi.new, "nu" = nu.new, "iterations" = i)
 
@@ -153,7 +164,7 @@ fit.rcm <- function(S,
   } else if (method == "pool") {
     
     Psi.new <- pool(S_list = S, ns = ns, norm_type = 1L)
-    nu.res <- rcm_get_nu2(Psi = Psi.new, S_list = S, ns = ns)
+    nu.res <- rcm_get_nu_optim(Psi = Psi.new, S_list = S, ns = ns)
     nu.new <- nu.res$estimate
     ans <- list("Psi" = Psi.new, "nu" = nu.new, "iterations" = 1)
   
