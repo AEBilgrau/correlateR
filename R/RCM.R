@@ -7,6 +7,7 @@
 #'   estimate of \eqn{Psi}{\Psi}.
 #' @param S_list A \code{list} of scatter matrices.
 #' @param ns Vector of group sizes.
+#' @param \dots arguments passed to the optimizer.
 #' @return A list giving the \eqn{nu}{\nu} optimizing the RCM
 #'   likelihood with fixed \eqn{Psi}{\Psi} and other stuff.
 #' @author Anders Ellern Bilgrau
@@ -28,14 +29,17 @@
 #' # Get nu
 #' print(ans <- correlateR:::rcm_get_nu_optimize(Psi, S_list, ns))
 #' print(ans2 <- correlateR:::rcm_get_nu_optim(Psi, S_list, ns))
+#' print(ans3 <- correlateR:::rcm_get_nu_nlm(Psi, S_list, ns))
 #' 
 #' abline(v = ans$maximum, col = "orange", lwd = 2, lty = 2)
 #' abline(v = ans2$par, col = "blue", lwd = 2, lty = 3)
+#' abline(v = ans3$estimate, col = "red", lwd = 2, lty = 4)
 #' 
 #' \dontrun{
 #' library("microbenchmark")
 #' microbenchmark(correlateR:::rcm_get_nu_optimize(Psi, S_list, ns),
-#'                correlateR:::rcm_get_nu_optim(Psi, S_list, ns))
+#'                correlateR:::rcm_get_nu_optim(Psi, S_list, ns),
+#'                correlateR:::rcm_get_nu_nlm(Psi, S_list, ns))
 #' }
 #' @keywords internal
 rcm_get_nu_optimize <- function(Psi, S_list, ns) {
@@ -53,19 +57,34 @@ rcm_get_nu_optimize <- function(Psi, S_list, ns) {
 
 #' @rdname rcm_get_nu_optimize
 #' @note \code{rcm_get_nu_optim} optimizes via \code{\link{optim}} and the L-BFGS-B
-#'   method.f
-rcm_get_nu_optim <- function(Psi, S_list, ns) {
+#'   method.
+rcm_get_nu_optim <- function(Psi, S_list, ns, ...) {
   loglik_of_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
     return(-1*rcm_loglik_arma(Psi, nu, S_list, ns))
   }
   st <- rcm_get_nu_optimize(Psi, S_list, ns)$maximum
   ans <- optim(fn = loglik_of_nu, par = st, lower = nrow(Psi) + 1, 
-               method = "L-BFGS-B", hessian = TRUE)
+               method = "L-BFGS-B", hessian = TRUE, ...)
   if (ans$convergence != 0) {
     warning("optim had convergence problems; code: ", ans$convergence)
   }
   return(ans)
 } 
+
+#' @rdname rcm_get_nu_optimize
+#' @note \code{rcm_get_nu_nlm} optimizes via \code{\link{nlm}}.
+rcm_get_nu_nlm <- function(Psi, S_list, ns, ...) {
+  loglik_of_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
+    return(-1*rcm_loglik_arma(Psi, nu, S_list, ns))
+  }
+  st <- rcm_get_nu_optimize(Psi, S_list, ns)$maximum
+  ans <- nlm(f = loglik_of_nu, p = st, hessian = TRUE, ...)
+  if (!(ans$code %in% c(1,2))) {
+    warning("mle had convergence problems; code: ", ans$code)
+  }
+  return(ans)
+} 
+
 
 # Compute new Psi from nu, S, ns using approximate MLE
 rcm_mle_step <- function(nu, S_list, ns, ...) {
