@@ -138,7 +138,7 @@ fit.rcm <- function(S,
     ll.old  <- rcm_loglik_arma(Psi = Psi.old, nu = nu.old, S_list = S, ns = ns)
     for (i in seq_len(max.ite)) {
       Psi.new <- updatePsi(Psi = Psi.old, nu = nu.old, S_list = S, ns = ns)
-      nu.new  <- rcm_get_nu_optim(Psi = Psi.new, S_list = S, ns = ns)$maximum
+      nu.new  <- rcm_get_nu_optim(Psi = Psi.new, S_list = S, ns = ns)$par
       ll.new  <- rcm_loglik_arma(Psi = Psi.new, nu = nu.new, S_list = S, ns=ns)
       diff <- ll.new - ll.old
       if (verbose) {
@@ -157,7 +157,7 @@ fit.rcm <- function(S,
     }
     if (i == max.ite) warning("max iterations (", max.ite, ") hit!")
     nu.res <- rcm_get_nu_optim(Psi = Psi.new, S_list = S, ns = ns)
-    nu.new <- nu.res$estimate
+    nu.new <- nu.res$par
     ans <- list("Psi" = Psi.new, "nu" = nu.new, "iterations" = i)
 
     
@@ -165,7 +165,7 @@ fit.rcm <- function(S,
     
     Psi.new <- pool(S_list = S, ns = ns, norm_type = 1L)
     nu.res <- rcm_get_nu_optim(Psi = Psi.new, S_list = S, ns = ns)
-    nu.new <- nu.res$estimate
+    nu.new <- nu.res$par
     ans <- list("Psi" = Psi.new, "nu" = nu.new, "iterations" = 1)
   
   } else {
