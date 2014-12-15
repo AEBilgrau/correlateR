@@ -153,7 +153,7 @@ fit.rcm <- function(S,
   } else if (method == "pool") {
     
     Psi.new <- pool(S_list = S, ns = ns, norm_type = 1L)
-    nu.res <- rcm_get_nu2(Psi = Psi, S_list = S, ns = ns)
+    nu.res <- rcm_get_nu2(Psi = Psi.new, S_list = S, ns = ns)
     nu.new <- nu.res$estimate
     ans <- list("Psi" = Psi.new, "nu" = nu.new, "iterations" = 1)
   
