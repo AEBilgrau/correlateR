@@ -3,7 +3,7 @@
 \alias{createRCMData}
 \title{Simulate data from RCM}
 \usage{
-createRCMData(ns, psi, nu)
+createRCMData(ns, psi, nu, sigma)
 }
 \arguments{
 \item{ns}{A numeric vector giving the sample sizes in each study.}
@@ -13,6 +13,9 @@ covariance matrix. If \code{nu} is \code{Inf}
 this is used as \eqn{Sigma} parameter in all Wishart distributions.}
 
 \item{nu}{A numeric of length one giving the underlying \eqn{nu} parameter.}
+
+\item{sigma}{A numeric matrix giving the expected covariance matrix.
+Can be supplied instead of \code{psi}.}
 }
 \value{
 A \code{list} of matrices of the same size as \code{psi} giving

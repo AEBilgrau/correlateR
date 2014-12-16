@@ -3,7 +3,7 @@
 \alias{fit.rcm}
 \title{Fit using the EM algorithm}
 \usage{
-fit.rcm(S, ns, Psi.init, nu.init, method = c("EM", "pool", "approxMLE"),
+fit.rcm(S, ns, Psi.init, nu.init, method = c("EM", "pooled", "approxMLE"),
   conf.lvl = 0.95, max.ite = 1000, eps = 0.001, verbose = FALSE)
 }
 \arguments{
@@ -19,7 +19,8 @@ covariance matrix.}
 \item{nu.init}{A numeric of length one giving the inital estimate of
 \eqn{nu}{nu}. Default is \code{sum(ns)}.}
 
-\item{method}{The method to be used.}
+\item{method}{A character giving the method to be used or abbreviation
+hereof.}
 
 \item{conf.lvl}{The confidence level. Default is 0.95.}
 
@@ -36,18 +37,20 @@ A named list of length 3 with the elements:
   \item{Psi}{A matrix giving the estimate of \eqn{Psi}{Psi}.}
   \item{nu}{A number giving the estimate of \eqn{nu}{nu}.}
   \item{iterations}{A integer giving the number of iterations used.}
+  \item{loglik}{A numeric giving the value of the log-likelihood in the last
+     iteration.}
 }
 \description{
 Fit the RCM using the modified EM algorithm.
 }
 \examples{
-ns <- c(40, 20)
-print(Psi <- drop(rwishart(1)))  # Expected covariance
-nu <- 30
-S <- createRCMData(ns, Psi, nu)
+nss <- c(40, 20, 30, 10)
+print(Psii <- drop(rwishart(1)))  # Expected covariance
+nuu <- 7
+SS <- createRCMData(ns = nss, psi = Psii, nu = nuu)
 
-fit.rcm(S, ns, method = "EM", verbose = TRUE)
-fit.rcm(S, ns, method = "pool")
-fit.rcm(S, ns, method = "approxMLE")
+fit.rcm(SS, nss, method = "EM", verbose = TRUE)
+fit.rcm(SS, nss, method = "pool", verbose = TRUE)
+fit.rcm(SS, nss, method = "approxMLE", verbose = FALSE)
 }
 

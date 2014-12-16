@@ -27,20 +27,16 @@ double rcm_loglik_arma(const arma::mat & Psi,
                        const Rcpp::NumericVector & ns) { 
   const int k = S_list.size();
   const int p = Psi.n_rows;
-  if (nu < p + 1) {
-    throw std::invalid_argument("nu is not greater than p + 1");
-  }
+
   const Rcpp::NumericVector nu_half(1, nu/2.0f); // Vector of length 1
   const Rcpp::NumericVector cs = (nu + ns)/2.0f;
-  const arma::mat sPsi = (nu - p - 1.0f)*Psi;
-  const double logdetPsi = logdet_arma( sPsi )(0);
+  const double logdetPsi = logdet_arma( Psi )(0);
   
   arma::vec logdetPsiPlusS(k);
   for (int i = 0; i < k; ++i) {
     arma::mat Si = S_list[i];
-    logdetPsiPlusS(i) = logdet_arma( sPsi + Si )(0);
+    logdetPsiPlusS(i) = logdet_arma( Psi + Si )(0);
   }
-
   const double c1 = sum(((ns * p)/2.0f) * log(2.0f));
   const double t1 = k*nu_half(0)*logdetPsi;
   const double t2 = Rcpp::sum( lgammap(cs, p) );
@@ -49,6 +45,10 @@ double rcm_loglik_arma(const arma::mat & Psi,
   const double t4 = -k * lgammap(nu_half, p)(0);
   return c1 + t1 + t2 + t3 + t4;
 }
+
+
+
+
 
 
 //' The RCM EM-step
@@ -78,14 +78,17 @@ arma::mat rcm_em_step_arma(const arma::mat & Psi,
   const int p = Psi.n_rows;
   const double c = k*nu;
   arma::mat inv_ans(p, p, arma::fill::zeros);
-  const arma::mat sPsi = (nu - p - 1.0f)*Psi;
   for (int i = 0; i < k; ++i) {
       double fac = ns[i] + nu;
       arma::mat Si = S_list[i];
-      inv_ans += fac * arma::inv( sPsi + Si );
+      inv_ans += fac * arma::inv( Psi + Si );
   }
   return c * arma::inv(inv_ans);
 }
+
+
+
+
 
 
 /*** R
