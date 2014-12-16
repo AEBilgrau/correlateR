@@ -1,3 +1,26 @@
+#' Conversion from Psi between and Sigma
+#' 
+#' Computes the expected covariance matrix from Psi and nu in the random 
+#' covariance model (RCM) and vice versa.
+#' 
+#' @param Psi A numeric square positive semi-definite matrix. The underlying 
+#'   parameter in the RCM.
+#' @param nu A numeric of length one giving the degrees of freedom in the RCM.
+#' @return The converted matrix the same size as \code{Psi} or \code{Sigma}.
+#' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @export
+Psi2Sigma <- function(Psi, nu) {
+  return(Psi/(nu - ncol(Psi) - 1))
+}
+
+#' @rdname Psi2Sigma
+#' @param Sigma A numeric square positive semi-definite matrix. The expected 
+#'   covariance matrix in the RCM.
+#' @export
+Sigma2Psi <- function(Sigma, nu) {
+  return((nu - ncol(Sigma) - 1)*Sigma)
+}
+
 #' Estimate degrees of freedom 
 #' 
 #' Function for estimating the degrees of freedom \eqn{nu}{\nu} in the 
