@@ -2,7 +2,7 @@
 \name{Psi2Sigma}
 \alias{Psi2Sigma}
 \alias{Sigma2Psi}
-\title{Conversion from Psi between and Sigma}
+\title{Conversion between Psi and Sigma}
 \usage{
 Psi2Sigma(Psi, nu)
 

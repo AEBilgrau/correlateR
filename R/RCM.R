@@ -1,4 +1,4 @@
-#' Conversion from Psi between and Sigma
+#' Conversion between Psi and Sigma
 #' 
 #' Computes the expected covariance matrix from Psi and nu in the random 
 #' covariance model (RCM) and vice versa.
