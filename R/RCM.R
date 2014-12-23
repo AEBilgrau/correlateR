@@ -1,3 +1,16 @@
+#' Compute the ICC in the RCM
+#' 
+#' A simple function for computing the intra-class correlation coefficient 
+#' (ICC). This function simply computes \code{1/(nu - p)}.
+#' 
+#' @param nu A numeric giving the estimated degrees of freedom.
+#' @param p A numeric giving the dimension of the space.
+#' @return A numeric giving the ICC.
+#' @export
+ICC <- function(nu, p) {
+  return(1/(nu - p))
+}
+
 #' Conversion between Psi and Sigma
 #' 
 #' Computes the expected covariance matrix from Psi and nu in the random 
