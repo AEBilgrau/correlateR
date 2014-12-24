@@ -35,7 +35,7 @@ rwishart <- function(n, sigma = diag(3), nu = 10, verbose = TRUE) {
       warning("Simulating from a singular Wishart distribution as nu <= p - 1.")
     }
     mu <- rep(0, nrow(sigma))
-    return(replicate(n, scatter(rmvnormal(nu, mu = mu, sigma = sigma))))
+    return(replicate(n, crossprod(rmvnormal(nu, mu = mu, sigma = sigma))))
   }
   return(rwishartArma(n, sigma, nu))
 }

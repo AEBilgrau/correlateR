@@ -4,13 +4,15 @@
 \alias{xscatter}
 \title{Compute the scatter matrix}
 \usage{
-scatter(X)
+scatter(X, center = TRUE)
 
-xscatter(X, Y)
+xscatter(X, Y, center = TRUE)
 }
 \arguments{
 \item{X}{An \code{n} by \code{p1} numeric matrix with observations in the
 rows and variables in the columns.}
+
+\item{center}{logical. If \code{TRUE}, the data-matrices are centered first.}
 
 \item{Y}{An \code{n} by \code{p2} as \code{X}.}
 }
@@ -28,10 +30,10 @@ respectively.
 n <- 11
 X <- createData(n, 4)
 Y <- createData(n, 2)
-correlateR:::scatter(X)
+scatter(X)
 (n-1)*cov(X)
 
-correlateR:::xscatter(X, Y)
+xscatter(X, Y)
 n*xcov(X, Y, method = "ML")  # == (n - 1)*xcov(X, Y)
 }
 \author{
