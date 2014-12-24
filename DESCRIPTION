@@ -11,7 +11,8 @@ Description: Fast, robust, and efficient estimation of marginal, partial, and
     semi-partial (part) correlations and covariances.
 License: GPL (>=2)
 Imports:
-    Rcpp (>= 0.10.6)
+    Rcpp (>= 0.10.6),
+    GMCM
 Depends:
     RcppEigen
 LinkingTo: Rcpp, RcppArmadillo, RcppEigen

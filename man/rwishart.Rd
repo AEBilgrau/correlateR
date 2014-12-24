@@ -4,7 +4,7 @@
 \alias{rwishart}
 \title{Wishart and inverse-Wishart distributions}
 \usage{
-rwishart(n, sigma = diag(3), nu = 10)
+rwishart(n, sigma = diag(3), nu = 10, verbose = TRUE)
 
 rinvwishart(n, psi = diag(3), nu = 10)
 }
@@ -14,6 +14,9 @@ rinvwishart(n, psi = diag(3), nu = 10)
 \item{sigma}{A \code{p} by \code{p} symmetric postive-definite matrix.}
 
 \item{nu}{An numeric of length one giving the degrees of freedom.}
+
+\item{verbose}{logical. Warn if draws are from a singular Wishart
+distribution.}
 
 \item{psi}{A square symmetric postive-definite matrix.}
 }
@@ -28,10 +31,17 @@ For \code{rinvwishart} each slice is a draw from the inverse Wishart
 \description{
 Generate data from Wishart and inverse-Wishart distributions using the
 Barlett decomposition.
+When simulating from the Wishart distribution and \code{nu} is an integer
+strictly less than p, then the functions draws from a singular Wishart
+distribution using multivariate normal draws.
 }
 \examples{
 rwishart(n = 2)
 rwishart(n = 3, diag(4), nu = 4)
+
+rwishart(n = 1, diag(3), nu = 3)
+rwishart(n = 1, diag(3), nu = 2)
+rwishart(n = 1, diag(3), nu = 1)
 rinvwishart(n = 2)
 }
 \seealso{
