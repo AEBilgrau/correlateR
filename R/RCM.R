@@ -1,32 +1,34 @@
-#' Compute the ICC in the RCM
-#' 
+#' @rdname RCMmisc
+#' @title RCM miscellaneous functions
+#' @description Miscellaneous functions for the random covariance model (RCM). 
+#' @details \code{ICC} compute the ICC in the RCM.
 #' A simple function for computing the intra-class correlation coefficient 
-#' (ICC). This function simply computes \code{1/(nu - p)}.
-#' 
+#' (ICC). This function simply computes 1 divided by \code{nu - p}.
 #' @param nu A numeric giving the estimated degrees of freedom.
 #' @param p A numeric giving the dimension of the space.
-#' @return A numeric giving the ICC.
+#' @return \code{ICC}: A numeric giving the ICC.
 #' @export
 ICC <- function(nu, p) {
   return(1/(nu - p))
 }
 
-#' Conversion between Psi and Sigma
-#' 
+#' @rdname RCMmisc
+#' @details \code{Psi2Sigma} and \code{Sigma2Psi} provide conversion between Psi 
+#' and Sigma.
 #' Computes the expected covariance matrix from Psi and nu in the random 
 #' covariance model (RCM) and vice versa.
-#' 
 #' @param Psi A numeric square positive semi-definite matrix. The underlying 
 #'   parameter in the RCM.
 #' @param nu A numeric of length one giving the degrees of freedom in the RCM.
-#' @return The converted matrix the same size as \code{Psi} or \code{Sigma}.
+#' @return \code{Psi2Sigma}, \code{Sigma2Psi}:
+#'   The converted matrix the same size as \code{Psi} or \code{Sigma}.
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
 #' @export
 Psi2Sigma <- function(Psi, nu) {
   return(Psi/(nu - ncol(Psi) - 1))
 }
 
-#' @rdname Psi2Sigma
+#' @rdname RCMmisc
 #' @param Sigma A numeric square positive semi-definite matrix. The expected 
 #'   covariance matrix in the RCM.
 #' @export
