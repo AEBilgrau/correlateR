@@ -12,7 +12,7 @@ Psi2Sigma(Psi, nu)
 Sigma2Psi(Sigma, nu)
 }
 \arguments{
-\item{nu}{A numeric giving the estimated degrees of freedom.}
+\item{nu}{A numeric of length one giving the degrees of freedom in the RCM.}
 
 \item{p}{A numeric giving the dimension of the space.}
 
@@ -21,8 +21,6 @@ parameter in the RCM.}
 
 \item{Sigma}{A numeric square positive semi-definite matrix. The expected
 covariance matrix in the RCM.}
-
-\item{nu}{A numeric of length one giving the degrees of freedom in the RCM.}
 }
 \value{
 \code{ICC}: A numeric giving the ICC.

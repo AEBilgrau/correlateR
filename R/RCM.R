@@ -4,7 +4,7 @@
 #' @details \code{ICC} compute the ICC in the RCM.
 #' A simple function for computing the intra-class correlation coefficient 
 #' (ICC). This function simply computes 1 divided by \code{nu - p}.
-#' @param nu A numeric giving the estimated degrees of freedom.
+#' @param nu A numeric of length one giving the degrees of freedom in the RCM.
 #' @param p A numeric giving the dimension of the space.
 #' @return \code{ICC}: A numeric giving the ICC.
 #' @export
@@ -19,7 +19,6 @@ ICC <- function(nu, p) {
 #' covariance model (RCM) and vice versa.
 #' @param Psi A numeric square positive semi-definite matrix. The underlying 
 #'   parameter in the RCM.
-#' @param nu A numeric of length one giving the degrees of freedom in the RCM.
 #' @return \code{Psi2Sigma}, \code{Sigma2Psi}:
 #'   The converted matrix the same size as \code{Psi} or \code{Sigma}.
 #' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
