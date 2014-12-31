@@ -37,8 +37,8 @@ random covariance model (RCM).
 
 \code{rcm_get_nu_optimize} optimizes via \code{\link{optimize}}.
 
-\code{rcm_get_nu_optim} optimizes via \code{\link{optim}} and the L-BFGS-B
-  method.
+\code{rcm_get_nu_optim} optimizes via \code{\link{optim}} and the
+  L-BFGS-B method.
 
 \code{rcm_get_nu_nlm} optimizes via \code{\link{nlm}}.
 }

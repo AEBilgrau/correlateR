@@ -33,13 +33,12 @@ Miscellaneous functions for the random covariance model (RCM).
 }
 \details{
 \code{ICC} compute the ICC in the RCM.
-A simple function for computing the intra-class correlation coefficient
-(ICC). This function simply computes 1 divided by \code{nu - p}.
+  A simple function for computing the intra-class correlation coefficient
+  (ICC). This function simply computes 1 divided by \code{nu - p}.
 
 \code{Psi2Sigma} and \code{Sigma2Psi} provide conversion between Psi
-and Sigma.
-Computes the expected covariance matrix from Psi and nu in the random
-covariance model (RCM) and vice versa.
+  and Sigma. Computes the expected covariance matrix from Psi and nu in the
+  random covariance model (RCM) and vice versa.
 }
 \author{
 Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>

@@ -2,8 +2,8 @@
 #' @title RCM miscellaneous functions
 #' @description Miscellaneous functions for the random covariance model (RCM). 
 #' @details \code{ICC} compute the ICC in the RCM.
-#' A simple function for computing the intra-class correlation coefficient 
-#' (ICC). This function simply computes 1 divided by \code{nu - p}.
+#'   A simple function for computing the intra-class correlation coefficient 
+#'   (ICC). This function simply computes 1 divided by \code{nu - p}.
 #' @param nu A numeric of length one giving the degrees of freedom in the RCM.
 #' @param p A numeric giving the dimension of the space.
 #' @return \code{ICC}: A numeric giving the ICC.
@@ -14,9 +14,8 @@ ICC <- function(nu, p) {
 
 #' @rdname RCMmisc
 #' @details \code{Psi2Sigma} and \code{Sigma2Psi} provide conversion between Psi 
-#' and Sigma.
-#' Computes the expected covariance matrix from Psi and nu in the random 
-#' covariance model (RCM) and vice versa.
+#'   and Sigma. Computes the expected covariance matrix from Psi and nu in the
+#'   random covariance model (RCM) and vice versa.
 #' @param Psi A numeric square positive semi-definite matrix. The underlying 
 #'   parameter in the RCM.
 #' @return \code{Psi2Sigma}, \code{Sigma2Psi}:
@@ -99,8 +98,8 @@ rcm_get_nu_optimize <- function(Psi, S_list, ns) {
 } 
 
 #' @rdname rcm_get_nu
-#' @note \code{rcm_get_nu_optim} optimizes via \code{\link{optim}} and the L-BFGS-B
-#'   method.
+#' @note \code{rcm_get_nu_optim} optimizes via \code{\link{optim}} and the 
+#'   L-BFGS-B method.
 rcm_get_nu_optim <- function(Psi, S_list, ns, ...) {
   loglik_of_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
     return(-1*rcm_loglik_arma(Psi, nu, S_list, ns))
