@@ -27,7 +27,6 @@ double rcm_loglik_arma(const arma::mat & Psi,
                        const Rcpp::NumericVector & ns) { 
   const int k = S_list.size();
   const int p = Psi.n_rows;
-
   const Rcpp::NumericVector nu_half(1, nu/2.0f); // Vector of length 1
   const Rcpp::NumericVector cs = (nu + ns)/2.0f;
   const double logdetPsi = logdet_arma( Psi )(0);
@@ -37,14 +36,15 @@ double rcm_loglik_arma(const arma::mat & Psi,
     arma::mat Si = S_list[i];
     logdetPsiPlusS(i) = logdet_arma( Psi + Si )(0);
   }
-  const double c1 = sum(((ns * p)/2.0f) * log(2.0f));
+  const double c1 = sum(ns * p)/2.0f * log(arma::datum::pi);
   const double t1 = k*nu_half(0)*logdetPsi;
-  const double t2 = Rcpp::sum( lgammap(cs, p) );
-  const double t3 = -Rcpp::sum(cs*Rcpp::as<Rcpp::NumericVector>(
+  const double t2 = sum( lgammap(cs, p) );
+  const double t3 = -sum(cs*Rcpp::as<Rcpp::NumericVector>(
     Rcpp::wrap(logdetPsiPlusS)));
   const double t4 = -k * lgammap(nu_half, p)(0);
   return c1 + t1 + t2 + t3 + t4;
 }
+
 
 
 
@@ -93,6 +93,11 @@ arma::mat rcm_em_step_arma(const arma::mat & Psi,
 
 /*** R
 
+set.seed(1)
+ns <-  c(5, 5, 5)
+S <- createRCMData(ns = ns, psi = diag(4), nu = 30)
+correlateR:::rcm_loglik_arma(Psi = diag(4), nu = 15, S_list = S, ns = ns)
+ 
 rm(list = ls())
 
 library("correlateR")
