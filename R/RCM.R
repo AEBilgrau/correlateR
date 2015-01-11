@@ -291,15 +291,14 @@ drcm <- function(x, mu, Psi, nu, logarithm = FALSE) {
   Q <- function(x, A) {
     rowSums(tcrossprod(x, A) * x)
   }
-  sPsi <- (nu - p - 1)*Psi
   stopifnot(ncol(x) == length(mu))
   t1 <- lgammap((nu + 1)/2, p = p)
   t2 <- -lgammap(nu/2, p = p)
   t3 <- p/2*log(pi)
-  t4 <- -1/2*logdet_arma(sPsi)[1]
+  t4 <- -1/2*logdet_arma(Psi)[1]
   
   x.center <- t(t(x) - mu)
-  t5 <- -(nu + 1)/2 * log(1 + Q(x.center, solve(sPsi)))
+  t5 <- -(nu + 1)/2 * log(1 + Q(x.center, solve(Psi)))
   
   ans <- t1 + t2 + t3 + t4 + t5
   if (!logarithm) {
