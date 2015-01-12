@@ -16,7 +16,7 @@ matrices in \code{S}.}
 \eqn{Psi}{Psi}. Default starting value is the scaled pooled sample
 covariance matrix.}
 
-\item{nu.init}{A numeric of length one giving the inital estimate of
+\item{nu.init}{A numeric of length one giving the initial estimate of
 \eqn{nu}{nu}. Default is \code{sum(ns)}.}
 
 \item{method}{A character giving the method to be used or abbreviation

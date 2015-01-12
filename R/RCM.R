@@ -147,7 +147,7 @@ rcm_mle_step <- function(nu, S_list, ns, ...) {
 #'   covariance matrix.
 #' @param max.ite A numeric of length one giving the maximum number of 
 #'   iterations allowed. Default is 1000.
-#' @param nu.init A numeric of length one giving the inital estimate of 
+#' @param nu.init A numeric of length one giving the initial estimate of 
 #'   \eqn{nu}{nu}. Default is \code{sum(ns)}.
 #' @param method A character giving the method to be used or abbreviation 
 #'   hereof.
