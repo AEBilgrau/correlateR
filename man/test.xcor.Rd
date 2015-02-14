@@ -17,12 +17,12 @@ If vectors, \code{X} and \code{Y} mush have the same length.}
 
 \item{conf.level}{confidence level for the returned confidence interval.}
 
-\item{null}{The null to test against. Either a sigle number of or a matrix
+\item{null}{The null to test against. Either a single number of or a matrix
 of size \code{ncol(X)} times \code{ncol(Y)}.}
 }
 \value{
 If matrices are given a list of matrices are returned where the \eqn{ij}th
-  entry correponds to the results of \code{stats::cor.test(X[,i], Y[,j])}.\cr
+  entry corresponds to the results of \code{stats::cor.test(X[,i], Y[,j])}.\cr
   If vectors are given a vector of the results is given.
 }
 \description{
