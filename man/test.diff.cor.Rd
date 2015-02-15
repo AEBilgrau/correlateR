@@ -8,17 +8,18 @@
   "greater"), conf.level = 0.95, null = 0)
 }
 \arguments{
-\item{X1}{A numeric matrix of observations.}
+\item{X1}{A \code{numeric} \code{matrix} of observations.}
 
-\item{X2}{A numeric matrix of observations.}
+\item{X2}{A \code{numeric} \code{matrix} of observations.}
 
-\item{cor1}{A numeric matrix of correlation coefficients in the first group.}
+\item{cor1}{A \code{numeric} \code{matrix}  of correlation coefficients in
+the first group.}
 
 \item{cor2}{As c\code{cor1} for the second group.}
 
-\item{n1}{integer of lenth 1. The number of samples in group 1.}
+\item{n1}{\code{integer} of length 1. The number of samples in group 1.}
 
-\item{n2}{integer of lenth 1. The number of samples in group 2.}
+\item{n2}{\code{integer} of length 1. The number of samples in group 2.}
 
 \item{alternative}{The alternative hypothesis.}
 

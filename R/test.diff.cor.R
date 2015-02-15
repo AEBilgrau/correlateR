@@ -4,12 +4,13 @@
 #' It uses Fisher's Z-transform (atanh) to test the null hypothesis
 #' of no difference in correlations. See details.
 #' 
-#' @param X1 A numeric matrix of observations.
-#' @param X2 A numeric matrix of observations.
-#' @param cor1 A numeric matrix of correlation coefficients in the first group.
+#' @param X1 A \code{numeric} \code{matrix} of observations.
+#' @param X2 A \code{numeric} \code{matrix} of observations.
+#' @param cor1 A \code{numeric} \code{matrix}  of correlation coefficients in 
+#'   the first group.
 #' @param cor2 As c\code{cor1} for the second group.
-#' @param n1 integer of lenth 1. The number of samples in group 1.
-#' @param n2 integer of lenth 1. The number of samples in group 2.
+#' @param n1 \code{integer} of length 1. The number of samples in group 1.
+#' @param n2 \code{integer} of length 1. The number of samples in group 2.
 #' @param alternative The alternative hypothesis.
 #' @param conf.level The confidence level used in the computed confidence 
 #'   intervals.
