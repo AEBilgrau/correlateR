@@ -7,7 +7,7 @@
 #' distribution using multivariate normal draws.
 #'
 #' @param n The number of realizations.
-#' @param sigma A \code{p} by \code{p} symmetric postive-definite matrix.
+#' @param sigma A \code{p} by \code{p} symmetric positive definite matrix.
 #' @param nu An numeric of length one giving the degrees of freedom.
 #' @param verbose logical. Warn if draws are from a singular Wishart 
 #'   distribution.
@@ -41,7 +41,7 @@ rwishart <- function(n, sigma = diag(3), nu = 10, verbose = TRUE) {
 }
 
 #' @rdname rwishart
-#' @param psi A square symmetric postive-definite matrix.
+#' @param psi A square symmetric positive definite matrix.
 #' @return For \code{rinvwishart} each slice is a draw from the inverse Wishart 
 #'   distribution.
 #' @examples
