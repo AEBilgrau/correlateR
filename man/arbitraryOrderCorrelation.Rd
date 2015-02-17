@@ -8,7 +8,7 @@ arbitraryOrderCorrelation(S, z)
 \arguments{
 \item{S}{A numeric correlation matrix}
 
-\item{z}{A integer vector of indices of the variarbles to condition on. I.e.
+\item{z}{A integer vector of indices of the variables to condition on. I.e.
 length(z) is the order of the partial correlations. If \code{z} has
 length 0 the marginal correlations are returned.}
 }
