@@ -25,14 +25,14 @@ xcovEigen(X, Y, norm_type = 0L)
 \item{X}{A numeric matrix.}
 
 \item{norm_type}{an integer of length one giving the estimator. The
-default \code{0L} gives the unbised estimate while \code{1L} gives the
+default \code{0L} gives the unbiased estimate while \code{1L} gives the
 MLE.}
 
 \item{Y}{A numeric matrix of compatible dimension with the \code{X}, i.e.
 \code{nrow(X)} equals \code{nrow(Y)}.}
 }
 \value{
-The \code{cor}-familiy returns a numeric correlation matrix of size
+The \code{cor}-family returns a numeric correlation matrix of size
   \code{ncol(X)} times \code{ncol(X)}.
 
   The \code{xcor}-family returns a numeric cross-covariance matrix
@@ -56,7 +56,7 @@ Functions almost like \code{\link{cor}}.
 }
 \note{
 NA's in \code{X} or \code{Y} will yield NA's in the correlation matrix.
-  This also includes the diagonal unlike the behaviour of
+  This also includes the diagonal unlike the behavior of
   \code{stats::cor(X)}.
 }
 \author{
