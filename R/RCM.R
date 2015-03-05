@@ -66,24 +66,28 @@ Sigma2Psi <- function(Sigma, nu) {
 #' print(ans <- correlateR:::rcm_get_nu_optimize(Psi, S_list, ns))
 #' print(ans2 <- correlateR:::rcm_get_nu_optim(Psi, S_list, ns))
 #' print(ans3 <- correlateR:::rcm_get_nu_nlm(Psi, S_list, ns))
+#' print(ans4 <- correlateR:::rcm_get_nu_optimize2(Psi, S_list, ns))
 #' 
 #' abline(v = ans$maximum, col = "orange", lwd = 2, lty = 2)
 #' abline(v = ans2$par, col = "blue", lwd = 2, lty = 3)
-#' abline(v = ans3$estimate, col = "red", lwd = 2, lty = 4)
-#' 
+#' abline(v = ans3$estimate, col = "brown", lwd = 2, lty = 4)
+#' abline(v = ans4$maximum, col = "purple", lwd = 2, lty = 4)
+#'  
 #' \dontrun{
 #' library("microbenchmark")
-#' microbenchmark(correlateR:::rcm_get_nu_optimize(Psi, S_list, ns),
+#' microbenchmark(correlateR:::rcm_get_nu_optimize2(Psi, S_list, ns),
+#'                correlateR:::rcm_get_nu_optimize(Psi, S_list, ns),
 #'                correlateR:::rcm_get_nu_optim(Psi, S_list, ns),
 #'                correlateR:::rcm_get_nu_nlm(Psi, S_list, ns))
 #' }
 #' @keywords internal
 rcm_get_nu <- function(Psi, S_list, ns) {
-  return(rcm_get_nu_optimize(Psi, S_list, ns)$maximum)
+  return(rcm_get_nu_optimize2(Psi, S_list, ns)$maximum)
 } 
 
 #' @rdname rcm_get_nu
-#' @note \code{rcm_get_nu_optimize} optimizes via \code{\link{optimize}}.
+#' @note \code{rcm_get_nu_optimize} optimizes via \code{\link{optimize}} and
+#'   the Brent-type optimization.
 rcm_get_nu_optimize <- function(Psi, S_list, ns) {
   loglik_of_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
     return(rcm_loglik_arma(Psi, nu, S_list, ns))
@@ -123,6 +127,27 @@ rcm_get_nu_nlm <- function(Psi, S_list, ns, ...) {
   ans <- nlm(f = loglik_of_nu, p = st, hessian = TRUE, ...)
   if (!(ans$code %in% c(1,2))) {
     warning("nlm had convergence problems; code: ", ans$code)
+  }
+  return(ans)
+} 
+
+#' @rdname rcm_get_nu
+#' @note \code{rcm_get_nu_optim2} optimizes via \code{\link{optimizme}} and the 
+#'   Brent-type method. A faster implementation. Avoids many repeated
+#'   evaluations.
+rcm_get_nu_optimize2 <- function(Psi, S_list, ns) {
+  loglik_of_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
+    return(rcm_loglik_nu_arma(logdetPsi = logdetPsi, nu = nu, 
+                              logdetPsiPlusS = logdetPsiPlusS, ns = ns, p = p))
+  }
+  p <- nrow(Psi)
+  logdetPsi <- logdet_arma(Psi)[1]
+  logdetPsiPlusS <- rcm_logdetPsiPlusS_arma(Psi = Psi, S_list = S_list)
+  upper <- 1e7
+  interval <- c(nrow(Psi) + 1 + sqrt(.Machine$double.eps), upper) 
+  ans <- optimize(f = loglik_of_nu, interval = interval, maximum = TRUE)
+  if (isTRUE(all.equal(ans$maximum, upper))) {
+    stop("maximum is close to the upper edge of", upper)
   }
   return(ans)
 } 

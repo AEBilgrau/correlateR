@@ -329,6 +329,22 @@ BEGIN_RCPP
     return __sexp_result;
 END_RCPP
 }
+// rcm_logdetPsiPlusS_arma
+Rcpp::NumericVector rcm_logdetPsiPlusS_arma(const arma::mat& Psi, const Rcpp::List& S_list);
+RcppExport SEXP correlateR_rcm_logdetPsiPlusS_arma(SEXP PsiSEXP, SEXP S_listSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP );
+        Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP );
+        Rcpp::NumericVector __result = rcm_logdetPsiPlusS_arma(Psi, S_list);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
 // rcm_loglik_arma
 double rcm_loglik_arma(const arma::mat& Psi, const double nu, const Rcpp::List& S_list, const Rcpp::NumericVector& ns);
 RcppExport SEXP correlateR_rcm_loglik_arma(SEXP PsiSEXP, SEXP nuSEXP, SEXP S_listSEXP, SEXP nsSEXP) {
@@ -341,6 +357,25 @@ BEGIN_RCPP
         Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP );
         Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP );
         double __result = rcm_loglik_arma(Psi, nu, S_list, ns);
+        PROTECT(__sexp_result = Rcpp::wrap(__result));
+    }
+    UNPROTECT(1);
+    return __sexp_result;
+END_RCPP
+}
+// rcm_loglik_nu_arma
+double rcm_loglik_nu_arma(const double& logdetPsi, const double nu, const Rcpp::NumericVector& logdetPsiPlusS, const Rcpp::NumericVector& ns, const int p);
+RcppExport SEXP correlateR_rcm_loglik_nu_arma(SEXP logdetPsiSEXP, SEXP nuSEXP, SEXP logdetPsiPlusSSEXP, SEXP nsSEXP, SEXP pSEXP) {
+BEGIN_RCPP
+    SEXP __sexp_result;
+    {
+        Rcpp::RNGScope __rngScope;
+        Rcpp::traits::input_parameter< const double& >::type logdetPsi(logdetPsiSEXP );
+        Rcpp::traits::input_parameter< const double >::type nu(nuSEXP );
+        Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type logdetPsiPlusS(logdetPsiPlusSSEXP );
+        Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP );
+        Rcpp::traits::input_parameter< const int >::type p(pSEXP );
+        double __result = rcm_loglik_nu_arma(logdetPsi, nu, logdetPsiPlusS, ns, p);
         PROTECT(__sexp_result = Rcpp::wrap(__result));
     }
     UNPROTECT(1);

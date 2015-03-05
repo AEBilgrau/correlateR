@@ -203,6 +203,10 @@ pxcovArma <- function(X, Y, Z, norm_type = 0L) {
     .Call('correlateR_pxcovArma', PACKAGE = 'correlateR', X, Y, Z, norm_type)
 }
 
+rcm_logdetPsiPlusS_arma <- function(Psi, S_list) {
+    .Call('correlateR_rcm_logdetPsiPlusS_arma', PACKAGE = 'correlateR', Psi, S_list)
+}
+
 #' The RCM log-likelihood function
 #' 
 #' Fast evaluation of the RCM log-likelihood function.
@@ -222,6 +226,10 @@ pxcovArma <- function(X, Y, Z, norm_type = 0L) {
 #' @keywords internal
 rcm_loglik_arma <- function(Psi, nu, S_list, ns) {
     .Call('correlateR_rcm_loglik_arma', PACKAGE = 'correlateR', Psi, nu, S_list, ns)
+}
+
+rcm_loglik_nu_arma <- function(logdetPsi, nu, logdetPsiPlusS, ns, p) {
+    .Call('correlateR_rcm_loglik_nu_arma', PACKAGE = 'correlateR', logdetPsi, nu, logdetPsiPlusS, ns, p)
 }
 
 #' The RCM EM-step

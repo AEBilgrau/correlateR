@@ -1,7 +1,23 @@
 // Only include aux_functions.h which pulls in RcppArmadillo.h,
 // RcppEigen.h, and Rcpp.h
-
 #include "auxiliary_functions.h"
+
+
+
+// Helper function - compute the log determinant of Psi + Si for all 1, ..., k
+// [[Rcpp::export]]
+Rcpp::NumericVector rcm_logdetPsiPlusS_arma(const arma::mat & Psi, 
+                                            const Rcpp::List & S_list) { 
+  const int k = S_list.size();
+  arma::vec logdetPsiPlusS(k);
+  for (int i = 0; i < k; ++i) {
+    arma::mat Si = S_list[i];
+    logdetPsiPlusS(i) = logdet_arma( Psi + Si )(0);
+  }
+  return Rcpp::wrap(logdetPsiPlusS);
+}
+
+
 
 //' The RCM log-likelihood function
 //' 
@@ -29,24 +45,35 @@ double rcm_loglik_arma(const arma::mat & Psi,
   const int p = Psi.n_rows;
   const Rcpp::NumericVector nu_half(1, nu/2.0f); // Vector of length 1
   const Rcpp::NumericVector cs = (nu + ns)/2.0f;
+  const Rcpp::NumericVector logdetPsiPlusS = rcm_logdetPsiPlusS_arma(Psi,S_list);
   const double logdetPsi = logdet_arma( Psi )(0);
-  
-  arma::vec logdetPsiPlusS(k);
-  for (int i = 0; i < k; ++i) {
-    arma::mat Si = S_list[i];
-    logdetPsiPlusS(i) = logdet_arma( Psi + Si )(0);
-  }
   const double c1 = sum(ns * p)/2.0f * log(arma::datum::pi);
   const double t1 = k*nu_half(0)*logdetPsi;
   const double t2 = sum( lgammap(cs, p) );
-  const double t3 = -sum(cs*Rcpp::as<Rcpp::NumericVector>(
-    Rcpp::wrap(logdetPsiPlusS)));
+  const double t3 = -sum( cs*logdetPsiPlusS );
   const double t4 = -k * lgammap(nu_half, p)(0);
   return c1 + t1 + t2 + t3 + t4;
 }
 
 
-
+// The log-likelihood as a function of nu
+// Allows for faster evaluation
+// [[Rcpp::export]]
+double rcm_loglik_nu_arma(const double & logdetPsi, 
+                          const double nu, 
+                          const Rcpp::NumericVector & logdetPsiPlusS, 
+                          const Rcpp::NumericVector & ns,
+                          const int p) { 
+  const int k = ns.size();
+  const Rcpp::NumericVector nu_half(1, nu/2.0f); // Vector of length 1
+  const Rcpp::NumericVector cs = (nu + ns)/2.0f;
+  const double c1 = sum(ns * p)/2.0f * log(arma::datum::pi);
+  const double t1 = k*nu_half(0)*logdetPsi;
+  const double t2 = sum( lgammap(cs, p) );
+  const double t3 = -sum(cs*logdetPsiPlusS);
+  const double t4 = -k * lgammap(nu_half, p)(0);
+  return c1 + t1 + t2 + t3 + t4;
+}
 
 
 
@@ -92,12 +119,22 @@ arma::mat rcm_em_step_arma(const arma::mat & Psi,
 
 
 /*** R
-
+rm(list = ls())
 set.seed(1)
-ns <-  c(5, 5, 5)
-S <- createRCMData(ns = ns, psi = diag(4), nu = 30)
-correlateR:::rcm_loglik_arma(Psi = diag(4), nu = 15, S_list = S, ns = ns)
- 
+NS <-  c(5, 5, 5)
+PSI <- diag(5)
+NU <- 15
+S <- createRCMData(ns = NS, psi = PSI, nu = NU)
+
+  
+correlateR:::rcm_loglik_arma(Psi = PSI, nu = NU, S_list = S, ns = NS)
+logdetPsiPlusSi <- correlateR:::rcm_logdetPsiPlusS_arma(Psi = PSI, S_list = S)
+correlateR:::rcm_loglik_nu_arma(logdetPsi = correlateR:::logdet_arma(PSI)[1], 
+                                nu = NU, logdetPsiPlusS = logdetPsiPlusSi,
+                                ns = NS, p = 5)
+
+rcm_loglik_nu_arma
+
 rm(list = ls())
 
 library("correlateR")
