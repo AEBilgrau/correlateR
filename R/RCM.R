@@ -36,7 +36,7 @@ Sigma2Psi <- function(Sigma, nu) {
 
 #' Estimate degrees of freedom 
 #' 
-#' Function for estimating the degrees of freedom \eqn{nu}{\nu} in the 
+#' Functions for estimating the degrees of freedom \eqn{nu}{\nu} in the 
 #' random covariance model (RCM).
 #' 
 #' @param Psi A numeric matrix of size \eqn{p} times \eqn{p} giving the initial
@@ -132,7 +132,7 @@ rcm_get_nu_nlm <- function(Psi, S_list, ns, ...) {
 } 
 
 #' @rdname rcm_get_nu
-#' @note \code{rcm_get_nu_optim2} optimizes via \code{\link{optimizme}} and the 
+#' @note \code{rcm_get_nu_optim2} optimizes via \code{\link{optimize}} and the 
 #'   Brent-type method. A faster implementation. Avoids many repeated
 #'   evaluations.
 rcm_get_nu_optimize2 <- function(Psi, S_list, ns) {

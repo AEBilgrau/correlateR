@@ -33,7 +33,7 @@ A list giving the \eqn{nu}{\nu} optimizing the RCM
   likelihood with fixed \eqn{Psi}{\Psi} and other stuff.
 }
 \description{
-Function for estimating the degrees of freedom \eqn{nu}{\nu} in the
+Functions for estimating the degrees of freedom \eqn{nu}{\nu} in the
 random covariance model (RCM).
 }
 \note{
@@ -47,7 +47,7 @@ random covariance model (RCM).
 
 \code{rcm_get_nu_nlm} optimizes via \code{\link{nlm}}.
 
-\code{rcm_get_nu_optim2} optimizes via \code{\link{optimizme}} and the
+\code{rcm_get_nu_optim2} optimizes via \code{\link{optimize}} and the
   Brent-type method. A faster implementation. Avoids many repeated
   evaluations.
 }
