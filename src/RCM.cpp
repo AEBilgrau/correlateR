@@ -108,9 +108,9 @@ arma::mat rcm_em_step_arma(const arma::mat & Psi,
   for (int i = 0; i < k; ++i) {
       double fac = ns[i] + nu;
       arma::mat Si = S_list[i];
-      inv_ans += fac * arma::inv( Psi + Si );
+      inv_ans += fac * arma::inv_sympd( Psi + Si );
   }
-  return c * arma::inv(inv_ans);
+  return c * arma::inv_sympd(inv_ans);
 }
 
 
