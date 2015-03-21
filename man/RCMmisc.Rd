@@ -39,7 +39,7 @@ Miscellaneous functions for the random covariance model (RCM).
 
 \code{Psi2Sigma} and \code{Sigma2Psi} provide conversion between Psi
   and Sigma. Computes the expected covariance matrix from Psi and nu in the
-  random covariance model (RCM) and vice versa.
+  random covariance model (RCM) and the other way around.
 }
 \author{
 Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>

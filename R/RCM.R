@@ -15,7 +15,7 @@ ICC <- function(nu, p) {
 #' @rdname RCMmisc
 #' @details \code{Psi2Sigma} and \code{Sigma2Psi} provide conversion between Psi 
 #'   and Sigma. Computes the expected covariance matrix from Psi and nu in the
-#'   random covariance model (RCM) and vice versa.
+#'   random covariance model (RCM) and the other way around.
 #' @param Psi A numeric square positive semi-definite matrix. The underlying 
 #'   parameter in the RCM.
 #' @return \code{Psi2Sigma}, \code{Sigma2Psi}:
