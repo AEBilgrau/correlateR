@@ -7,21 +7,21 @@
 createData(n, m, n.na = 0)
 }
 \arguments{
-\item{n}{an non-negative integer giving the number of observations/samples.}
+\item{n}{A non-negative integer giving the number of observations/samples.}
 
-\item{m}{an non-negative integer giving the number of variables/features.}
+\item{m}{A non-negative integer giving the number of variables/features.}
 
-\item{n.na}{an integer from \code{0} to \code{n*m} giving the number of
+\item{n.na}{An integer from \code{0} to \code{n*m} giving the number of
 \code{NA}s in the output. Default is \code{0}.}
 }
 \value{
-A \code{n} times \code{m} numeric matrix of observations from
+An \code{n} times \code{m} numeric matrix of observations from
   zero-mean gaussian random variables.
 }
 \description{
 Creates a named matrix of toy data from an \code{m}-dimensional
-zero-mean normal distribution with identity covariance matrix for
-convenience.
+zero-mean normal distribution with identity covariance matrix.
+For convenience in various examples and tests.
 }
 \note{
 The \code{n.na} \code{NA}s are randomly inserted in the output.
