@@ -47,7 +47,7 @@ the matrix of variables to condition on.}
 All functions return a matrix of correlations or covariances.
 }
 \description{
-These functions offers a interface to compute arbitrary order partial
+These functions offer an interface to compute arbitrary order partial
 (or semi-partial) variance-covariance or correlation matrix as well as
 partial cross variance-covariances or correlations.
 }
