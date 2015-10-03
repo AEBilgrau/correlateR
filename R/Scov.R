@@ -78,8 +78,8 @@ Scov <- function(X, method = c("OAS", "RBLW", "LW", "SS")) {
       ((n + 2) * (tr(Shat^2) - tr(Shat)^2/p))
   } else if (method == "OAS") {
     rho <- # OAS estimate of the optimal rho (eq. 23 i ref.)
-      ((1 - 2)/p * tr(Shat^2) + tr(Shat)^2)/
-      ((n + 1 - 2)/p * (tr(Shat^2) - tr(Shat)^2/p))
+      ((1 - 2/p) * tr(Shat^2) + tr(Shat)^2)/
+      ((n + 1 - 2/p) * (tr(Shat^2) - tr(Shat)^2/p))
   } else {
     stop("method ", method, " must one 'OAS', 'RBLW', 'LW'. ",
          "Others (SS) are not implemented yet.")
