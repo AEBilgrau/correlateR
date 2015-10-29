@@ -8,429 +8,325 @@
 using namespace Rcpp;
 
 // lgammap
-Rcpp::NumericVector lgammap(const Rcpp::NumericVector& x, const int p = 1);
+Rcpp::NumericVector lgammap(const Rcpp::NumericVector& x, const int p);
 RcppExport SEXP correlateR_lgammap(SEXP xSEXP, SEXP pSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type x(xSEXP );
-        Rcpp::traits::input_parameter< const int >::type p(pSEXP );
-        Rcpp::NumericVector __result = lgammap(x, p);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type x(xSEXP);
+    Rcpp::traits::input_parameter< const int >::type p(pSEXP);
+    __result = Rcpp::wrap(lgammap(x, p));
+    return __result;
 END_RCPP
 }
 // logdet_arma
 arma::vec logdet_arma(const arma::mat& x);
 RcppExport SEXP correlateR_logdet_arma(SEXP xSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type x(xSEXP );
-        arma::vec __result = logdet_arma(x);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type x(xSEXP);
+    __result = Rcpp::wrap(logdet_arma(x));
+    return __result;
 END_RCPP
 }
 // corRcpp
 Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix& X);
 RcppExport SEXP correlateR_corRcpp(SEXP XSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type X(XSEXP );
-        Rcpp::NumericMatrix __result = corRcpp(X);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type X(XSEXP);
+    __result = Rcpp::wrap(corRcpp(X));
+    return __result;
 END_RCPP
 }
 // xcorRcpp
 Rcpp::NumericMatrix xcorRcpp(Rcpp::NumericMatrix& X, Rcpp::NumericMatrix& Y);
 RcppExport SEXP correlateR_xcorRcpp(SEXP XSEXP, SEXP YSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type Y(YSEXP );
-        Rcpp::NumericMatrix __result = xcorRcpp(X, Y);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type Y(YSEXP);
+    __result = Rcpp::wrap(xcorRcpp(X, Y));
+    return __result;
 END_RCPP
 }
 // corArma
 arma::mat corArma(const arma::mat& X);
 RcppExport SEXP correlateR_corArma(SEXP XSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
-        arma::mat __result = corArma(X);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    __result = Rcpp::wrap(corArma(X));
+    return __result;
 END_RCPP
 }
 // xcorArma
 arma::mat xcorArma(const arma::mat& X, const arma::mat& Y);
 RcppExport SEXP correlateR_xcorArma(SEXP XSEXP, SEXP YSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP );
-        arma::mat __result = xcorArma(X, Y);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    __result = Rcpp::wrap(xcorArma(X, Y));
+    return __result;
 END_RCPP
 }
 // corEigen
 Eigen::MatrixXd corEigen(Eigen::Map<Eigen::MatrixXd>& X);
 RcppExport SEXP correlateR_corEigen(SEXP XSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP );
-        Eigen::MatrixXd __result = corEigen(X);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP);
+    __result = Rcpp::wrap(corEigen(X));
+    return __result;
 END_RCPP
 }
 // xcorEigen
 Eigen::MatrixXd xcorEigen(Eigen::Map<Eigen::MatrixXd>& X, Eigen::Map<Eigen::MatrixXd>& Y);
 RcppExport SEXP correlateR_xcorEigen(SEXP XSEXP, SEXP YSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type Y(YSEXP );
-        Eigen::MatrixXd __result = xcorEigen(X, Y);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type Y(YSEXP);
+    __result = Rcpp::wrap(xcorEigen(X, Y));
+    return __result;
 END_RCPP
 }
 // cov2corArma
 arma::mat cov2corArma(arma::mat S);
 RcppExport SEXP correlateR_cov2corArma(SEXP SSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP );
-        arma::mat __result = cov2corArma(S);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< arma::mat >::type S(SSEXP);
+    __result = Rcpp::wrap(cov2corArma(S));
+    return __result;
 END_RCPP
 }
 // covRcpp
-Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix& X, const int norm_type = 0);
+Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix& X, const int norm_type);
 RcppExport SEXP correlateR_covRcpp(SEXP XSEXP, SEXP norm_typeSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        Rcpp::NumericMatrix __result = covRcpp(X, norm_type);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP);
+    __result = Rcpp::wrap(covRcpp(X, norm_type));
+    return __result;
 END_RCPP
 }
 // xcovRcpp
-Rcpp::NumericMatrix xcovRcpp(Rcpp::NumericMatrix& X, Rcpp::NumericMatrix& Y, const int norm_type = 0);
+Rcpp::NumericMatrix xcovRcpp(Rcpp::NumericMatrix& X, Rcpp::NumericMatrix& Y, const int norm_type);
 RcppExport SEXP correlateR_xcovRcpp(SEXP XSEXP, SEXP YSEXP, SEXP norm_typeSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type Y(YSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        Rcpp::NumericMatrix __result = xcovRcpp(X, Y, norm_type);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< Rcpp::NumericMatrix& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP);
+    __result = Rcpp::wrap(xcovRcpp(X, Y, norm_type));
+    return __result;
 END_RCPP
 }
 // covArma
-arma::mat covArma(const arma::mat& X, const int norm_type = 0);
+arma::mat covArma(const arma::mat& X, const int norm_type);
 RcppExport SEXP correlateR_covArma(SEXP XSEXP, SEXP norm_typeSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        arma::mat __result = covArma(X, norm_type);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP);
+    __result = Rcpp::wrap(covArma(X, norm_type));
+    return __result;
 END_RCPP
 }
 // xcovArma
-arma::mat xcovArma(const arma::mat& X, const arma::mat& Y, const int norm_type = 0);
+arma::mat xcovArma(const arma::mat& X, const arma::mat& Y, const int norm_type);
 RcppExport SEXP correlateR_xcovArma(SEXP XSEXP, SEXP YSEXP, SEXP norm_typeSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        arma::mat __result = xcovArma(X, Y, norm_type);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP);
+    __result = Rcpp::wrap(xcovArma(X, Y, norm_type));
+    return __result;
 END_RCPP
 }
 // covEigen
-Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd>& X, const int norm_type = 0);
+Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd>& X, const int norm_type);
 RcppExport SEXP correlateR_covEigen(SEXP XSEXP, SEXP norm_typeSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        Eigen::MatrixXd __result = covEigen(X, norm_type);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP);
+    __result = Rcpp::wrap(covEigen(X, norm_type));
+    return __result;
 END_RCPP
 }
 // xcovEigen
-Eigen::MatrixXd xcovEigen(Eigen::Map<Eigen::MatrixXd>& X, Eigen::Map<Eigen::MatrixXd>& Y, const int norm_type = 0);
+Eigen::MatrixXd xcovEigen(Eigen::Map<Eigen::MatrixXd>& X, Eigen::Map<Eigen::MatrixXd>& Y, const int norm_type);
 RcppExport SEXP correlateR_xcovEigen(SEXP XSEXP, SEXP YSEXP, SEXP norm_typeSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type Y(YSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        Eigen::MatrixXd __result = xcovEigen(X, Y, norm_type);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< Eigen::Map<Eigen::MatrixXd>& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP);
+    __result = Rcpp::wrap(xcovEigen(X, Y, norm_type));
+    return __result;
 END_RCPP
 }
 // pcorArma
 arma::mat pcorArma(const arma::mat& X, const arma::uvec& z);
 RcppExport SEXP correlateR_pcorArma(SEXP XSEXP, SEXP zSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const arma::uvec& >::type z(zSEXP );
-        arma::mat __result = pcorArma(X, z);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type z(zSEXP);
+    __result = Rcpp::wrap(pcorArma(X, z));
+    return __result;
 END_RCPP
 }
 // pcovArma
 arma::mat pcovArma(const arma::mat& X, const arma::uvec& z);
 RcppExport SEXP correlateR_pcovArma(SEXP XSEXP, SEXP zSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const arma::uvec& >::type z(zSEXP );
-        arma::mat __result = pcovArma(X, z);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::uvec& >::type z(zSEXP);
+    __result = Rcpp::wrap(pcovArma(X, z));
+    return __result;
 END_RCPP
 }
 // pool
-arma::mat pool(const Rcpp::List& S_list, const Rcpp::NumericVector ns, const int norm_type = 0);
+arma::mat pool(const Rcpp::List& S_list, const Rcpp::NumericVector ns, const int norm_type);
 RcppExport SEXP correlateR_pool(SEXP S_listSEXP, SEXP nsSEXP, SEXP norm_typeSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP );
-        Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type ns(nsSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        arma::mat __result = pool(S_list, ns, norm_type);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector >::type ns(nsSEXP);
+    Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP);
+    __result = Rcpp::wrap(pool(S_list, ns, norm_type));
+    return __result;
 END_RCPP
 }
 // pxcorArma
 arma::mat pxcorArma(const arma::mat& X, const arma::mat& Y, const arma::mat& Z);
 RcppExport SEXP correlateR_pxcorArma(SEXP XSEXP, SEXP YSEXP, SEXP ZSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP );
-        Rcpp::traits::input_parameter< const arma::mat& >::type Z(ZSEXP );
-        arma::mat __result = pxcorArma(X, Y, Z);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Z(ZSEXP);
+    __result = Rcpp::wrap(pxcorArma(X, Y, Z));
+    return __result;
 END_RCPP
 }
 // pxcovArma
-arma::mat pxcovArma(const arma::mat& X, const arma::mat& Y, const arma::mat& Z, const int norm_type = 0L);
+arma::mat pxcovArma(const arma::mat& X, const arma::mat& Y, const arma::mat& Z, const int norm_type);
 RcppExport SEXP correlateR_pxcovArma(SEXP XSEXP, SEXP YSEXP, SEXP ZSEXP, SEXP norm_typeSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP );
-        Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP );
-        Rcpp::traits::input_parameter< const arma::mat& >::type Z(ZSEXP );
-        Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP );
-        arma::mat __result = pxcovArma(X, Y, Z, norm_type);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type X(XSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Y(YSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type Z(ZSEXP);
+    Rcpp::traits::input_parameter< const int >::type norm_type(norm_typeSEXP);
+    __result = Rcpp::wrap(pxcovArma(X, Y, Z, norm_type));
+    return __result;
 END_RCPP
 }
 // rcm_logdetPsiPlusS_arma
 Rcpp::NumericVector rcm_logdetPsiPlusS_arma(const arma::mat& Psi, const Rcpp::List& S_list);
 RcppExport SEXP correlateR_rcm_logdetPsiPlusS_arma(SEXP PsiSEXP, SEXP S_listSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP );
-        Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP );
-        Rcpp::NumericVector __result = rcm_logdetPsiPlusS_arma(Psi, S_list);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP);
+    __result = Rcpp::wrap(rcm_logdetPsiPlusS_arma(Psi, S_list));
+    return __result;
 END_RCPP
 }
 // rcm_loglik_arma
 double rcm_loglik_arma(const arma::mat& Psi, const double nu, const Rcpp::List& S_list, const Rcpp::NumericVector& ns);
 RcppExport SEXP correlateR_rcm_loglik_arma(SEXP PsiSEXP, SEXP nuSEXP, SEXP S_listSEXP, SEXP nsSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP );
-        Rcpp::traits::input_parameter< const double >::type nu(nuSEXP );
-        Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP );
-        Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP );
-        double __result = rcm_loglik_arma(Psi, nu, S_list, ns);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP);
+    Rcpp::traits::input_parameter< const double >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP);
+    __result = Rcpp::wrap(rcm_loglik_arma(Psi, nu, S_list, ns));
+    return __result;
 END_RCPP
 }
 // rcm_loglik_nu_arma
 double rcm_loglik_nu_arma(const double& logdetPsi, const double nu, const Rcpp::NumericVector& logdetPsiPlusS, const Rcpp::NumericVector& ns, const int p);
 RcppExport SEXP correlateR_rcm_loglik_nu_arma(SEXP logdetPsiSEXP, SEXP nuSEXP, SEXP logdetPsiPlusSSEXP, SEXP nsSEXP, SEXP pSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const double& >::type logdetPsi(logdetPsiSEXP );
-        Rcpp::traits::input_parameter< const double >::type nu(nuSEXP );
-        Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type logdetPsiPlusS(logdetPsiPlusSSEXP );
-        Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP );
-        Rcpp::traits::input_parameter< const int >::type p(pSEXP );
-        double __result = rcm_loglik_nu_arma(logdetPsi, nu, logdetPsiPlusS, ns, p);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const double& >::type logdetPsi(logdetPsiSEXP);
+    Rcpp::traits::input_parameter< const double >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type logdetPsiPlusS(logdetPsiPlusSSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP);
+    Rcpp::traits::input_parameter< const int >::type p(pSEXP);
+    __result = Rcpp::wrap(rcm_loglik_nu_arma(logdetPsi, nu, logdetPsiPlusS, ns, p));
+    return __result;
 END_RCPP
 }
 // rcm_em_step_arma
 arma::mat rcm_em_step_arma(const arma::mat& Psi, const double nu, const Rcpp::List& S_list, const Rcpp::NumericVector& ns);
 RcppExport SEXP correlateR_rcm_em_step_arma(SEXP PsiSEXP, SEXP nuSEXP, SEXP S_listSEXP, SEXP nsSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP );
-        Rcpp::traits::input_parameter< const double >::type nu(nuSEXP );
-        Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP );
-        Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP );
-        arma::mat __result = rcm_em_step_arma(Psi, nu, S_list, ns);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP);
+    Rcpp::traits::input_parameter< const double >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP);
+    __result = Rcpp::wrap(rcm_em_step_arma(Psi, nu, S_list, ns));
+    return __result;
 END_RCPP
 }
 // rwishartArma
 arma::cube rwishartArma(const int n, const arma::mat& sigma, const double nu);
 RcppExport SEXP correlateR_rwishartArma(SEXP nSEXP, SEXP sigmaSEXP, SEXP nuSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const int >::type n(nSEXP );
-        Rcpp::traits::input_parameter< const arma::mat& >::type sigma(sigmaSEXP );
-        Rcpp::traits::input_parameter< const double >::type nu(nuSEXP );
-        arma::cube __result = rwishartArma(n, sigma, nu);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type sigma(sigmaSEXP);
+    Rcpp::traits::input_parameter< const double >::type nu(nuSEXP);
+    __result = Rcpp::wrap(rwishartArma(n, sigma, nu));
+    return __result;
 END_RCPP
 }
 // rinvwishartArma
 arma::cube rinvwishartArma(const int n, const arma::mat& psi, const double nu);
 RcppExport SEXP correlateR_rinvwishartArma(SEXP nSEXP, SEXP psiSEXP, SEXP nuSEXP) {
 BEGIN_RCPP
-    SEXP __sexp_result;
-    {
-        Rcpp::RNGScope __rngScope;
-        Rcpp::traits::input_parameter< const int >::type n(nSEXP );
-        Rcpp::traits::input_parameter< const arma::mat& >::type psi(psiSEXP );
-        Rcpp::traits::input_parameter< const double >::type nu(nuSEXP );
-        arma::cube __result = rinvwishartArma(n, psi, nu);
-        PROTECT(__sexp_result = Rcpp::wrap(__result));
-    }
-    UNPROTECT(1);
-    return __sexp_result;
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const arma::mat& >::type psi(psiSEXP);
+    Rcpp::traits::input_parameter< const double >::type nu(nuSEXP);
+    __result = Rcpp::wrap(rinvwishartArma(n, psi, nu));
+    return __result;
 END_RCPP
 }
