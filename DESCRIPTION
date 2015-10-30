@@ -6,7 +6,7 @@ Date: 2014-07-24
 Author: Anders Ellern Bilgrau
 Maintainer: Anders Ellern Bilgrau <abilgrau@math.aau.dk>
 URL: https://github.com/AEBilgrau/correlateR
-BugReports: https://github.com/AEBilgrau/correlateR/issues
+BugReports: https://github.com/AEBilgrau/correlateR/issues/new
 Description: Fast, robust, and efficient estimation of marginal, partial, and
     semi-partial (part) correlations and covariances.
 License: GPL (>=2)
