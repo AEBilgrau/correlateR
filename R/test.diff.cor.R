@@ -32,7 +32,7 @@
 #'   It performs the test for all correlations in the correlation matrix.
 #' @references 
 #'   \url{http://core.ecu.edu/psyc/wuenschk/docs30/CompareCorrCoeff.pdf}
-#' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 #' @seealso 
 #'   Similar usage to \code{\link[stats]{cor.test}} (but NOT the same thing).\cr
 #'   This is a vectorized version of \code{\link{test.diff.cor.single}}.
@@ -105,7 +105,7 @@ test.diff.cor <- function(X1, X2,
 #' \code{"less"}      \tab =>\tab 
 #' H1: \code{cor(x1, y1) < cor(x2, y2)} 
 #' }
-#' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 #' @seealso 
 #'   Similar usage to \code{\link[stats]{cor.test}} in \code{stats}, however 
 #'   not the same! \cr

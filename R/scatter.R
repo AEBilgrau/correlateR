@@ -11,7 +11,7 @@
 #' @param center logical. If \code{TRUE}, the data-matrices are centered first.
 #' @return The \code{p1} times \code{p1} scatter matrix or 
 #'   \code{p1} times \code{p2} cross-scatter matrix.
-#' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 #' @examples
 #' n <- 11
 #' X <- createData(n, 4)

@@ -12,7 +12,7 @@
 //' @aliases cov2cor
 //' @param S A square covariance matrix.
 //' @return A square correlation matrix.
-//' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+//' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 //' @examples
 //' X <- createData(n = 11, m = 4)
 //' S <- cov(X)

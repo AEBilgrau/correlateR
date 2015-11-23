@@ -8,7 +8,7 @@
 #' @return A matrix of the same size as \code{X} with \code{NaN}s in the
 #'   \code{k} row and column.
 #' @seealso \code{\link{cor}}
-#' @author Anders Ellernsta Bilgrau <abilgrau (at) math.aau.dk>
+#' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 #' @examples
 #' X <- createData(4, 10)
 #' S <- cor(X)

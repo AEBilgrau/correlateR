@@ -30,7 +30,7 @@ Rcpp::NumericVector rcm_logdetPsiPlusS_arma(const arma::mat & Psi,
 //' @param ns A numeric of the same length as \code{S_list} giving the 
 //'   number of samples in each group.
 //' @return The value of the log-likelihood.
-//' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+//' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 //' @examples
 //' ns <-  c(5, 5, 5)
 //' S <- createRCMData(ns = ns, psi = diag(4), nu = 30)

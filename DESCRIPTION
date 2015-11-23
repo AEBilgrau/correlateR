@@ -4,7 +4,7 @@ Title: Fast correlations and covariances.
 Version: 0.1
 Date: 2014-07-24
 Author: Anders Ellern Bilgrau
-Maintainer: Anders Ellern Bilgrau <abilgrau@math.aau.dk>
+Maintainer: Anders Ellern Bilgrau <anders.ellern.bilgrau@gmail.com>
 URL: https://github.com/AEBilgrau/correlateR
 BugReports: https://github.com/AEBilgrau/correlateR/issues/new
 Description: Fast, robust, and efficient estimation of marginal, partial, and

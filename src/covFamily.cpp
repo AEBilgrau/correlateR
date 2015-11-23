@@ -40,7 +40,7 @@
 //'   NA's in \code{X} or \code{Y} will yield NA's in the correlation matrix.
 //'   This also includes the diagonal unlike the behavior of 
 //'   \code{stats::cor(X)}.
-//' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+//' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 //' @export
 // [[Rcpp::export]]
 Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix & X,

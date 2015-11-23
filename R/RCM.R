@@ -20,7 +20,7 @@ ICC <- function(nu, p) {
 #'   parameter in the RCM.
 #' @return \code{Psi2Sigma}, \code{Sigma2Psi}:
 #'   The converted matrix the same size as \code{Psi} or \code{Sigma}.
-#' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 #' @export
 Psi2Sigma <- function(Psi, nu) {
   return(Psi/(nu - ncol(Psi) - 1))
@@ -347,7 +347,7 @@ drcm <- function(x, mu, Psi, nu, logarithm = FALSE) {
 #' @return A \code{list} of matrices of the same size as \code{psi} giving
 #'   observed scatter matrices from the RCM.\cr
 #'   The realized covariance matrices are appended as an attribute.
-#' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 #' @examples
 #' ns <- c(20, 10)
 #' psi <- diag(3)

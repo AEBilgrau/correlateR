@@ -14,7 +14,7 @@
 #'   If matrices are given a list of matrices are returned where the \eqn{ij}th
 #'   entry corresponds to the results of \code{stats::cor.test(X[,i], Y[,j])}.\cr
 #'   If vectors are given a vector of the results is given.
-#' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 #' @details The test and confidence interval is based Fisher's Z transform.
 #' @seealso \code{\link[stats]{cor.test}}
 #' @examples

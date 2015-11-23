@@ -17,7 +17,7 @@
 #'   All functions return a matrix of correlations or covariances.
 #' @details 
 #'   Give some details!
-#' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 #' @seealso \code{\link{corFamily}} (the workhorse functions)
 #' @examples
 #' n <- 11

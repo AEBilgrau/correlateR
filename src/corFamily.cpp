@@ -38,7 +38,7 @@
 //'   NA's in \code{X} or \code{Y} will yield NA's in the correlation matrix.
 //'   This also includes the diagonal unlike the behaviour of 
 //'   \code{\link[stats]{cor}}.
-//' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+//' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 //' @export
 // [[Rcpp::export]]
 Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix & X) {

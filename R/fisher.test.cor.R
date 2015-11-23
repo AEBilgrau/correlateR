@@ -9,7 +9,7 @@
 #' @param alternative specifies the alternative hypothesis.
 #' @param conf.level confidence level for the returned confidence interval.
 #' @return A list of values resulting from the test.
-#' @author Anders Ellern Bilgrau <abilgrau (at) math.aau.dk>
+#' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 #' @examples
 #' est <- matrix(3, 2, 1)
 #' mean <- matrix(0, 2, 1)
