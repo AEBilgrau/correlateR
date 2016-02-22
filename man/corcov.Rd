@@ -34,7 +34,7 @@ xcov(X, Y, method = c("Unbiased", "ML"))
 in columns.}
 
 \item{method}{A character of length 1. The unbiased estimate divided with
-\code{n-1} and wheras ML uses \code{n}.}
+\code{n-1} and whereas ML uses \code{n}.}
 
 \item{z}{A integer vector of indices to condition on.}
 

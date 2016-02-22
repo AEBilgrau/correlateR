@@ -12,7 +12,7 @@
 #' @param Z A numeric matrix with the same number of rows as \code{X}. This is
 #'   the matrix of variables to condition on.
 #' @param method A character of length 1. The unbiased estimate divided with
-#'   \code{n-1} and wheras ML uses \code{n}.
+#'   \code{n-1} and whereas ML uses \code{n}.
 #' @return 
 #'   All functions return a matrix of correlations or covariances.
 #' @details 
