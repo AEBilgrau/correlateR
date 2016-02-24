@@ -1,12 +1,13 @@
 #' Fisher's correlation test
 #'
-#' Test hypothesis about the correlation using fisher's z-transform (atanh).
+#' Test hypotheses about the correlation using fisher's z-transform 
+#' (\code{atanh}).
 #' 
 #' @param estimate The fisher z-transformed correlation.
-#' @param mean The fisher z-transformed null hypothess.
+#' @param mean The fisher z-transformed null hypotheses.
 #' @param se The standard error of the estimate (usually \eqn{1/sqrt(n - 3)}
-#'   where n is the samplesize)
-#' @param alternative specifies the alternative hypothesis.
+#'   where n is the sample size)
+#' @param alternative specifies the alternative hypotheses.
 #' @param conf.level confidence level for the returned confidence interval.
 #' @return A list of values resulting from the test.
 #' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>

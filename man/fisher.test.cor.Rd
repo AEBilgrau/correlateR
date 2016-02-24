@@ -9,12 +9,12 @@ fisher.test.cor(estimate, mean, se, alternative, conf.level)
 \arguments{
 \item{estimate}{The fisher z-transformed correlation.}
 
-\item{mean}{The fisher z-transformed null hypothess.}
+\item{mean}{The fisher z-transformed null hypotheses.}
 
 \item{se}{The standard error of the estimate (usually \eqn{1/sqrt(n - 3)}
-where n is the samplesize)}
+where n is the sample size)}
 
-\item{alternative}{specifies the alternative hypothesis.}
+\item{alternative}{specifies the alternative hypotheses.}
 
 \item{conf.level}{confidence level for the returned confidence interval.}
 }
@@ -22,7 +22,8 @@ where n is the samplesize)}
 A list of values resulting from the test.
 }
 \description{
-Test hypothesis about the correlation using fisher's z-transform (atanh).
+Test hypotheses about the correlation using fisher's z-transform
+(\code{atanh}).
 }
 \examples{
 est <- matrix(3, 2, 1)
