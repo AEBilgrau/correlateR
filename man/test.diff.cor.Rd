@@ -40,12 +40,12 @@ A list of matrices or vector containing:
 }
 \description{
 This functions tests the hypothesis of no difference in correlations.
-It uses Fisher's Z-transform (atanh) to test the null hypothesis
+It uses Fisher's Z-transform (\code{atanh}) to test the null hypothesis
 of no difference in correlations. See details.
 }
 \details{
-The function uses Fisher's Z transform (atanh) of correlations to test
-  that the hypothes of no difference in correlation. The computed
+The function uses Fisher's Z transform (\code{atanh}) of correlations to
+  test that the hypotheses of no difference in correlation. The computed
   Z-score is
   \deqn{\frac{Z1 - Z2}{\sqrt{1/(n1 - 3) + 1/(n2 - 3))}}}{
              (Z1 - Z2)/ sqrt(1/(n1 - 3) + 1/(n2 - 3))}
@@ -74,6 +74,6 @@ Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 }
 \seealso{
 Similar usage to \code{\link[stats]{cor.test}} (but NOT the same thing).\cr
-  This is a vectorized version of \code{\link{test.diff.cor.single}}.
+  This is a vectorised version of \code{\link{test.diff.cor.single}}.
 }
 

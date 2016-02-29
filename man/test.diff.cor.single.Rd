@@ -65,7 +65,7 @@ Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 \seealso{
 Similar usage to \code{\link[stats]{cor.test}} in \code{stats}, however
   not the same! \cr
-  See \code{\link{test.diff.cor}} for a vectorized version.
+  See \code{\link{test.diff.cor}} for a vectorised version.
 }
 \keyword{internal}
 
