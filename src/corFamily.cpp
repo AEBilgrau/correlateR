@@ -21,7 +21,7 @@
 //' @param Y A numeric matrix of compatible dimension with the \code{X}, i.e. 
 //'   \code{nrow(X)} equals \code{nrow(Y)}.
 //' @return
-//'   The \code{corXX} familiy returns a numeric correlation matrix of size 
+//'   The \code{corXX} family returns a numeric correlation matrix of size 
 //'   \code{ncol(X)} times \code{ncol(X)}.
 //'   
 //'   The \code{xcorXX} family returns a numeric cross-correlation matrix 
@@ -36,7 +36,7 @@
 //'   and \code{Y[j, ]}.
 //' @note 
 //'   NA's in \code{X} or \code{Y} will yield NA's in the correlation matrix.
-//'   This also includes the diagonal unlike the behaviour of 
+//'   This also includes the diagonal unlike the behavior of 
 //'   \code{\link[stats]{cor}}.
 //' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
 //' @export
