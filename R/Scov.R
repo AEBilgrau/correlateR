@@ -12,11 +12,11 @@
 #'   the oracle approximating shrinkage (OAS) are also implemented. The 
 #'   algorithm seeks a solution to the problem:
 #'     \deqn{\min_{\rho}E[ || \Sigma_O - \Sigma ||^2 ]}{%
-#'           mininimize E[ || Sigma_O - Sigma ||^2 ] w.r.t. rho}
+#'           minimize E[ || Sigma_O - Sigma ||^2 ] w.r.t. rho}
 #'     \deqn{s.t. \Sigma_O = (1 - \rho)S + \rho F}{%
 #'           s.t. Sigma_O = (1-rho)*S + rho*F}
 #'   using various methods
-#'   The intepolated \eqn{\rho}{rho} value used is always
+#'   The interpolated \eqn{\rho}{rho} value used is always
 #'   \eqn{\min(\rho, 1)}{min(rho,1)}.
 #'   More information can be found in the given reference.
 #'
