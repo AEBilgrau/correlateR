@@ -9,7 +9,7 @@ pool(S_list, ns, norm_type = 0L)
 \arguments{
 \item{S_list}{A list of scatter matrices.}
 
-\item{norm_type}{A integer of length one equalling \code{0} or \code{1}.
+\item{norm_type}{A integer of length one equaling \code{0} or \code{1}.
 If \code{0} the bias correction is used. If \code{1} the ML estimate is
 used.}
 
