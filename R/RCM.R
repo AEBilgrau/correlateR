@@ -359,7 +359,11 @@ drcm <- function(x, mu, Psi, nu, logarithm = FALSE) {
 createRCMData <- function(ns, psi, nu, sigma) {
   stopifnot(length(ns) > 0)
   k <- length(ns)
-  p <- nrow(psi)
+  if (missing(psi) & !missing(sigma)) {
+    p <- nrow(sigma)
+  } else{
+    p <- nrow(psi)
+  }
   if (nu < p + 1) {
     warning("The expected value, sigma, does not exist for n < p + 1.")
   }
@@ -378,5 +382,4 @@ createRCMData <- function(ns, psi, nu, sigma) {
   attributes(S)$sigmas <- sigmas
   return(S)
 }
-
 
