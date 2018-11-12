@@ -1,6 +1,6 @@
 Package: correlateR
 Type: Package
-Title: Fast correlations and covariances.
+Title: Fast correlations and covariances
 Version: 0.1
 Date: 2014-07-24
 Author: Anders Ellern Bilgrau
