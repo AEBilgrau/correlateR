@@ -19,3 +19,4 @@ LinkingTo: Rcpp, RcppArmadillo, RcppEigen
 Suggests:
     testthat (>= 0.3)
 Enhances: microbenchmark
+RoxygenNote: 6.1.0
