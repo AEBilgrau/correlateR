@@ -17,6 +17,7 @@
 #' sd <- matrix(1, 2, 1)
 #' correlateR:::fisher.test.cor(estimate = est, mean = mean, se = sd,
 #'                              alternative = "two.sided", conf.level = 0.95)
+#' @importFrom stats qnorm pnorm
 #' @keywords internal
 fisher.test.cor <- function(estimate, mean, se, alternative, conf.level) {
   z <- (estimate - mean)/se

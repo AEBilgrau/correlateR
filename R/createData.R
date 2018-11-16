@@ -18,6 +18,7 @@
 #' # Also works for the degenerate cases!
 #' createData(3, 0)
 #' createData(0, 3)
+#' @importFrom stats rnorm
 #' @export
 createData <- function(n, m, n.na = 0) {
   stopifnot(n >= 0 && m >= 0)
