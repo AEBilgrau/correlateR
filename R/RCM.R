@@ -86,6 +86,7 @@ rcm_get_nu <- function(Psi, S_list, ns) {
 } 
 
 #' @rdname rcm_get_nu
+#' @importFrom stats optimize 
 #' @note \code{rcm_get_nu_optimize} optimizes via \code{\link{optimize}} and
 #'   the Brent-type optimization.
 rcm_get_nu_optimize <- function(Psi, S_list, ns) {
@@ -102,6 +103,7 @@ rcm_get_nu_optimize <- function(Psi, S_list, ns) {
 } 
 
 #' @rdname rcm_get_nu
+#' @importFrom stats optim
 #' @note \code{rcm_get_nu_optim} optimizes via \code{\link{optim}} and the 
 #'   L-BFGS-B method.
 rcm_get_nu_optim <- function(Psi, S_list, ns, ...) {
@@ -118,6 +120,7 @@ rcm_get_nu_optim <- function(Psi, S_list, ns, ...) {
 } 
 
 #' @rdname rcm_get_nu
+#' @importFrom stats nlm
 #' @note \code{rcm_get_nu_nlm} optimizes via \code{\link{nlm}}.
 rcm_get_nu_nlm <- function(Psi, S_list, ns, ...) {
   loglik_of_nu <- function(nu) { # log-likelihood as a function of nu, fixed Psi
@@ -132,6 +135,7 @@ rcm_get_nu_nlm <- function(Psi, S_list, ns, ...) {
 } 
 
 #' @rdname rcm_get_nu
+#' @importFrom stats optimize
 #' @note \code{rcm_get_nu_optim2} optimizes via \code{\link{optimize}} and the 
 #'   Brent-type method. A faster implementation. Avoids many repeated
 #'   evaluations.
