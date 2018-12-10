@@ -4,20 +4,19 @@
 # see the wiki:
 #   https://github.com/craigcitro/r-travis/wiki
 
-language: cpp
+language: r
 
-before_install:
-  - curl -OL http://raw.github.com/craigcitro/r-travis/master/scripts/travis-tool.sh
-  - chmod 755 ./travis-tool.sh
-  - ./travis-tool.sh bootstrap
-install:
-  - ./travis-tool.sh bioc_install AnnotationDbi Biobase GEOquery affy affyio oligo XML
-  - ./travis-tool.sh install_deps
+r_build_args: --no-build-vignettes --no-manual --no-resave-data
 
-script: ./travis-tool.sh run_tests
+r_check_args: --no-build-vignettes --no-manual
 
-after_failure:
-  - ./travis-tool.sh dump_logs
+warnings_are_errors: false
+
+r_github_packages:
+  - r-lib/covr
+
+after_success:
+  - Rscript -e 'covr::coveralls()'
 
 notifications:
   email:

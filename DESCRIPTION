@@ -17,6 +17,7 @@ Depends:
     RcppEigen
 LinkingTo: Rcpp, RcppArmadillo, RcppEigen
 Suggests:
-    testthat (>= 0.3)
+    testthat (>= 0.3),
+    covr
 Enhances: microbenchmark
 RoxygenNote: 6.1.0
