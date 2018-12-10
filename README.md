@@ -1,8 +1,10 @@
+[![Build Status](https://api.travis-ci.org/AEBilgrau/correlateR.svg?branch=master)](https://travis-ci.org/AEBilgrau/correlateR)
+[![Coverage status](https://coveralls.io/repos/github/AEBilgrau/correlateR/badge.svg)](https://coveralls.io/r/AEBilgrau/correlateR?branch=master)
+
+
 correlateR
 ==========
 #### General purpose correlation and covariance estimation
-[![Build Status](https://api.travis-ci.org/AEBilgrau/correlateR.svg?branch=master)](https://travis-ci.org/AEBilgrau/correlateR)
-[![Coverage status](https://coveralls.io/repos/github/AEBilgrau/correlateR/badge.svg)](https://coveralls.io/r/AEBilgrau/correlateR?branch=master)
 
 The R-package `correlateR` is planned to be a comprehensive resource of functions related to correlations and covariances. It features fast, robust, and efficient (as well as inefficient) marginal, partial, semi-partial correlations and covariances of arbitrary conditional order. A good discussion and explanation of marginal (unconditioned), partial, and semi-partial (or, part) correlations can be found [here.](http://luna.cas.usf.edu/~mbrannic/files/regression/Partial.html) Another good resource is found [here.](http://www.johndcook.com/blog/2008/11/05/how-to-calculate-pearson-correlation-accurately/)
 
