@@ -16,11 +16,6 @@ test_that("Correct conversion", {
   expect_that(min(res) >= -1, is_true())
 })
 
-test_that("Fast computation.", {
-  expect_that(cov2cor(bigS),
-              takes_less_than(system.time(stats::cov2cor(bigS))[3]))
-})
-
 # Add NA handling!!
 
 
