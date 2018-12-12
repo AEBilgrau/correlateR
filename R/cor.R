@@ -1,12 +1,12 @@
 #' Covariance and correlation
 #'
 #' These functions offer an interface to compute arbitrary order partial
-#' (or semi-partial) variance-covariance or correlation matrix as well as
+#' (or semi-partial) variance-covariance or correlation matrices as well as
 #' partial cross variance-covariances or correlations.
 #'
 #' @rdname corcov
 #' @aliases cor cov pcor pcov xcor xcov pxcor pxcov correlation covariance
-#' @param X A numeric matrix with observations in rows and variables/features
+#' @param X A numeric matrix with observations in rows and variables
 #'   in columns.
 #' @param Y A numeric matrix with the same number of rows as \code{X}.
 #' @param Z A numeric matrix with the same number of rows as \code{X}. This is
@@ -15,10 +15,8 @@
 #'   \code{n-1} and whereas ML uses \code{n}.
 #' @return 
 #'   All functions return a matrix of correlations or covariances.
-#' @details 
-#'   Give some details!
 #' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
-#' @seealso \code{\link{corFamily}} (the workhorse functions)
+#' @seealso \code{\link{corFamily}} (the internal workhorse functions)
 #' @examples
 #' n <- 11
 #' X <- createData(n, 4)

@@ -31,7 +31,7 @@ xcor(X, Y)
 xcov(X, Y, method = c("Unbiased", "ML"))
 }
 \arguments{
-\item{X}{A numeric matrix with observations in rows and variables/features
+\item{X}{A numeric matrix with observations in rows and variables
 in columns.}
 
 \item{method}{A character of length 1. The unbiased estimate divided with
@@ -49,11 +49,8 @@ All functions return a matrix of correlations or covariances.
 }
 \description{
 These functions offer an interface to compute arbitrary order partial
-(or semi-partial) variance-covariance or correlation matrix as well as
+(or semi-partial) variance-covariance or correlation matrices as well as
 partial cross variance-covariances or correlations.
-}
-\details{
-Give some details!
 }
 \examples{
 n <- 11
@@ -77,7 +74,7 @@ pxcov(X, Y, Z)
 pxcor(X, Y, Z)
 }
 \seealso{
-\code{\link{corFamily}} (the workhorse functions)
+\code{\link{corFamily}} (the internal workhorse functions)
 }
 \author{
 Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
