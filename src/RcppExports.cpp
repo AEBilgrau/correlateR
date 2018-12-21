@@ -7,6 +7,61 @@
 
 using namespace Rcpp;
 
+// rcm_logdetPsiPlusS_arma
+Rcpp::NumericVector rcm_logdetPsiPlusS_arma(const arma::mat& Psi, const Rcpp::List& S_list);
+RcppExport SEXP _correlateR_rcm_logdetPsiPlusS_arma(SEXP PsiSEXP, SEXP S_listSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcm_logdetPsiPlusS_arma(Psi, S_list));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcm_loglik_arma
+double rcm_loglik_arma(const arma::mat& Psi, const double nu, const Rcpp::List& S_list, const Rcpp::NumericVector& ns);
+RcppExport SEXP _correlateR_rcm_loglik_arma(SEXP PsiSEXP, SEXP nuSEXP, SEXP S_listSEXP, SEXP nsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP);
+    Rcpp::traits::input_parameter< const double >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcm_loglik_arma(Psi, nu, S_list, ns));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcm_loglik_nu_arma
+double rcm_loglik_nu_arma(const double& logdetPsi, const double nu, const Rcpp::NumericVector& logdetPsiPlusS, const Rcpp::NumericVector& ns, const int p);
+RcppExport SEXP _correlateR_rcm_loglik_nu_arma(SEXP logdetPsiSEXP, SEXP nuSEXP, SEXP logdetPsiPlusSSEXP, SEXP nsSEXP, SEXP pSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const double& >::type logdetPsi(logdetPsiSEXP);
+    Rcpp::traits::input_parameter< const double >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type logdetPsiPlusS(logdetPsiPlusSSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP);
+    Rcpp::traits::input_parameter< const int >::type p(pSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcm_loglik_nu_arma(logdetPsi, nu, logdetPsiPlusS, ns, p));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rcm_em_step_arma
+arma::mat rcm_em_step_arma(const arma::mat& Psi, const double nu, const Rcpp::List& S_list, const Rcpp::NumericVector& ns);
+RcppExport SEXP _correlateR_rcm_em_step_arma(SEXP PsiSEXP, SEXP nuSEXP, SEXP S_listSEXP, SEXP nsSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP);
+    Rcpp::traits::input_parameter< const double >::type nu(nuSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP);
+    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP);
+    rcpp_result_gen = Rcpp::wrap(rcm_em_step_arma(Psi, nu, S_list, ns));
+    return rcpp_result_gen;
+END_RCPP
+}
 // lgammap
 Rcpp::NumericVector lgammap(const Rcpp::NumericVector& x, const int p);
 RcppExport SEXP _correlateR_lgammap(SEXP xSEXP, SEXP pSEXP) {
@@ -249,61 +304,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rcm_logdetPsiPlusS_arma
-Rcpp::NumericVector rcm_logdetPsiPlusS_arma(const arma::mat& Psi, const Rcpp::List& S_list);
-RcppExport SEXP _correlateR_rcm_logdetPsiPlusS_arma(SEXP PsiSEXP, SEXP S_listSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcm_logdetPsiPlusS_arma(Psi, S_list));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcm_loglik_arma
-double rcm_loglik_arma(const arma::mat& Psi, const double nu, const Rcpp::List& S_list, const Rcpp::NumericVector& ns);
-RcppExport SEXP _correlateR_rcm_loglik_arma(SEXP PsiSEXP, SEXP nuSEXP, SEXP S_listSEXP, SEXP nsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP);
-    Rcpp::traits::input_parameter< const double >::type nu(nuSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcm_loglik_arma(Psi, nu, S_list, ns));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcm_loglik_nu_arma
-double rcm_loglik_nu_arma(const double& logdetPsi, const double nu, const Rcpp::NumericVector& logdetPsiPlusS, const Rcpp::NumericVector& ns, const int p);
-RcppExport SEXP _correlateR_rcm_loglik_nu_arma(SEXP logdetPsiSEXP, SEXP nuSEXP, SEXP logdetPsiPlusSSEXP, SEXP nsSEXP, SEXP pSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const double& >::type logdetPsi(logdetPsiSEXP);
-    Rcpp::traits::input_parameter< const double >::type nu(nuSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type logdetPsiPlusS(logdetPsiPlusSSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP);
-    Rcpp::traits::input_parameter< const int >::type p(pSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcm_loglik_nu_arma(logdetPsi, nu, logdetPsiPlusS, ns, p));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rcm_em_step_arma
-arma::mat rcm_em_step_arma(const arma::mat& Psi, const double nu, const Rcpp::List& S_list, const Rcpp::NumericVector& ns);
-RcppExport SEXP _correlateR_rcm_em_step_arma(SEXP PsiSEXP, SEXP nuSEXP, SEXP S_listSEXP, SEXP nsSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< const arma::mat& >::type Psi(PsiSEXP);
-    Rcpp::traits::input_parameter< const double >::type nu(nuSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::List& >::type S_list(S_listSEXP);
-    Rcpp::traits::input_parameter< const Rcpp::NumericVector& >::type ns(nsSEXP);
-    rcpp_result_gen = Rcpp::wrap(rcm_em_step_arma(Psi, nu, S_list, ns));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rwishartArma
 arma::cube rwishartArma(const int n, const arma::mat& sigma, const double nu);
 RcppExport SEXP _correlateR_rwishartArma(SEXP nSEXP, SEXP sigmaSEXP, SEXP nuSEXP) {
@@ -332,6 +332,10 @@ END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
+    {"_correlateR_rcm_logdetPsiPlusS_arma", (DL_FUNC) &_correlateR_rcm_logdetPsiPlusS_arma, 2},
+    {"_correlateR_rcm_loglik_arma", (DL_FUNC) &_correlateR_rcm_loglik_arma, 4},
+    {"_correlateR_rcm_loglik_nu_arma", (DL_FUNC) &_correlateR_rcm_loglik_nu_arma, 5},
+    {"_correlateR_rcm_em_step_arma", (DL_FUNC) &_correlateR_rcm_em_step_arma, 4},
     {"_correlateR_lgammap", (DL_FUNC) &_correlateR_lgammap, 2},
     {"_correlateR_logdet_arma", (DL_FUNC) &_correlateR_logdet_arma, 1},
     {"_correlateR_corRcpp", (DL_FUNC) &_correlateR_corRcpp, 1},
@@ -352,10 +356,6 @@ static const R_CallMethodDef CallEntries[] = {
     {"_correlateR_pool", (DL_FUNC) &_correlateR_pool, 3},
     {"_correlateR_pxcorArma", (DL_FUNC) &_correlateR_pxcorArma, 3},
     {"_correlateR_pxcovArma", (DL_FUNC) &_correlateR_pxcovArma, 4},
-    {"_correlateR_rcm_logdetPsiPlusS_arma", (DL_FUNC) &_correlateR_rcm_logdetPsiPlusS_arma, 2},
-    {"_correlateR_rcm_loglik_arma", (DL_FUNC) &_correlateR_rcm_loglik_arma, 4},
-    {"_correlateR_rcm_loglik_nu_arma", (DL_FUNC) &_correlateR_rcm_loglik_nu_arma, 5},
-    {"_correlateR_rcm_em_step_arma", (DL_FUNC) &_correlateR_rcm_em_step_arma, 4},
     {"_correlateR_rwishartArma", (DL_FUNC) &_correlateR_rwishartArma, 3},
     {"_correlateR_rinvwishartArma", (DL_FUNC) &_correlateR_rinvwishartArma, 3},
     {NULL, NULL, 0}
