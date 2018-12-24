@@ -37,7 +37,7 @@
 //'   \code{j}'th entry of the output is the correlation between \code{X[i, ]} 
 //'   and \code{Y[j, ]}.
 //' @note 
-//'   NA's in \code{X} or \code{Y} will yield NA's in the correlation matrix.
+//'   \code{NA}s in \code{X} or \code{Y} will yield \code{NA}s in the correlation matrix.
 //'   This also includes the diagonal unlike the behavior of 
 //'   \code{stats::cor(X)}.
 //' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>

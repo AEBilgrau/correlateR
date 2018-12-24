@@ -52,7 +52,7 @@ Functions almost like \code{\link{cor}}.
   and \code{Y[j, ]}.
 }
 \note{
-NA's in \code{X} or \code{Y} will yield NA's in the correlation matrix.
+\code{NA}s in \code{X} or \code{Y} will yield NA's in the correlation matrix.
   This also includes the diagonal unlike the behavior of 
   \code{\link[stats]{cor}}.
 }
