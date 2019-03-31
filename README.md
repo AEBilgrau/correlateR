@@ -26,7 +26,7 @@ modifications!
 
 Features
 --------
-Currently, the packages is planned feature:
+Currently, the packages is planned to feature:
 
  - [x] `cor`/`cov` Marginal (unconditional) correlation/covariance. These basic 
        functions can be prefixed to yield other correlation/covariance 
