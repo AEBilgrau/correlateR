@@ -16,7 +16,7 @@ createData(n, m, n.na = 0)
 }
 \value{
 An \code{n} times \code{m} numeric matrix of observations from
-  zero-mean gaussian random variables.
+  zero-mean Gaussian random variables.
 }
 \description{
 Creates a named matrix of toy data from an \code{m}-dimensional 

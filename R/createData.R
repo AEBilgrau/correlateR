@@ -9,7 +9,7 @@
 #' @param n.na An integer from \code{0} to \code{n*m} giving the number of 
 #'   \code{NA}s in the output. Default is \code{0}.
 #' @return An \code{n} times \code{m} numeric matrix of observations from
-#'   zero-mean gaussian random variables.
+#'   zero-mean Gaussian random variables.
 #' @note The \code{n.na} \code{NA}s are randomly inserted in the output.
 #' @examples
 #' createData(10, 4)
@@ -27,7 +27,7 @@ createData <- function(n, m, n.na = 0) {
                               sprintf("var%03d", seq_len(m))))
   if (n.na) {
     stopifnot(n.na >= 0 && n.na <= n*m)
-    X[sample(n*m, n)] <- NA
+    X[sample(n*m, n.na)] <- NA
   }
   return(X)
 }
