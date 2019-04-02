@@ -169,12 +169,12 @@ rcm_mle_step <- function(nu, S_list, ns, ...) {
 #' Fit the RCM using the modified EM algorithm.
 #' 
 #' @param S A \code{list} of square scatter matrices of the same size.
-#' @param ns A vector of group or sample sizes corresponding to the scatter 
+#' @param ns A vector of group sample sizes corresponding to the scatter 
 #'   matrices in \code{S}.
 #' @param Psi.init A \code{matrix} giving the initial estimate of 
 #'   \eqn{Psi}{Psi}. Default starting value is the scaled pooled sample
 #'   covariance matrix.
-#' @param max.ite A numeric of length one giving the maximum number of 
+#' @param max.ite A \code{integer} of length one giving the maximum number of 
 #'   iterations allowed. Default is 1000.
 #' @param nu.init A numeric of length one giving the initial estimate of 
 #'   \eqn{nu}{nu}. Default is \code{sum(ns)}.

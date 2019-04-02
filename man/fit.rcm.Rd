@@ -11,7 +11,7 @@ fit.rcm(S, ns, Psi.init, nu.init, method = c("EM", "pooled",
 \arguments{
 \item{S}{A \code{list} of square scatter matrices of the same size.}
 
-\item{ns}{A vector of group or sample sizes corresponding to the scatter 
+\item{ns}{A vector of group sample sizes corresponding to the scatter 
 matrices in \code{S}.}
 
 \item{Psi.init}{A \code{matrix} giving the initial estimate of 
@@ -26,7 +26,7 @@ hereof.}
 
 \item{conf.lvl}{The confidence level. Default is 0.95.}
 
-\item{max.ite}{A numeric of length one giving the maximum number of 
+\item{max.ite}{A \code{integer} of length one giving the maximum number of 
 iterations allowed. Default is 1000.}
 
 \item{eps}{The convergence criterion.}
