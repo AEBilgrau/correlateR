@@ -1,21 +1,54 @@
 citHeader("Thanks for using the correlateR package!",
           "I have invested a lot of time and effort this package,",
-          "so please cite it if you are using it. Thanks!")
+          "so please cite it if you use it in publications. Thanks!")
 
 citEntry(entry = "Manual",
          title = "correlateR: Fast, efficient, and robust partial correlations",
          author = personList(person(family="Bilgrau", 
-                                    given="Anders", 
-                                    middle="Ellern", 
-                                    email="<anders.ellern.bilgrau@gmail.com")),
+                                    given=c("Anders", "Ellern"), 
+                                    email="anders.ellern.bilgrau@gmail.com")),
          url = "http://github.com/AEBilgrau/correlateR",
          year = "2014",
          textVersion = paste("Bilgrau, Anders Ellern; correlateR: Fast,",
                              "efficient, and robust partial correlations;", 
                              "http://github.com/AEBilgrau/correlateR"))
+                             
+                             
+bibentry(
+  bibtype     = "article",
+  title       = paste("Estimating a common covariance matrix for network",
+                      "meta-analysis of gene expression datasets in diffuse",
+                      "large {B}-cell lymphoma."),
+  author      = personList(
+                  person(given = c("Anders", "Ellern"),
+                         family = "Bilgrau",
+                         role = c("aut", "cre", "cph"),
+                         email = "anders.ellern.bilgrau@gmail.com"),
+                  person(given = c("Rasmus", "Froberg"), family = "Brondum"),
+                  person(given = c("Poul", "Svante"), family = "Eriksen"),
+                  person(given = "Karen", family = "Dybkaer"),
+                  person(given = "Martin", family = "Boegsted")
+                ),
+  journal     = "Annals of applied statistics",
+  year        = "2018",
+  volume      = "12",
+  number      = "3",
+  pages       = "1894--1913",
+  doi         = "10.1214/18-AOAS1136",
+  header      = "To cite correlateR/RCM functions in publications please use:",
+  url         = "https://projecteuclid.org/euclid.aoas/1536652979",
+  textVersion =
+     paste("Bilgrau, Anders Ellern; Brondum, Rasmus Froberg; Eriksen, Poul",
+           "Svante; Dybkaer, Karen; Bogsted, Martin. Estimating a common",
+           "covariance matrix for network meta-analysis of gene expression",
+           "datasets in diffuse large B-cell lymphoma. Ann. Appl. Stat. 12",
+           "(2018), no. 3, 1894--1913. doi:10.1214/18-AOAS1136.",
+           "https://projecteuclid.org/euclid.aoas/1536652979")
+)
+
 
 
 citFooter("Suggestions for improvements, comments, and bug",
           "reports are very welcome at",
-          "http://github.com/AEBilgrau/correlateR")
+          "http://github.com/AEBilgrau/correlateR/issues")
  
