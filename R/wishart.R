@@ -7,8 +7,8 @@
 #' distribution using multivariate normal draws.
 #'
 #' @param n The number of realizations.
-#' @param sigma A \code{p} by \code{p} symmetric positive definite matrix.
-#' @param nu An numeric of length one giving the degrees of freedom.
+#' @param sigma A \code{p} by \code{p} symmetric and positive definite matrix.
+#' @param nu An \code{numeric} of length one giving the degrees of freedom.
 #' @param verbose logical. Warn if draws are from a singular Wishart 
 #'   distribution.
 #' @return \code{rwishart} returns an \code{p} by \code{p} by \code{n} 

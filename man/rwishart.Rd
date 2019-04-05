@@ -12,9 +12,9 @@ rinvwishart(n, psi = diag(3), nu = 10)
 \arguments{
 \item{n}{The number of realizations.}
 
-\item{sigma}{A \code{p} by \code{p} symmetric positive definite matrix.}
+\item{sigma}{A \code{p} by \code{p} symmetric and positive definite matrix.}
 
-\item{nu}{An numeric of length one giving the degrees of freedom.}
+\item{nu}{An \code{numeric} of length one giving the degrees of freedom.}
 
 \item{verbose}{logical. Warn if draws are from a singular Wishart 
 distribution.}
