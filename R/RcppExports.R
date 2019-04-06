@@ -158,7 +158,7 @@ cov2corArma <- function(S) {
 #' Various workhorse functions to compute the marginal (or unconditional)
 #' covariance (and cross-covariance) estimates. The functions feature both the
 #' maximum likelihood and the biased corrected estimates. They are (almost)
-#' equivalent implementations of \code{\link[stats::cor]{cov}} (\code{stats::cov})
+#' equivalent implementations of \code{\link[stats:cor]{cov}} (\code{stats::cov})
 #' in Rcpp, RcppArmadillo, and RcppEigen.
 #' 
 #' @rdname covFamily
