@@ -1,14 +1,24 @@
 #' Test for difference in correlation
 #' 
-#' This functions tests the hypothesis of no difference in correlations.
-#' It uses Fisher's Z-transform (\code{atanh}) to test the null hypothesis
+#' This functions tests the hypothesis of no difference in correlations. It uses
+#' the Fisher \eqn{Z} transform (\code{atanh}) to test the null hypothesis
 #' of no difference in correlations. See details.
+#' 
+#' @details 
+#'   The function uses the Fisher \eqn{Z} transform (\code{atanh}) of
+#'   correlations to test that the hypotheses of no difference in correlation.
+#'   The computed \eqn{Z}-score is
+#'   \deqn{\frac{Z_1 - Z_2}{\sqrt{1/(n_1 - 3) + 1/(n_2 - 3))}}}{
+#'              (Z_1 - Z_2)/ sqrt(1/(n_1 - 3) + 1/(n_2 - 3))}
+#'   where \eqn{Z_1} and \eqn{Z_2} are the Fisher transformed correlations.
+#'   It performs the test for all correlations in the correlation matrix.
 #' 
 #' @param X1 A \code{numeric} \code{matrix} of observations.
 #' @param X2 A \code{numeric} \code{matrix} of observations.
-#' @param cor1 A \code{numeric} \code{matrix}  of correlation coefficients in 
-#'   the first group.
-#' @param cor2 As c\code{cor1} for the second group.
+#' @param cor1 A \code{numeric} \code{matrix} of correlation coefficients in 
+#'   the first group.  May be omitted if \code{X1} is provided.
+#' @param cor2 A \code{numeric} \code{matrix} of correlation coefficients in 
+#'   the second group. May be omitted if \code{X2} is provided.
 #' @param n1 \code{integer} of length 1. The number of samples in group 1.
 #' @param n2 \code{integer} of length 1. The number of samples in group 2.
 #' @param alternative The alternative hypothesis.
@@ -22,14 +32,6 @@
 #'   \item{\code{z}}{A numeric matrix of Z-scores for the hypothesis.}
 #'   \item{\code{p.val}}{A numeric matrix of the P-values.}
 #'   with an attribute giving the alternative hypothesis.
-#' @details 
-#'   The function uses Fisher's Z transform (\code{atanh}) of correlations to 
-#'   test that the hypotheses of no difference in correlation. The computed 
-#'   Z-score is 
-#'   \deqn{\frac{Z1 - Z2}{\sqrt{1/(n1 - 3) + 1/(n2 - 3))}}}{
-#'              (Z1 - Z2)/ sqrt(1/(n1 - 3) + 1/(n2 - 3))}
-#'   where Z1 and Z2 are the Fisher transformed correlations.
-#'   It performs the test for all correlations in the correlation matrix.
 #' @references 
 #'   \url{http://core.ecu.edu/psyc/wuenschk/docs30/CompareCorrCoeff.pdf}
 #' @author Anders Ellern Bilgrau <anders.ellern.bilgrau (at) gmail.com>
@@ -46,6 +48,8 @@
 #' print(cor2 <- cor(X2))
 #' 
 #' test.diff.cor(X1, X2)
+#' 
+#' # Directly supplied correlation matrices
 #' test.diff.cor(cor1 = cor1, cor2 = cor2, n1 = n1, n2 = n2)
 #' 
 #' test.diff.cor(X1, X2, alternative = "less")
@@ -63,7 +67,7 @@ test.diff.cor <- function(X1, X2,
   }
   alternative <- match.arg(alternative)
   
-  # Fisher z transform the correlations (atanh is Fisher's z transformation)
+  # Fisher z transform the correlations (atanh is the Fisher Z transform)
   Z1 <- atanh(cor1)
   Z2 <- atanh(cor2)
   
@@ -72,7 +76,7 @@ test.diff.cor <- function(X1, X2,
   diag(estimate) <- 0
   se <- sqrt(1/(n1 - 3) + 1/(n2 - 3))
 
-  # Perform Fisher's test
+  # Perform the Fisher test
   ans <- fisher.test.cor(estimate = estimate, mean = atanh(null), se = se, 
                          alternative = alternative, conf.level = conf.level)
   attr(ans, "alternative") <- alternative
@@ -83,7 +87,7 @@ test.diff.cor <- function(X1, X2,
 
 #' Test for difference in correlation
 #' 
-#' This functions uses Fisher's Z-transform (atanh) to test the null hypothesis
+#' This functions uses the Fisher Z-transform (atanh) to test the null hypothesis
 #' of no difference in correlations between x1 and y1 versus x2 and y2.
 #' 
 #' @param x1 numeric vector, x-values for the first sample.

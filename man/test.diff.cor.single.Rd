@@ -21,7 +21,7 @@ A numeric vector giving correlation for each group,
   size-estimate and standard error, confidence intervals and p-values.
 }
 \description{
-This functions uses Fisher's Z-transform (atanh) to test the null hypothesis
+This functions uses the Fisher Z-transform (atanh) to test the null hypothesis
 of no difference in correlations between x1 and y1 versus x2 and y2.
 }
 \details{
