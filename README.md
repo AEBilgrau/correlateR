@@ -1,6 +1,6 @@
 [![Build Status](https://api.travis-ci.org/AEBilgrau/correlateR.svg?branch=master)](https://travis-ci.org/AEBilgrau/correlateR)
 [![Coverage status](https://coveralls.io/repos/github/AEBilgrau/correlateR/badge.svg)](https://coveralls.io/r/AEBilgrau/correlateR?branch=master)
-[![Maintained](https://img.shields.io/maintenance/no/2019.svg)]
+![Maintained](https://img.shields.io/maintenance/no/2019.svg)
 
 
 correlateR
