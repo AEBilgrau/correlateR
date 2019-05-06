@@ -33,7 +33,27 @@ test_that("Cross-correlation is computed correctly", {
   expect_that(cov_XY*(n - 1)/n, equals(xcov(X, Y, method = "ML")))
 })
 
-# ADD TESTS WITH MISSING VALUES!
+# Test for degenerate cases
+combs <- expand.grid(n = c(0, 1, 10), m_X = c(0, 1, 10), m_Y = c(0, 1, 10))
 
-
-
+for (i in seq_len(nrow(combs))) {
+  n <- combs$n[i]
+  m_X <- combs$m_X[i]
+  m_Y <- combs$m_Y[i]
+  x <- createData(n, m_X)
+  y <- createData(n, m_Y)
+  cov_x <- stats::cov(x)
+  cov_xy <- stats::cov(x, y)
+  
+  test_that(sprintf("Covariance function works in degenerate cases, n = %d, m = %d", n, m_X), {
+    expect_equal(cov_x, covArma(x))
+    expect_equal(cov_x, covArma(x))
+    expect_equal(cov_x, covRcpp(x)) 
+  })
+  
+  test_that(sprintf("Cross-covariance function works in degenerate cases, n = %d, m_X = %d, m_Y = %d", n, m_X, m_Y), {
+    expect_equal(cov_xy, covArma(x))
+    expect_equal(cov_xy, covArma(x))
+    expect_equal(cov_xy, covRcpp(x)) 
+  })
+}
