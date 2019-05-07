@@ -47,13 +47,13 @@ for (i in seq_len(nrow(combs))) {
   
   test_that(sprintf("Covariance function works in degenerate cases, n = %d, m = %d", n, m_X), {
     expect_equal(cov_x, covArma(x))
-    expect_equal(cov_x, covArma(x))
+    expect_equal(cov_x, covEigen(x))
     expect_equal(cov_x, covRcpp(x)) 
   })
   
   test_that(sprintf("Cross-covariance function works in degenerate cases, n = %d, m_X = %d, m_Y = %d", n, m_X, m_Y), {
-    expect_equal(cov_xy, covArma(x))
-    expect_equal(cov_xy, covArma(x))
-    expect_equal(cov_xy, covRcpp(x)) 
+    expect_equal(cov_xy, xcovArma(x, y))
+    expect_equal(cov_xy, xcovEigen(x, y))
+    expect_equal(cov_xy, xcovRcpp(x, y)) 
   })
 }
