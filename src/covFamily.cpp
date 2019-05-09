@@ -137,22 +137,28 @@ arma::mat xcovArma(const arma::mat& X,
   return out;
 }
 
-// covariance in Eigen
+// Covariance in Eigen
 //' @rdname covFamily
 //' @export
 // [[Rcpp::export]]
 Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd> & X,
                          const int norm_type = 0) {
-
-    // Computing degrees of freedom
-    // n - 1 is the unbiased estimate whereas n is the MLE
-    const int df = X.rows() - 1 + norm_type; // Subtract 1 by default
-
-    // Centering the matrix
-    X.rowwise() -= X.colwise().mean();  
-
-    // Return the X^T * X is the scatter matrix
-    return X.transpose() * X / df;  // could be .adjoint()
+  
+  // Handle degenerate cases
+  if (X.rows() == 0 && X.cols() > 0) {
+    return Eigen::MatrixXd::Constant(X.cols(), X.cols(), 
+                                     Rcpp::NumericVector::get_na());
+  }
+  
+  // Computing degrees of freedom
+  // n - 1 is the unbiased estimate whereas n is the MLE
+  const int df = X.rows() - 1 + norm_type; // Subtract 1 by default
+  
+  // Centering the matrix
+  X.rowwise() -= X.colwise().mean(); // Centering the matrix to have 0 col means
+  
+  // Return the X^T * X is the scatter matrix
+  return X.transpose() * X / df;  // could be .adjoint()
 }
 
 
@@ -163,16 +169,24 @@ Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd> & X,
 Eigen::MatrixXd xcovEigen(Eigen::Map<Eigen::MatrixXd> & X,
                           Eigen::Map<Eigen::MatrixXd> & Y,
                           const int norm_type = 0) {
-
-    // Computing degrees of freedom
-    // n - 1 is the unbiased estimate whereas n is the MLE
-    const int df = X.rows() - 1 + norm_type; // Subtract 1 by default
-
-    // Centering matrices
-    Y.rowwise() -= Y.colwise().mean();
-    X.rowwise() -= X.colwise().mean();
-
-    // Return the X^T * X is the scatter matrix
-    return X.transpose() * Y / df;
+  
+  // Handle degenerate cases
+  if (X.cols() == 0 || Y.cols() == 0) {
+    return Eigen::MatrixXd::Constant(0, 0, 0);
+  } else if (X.rows() == 0) { // && X.cols() > 0 && Y.cols() > 0 implicit
+    return Eigen::MatrixXd::Constant(X.cols(), Y.cols(),
+                                     Rcpp::NumericVector::get_na());
+  }
+  
+  // Computing degrees of freedom
+  // n - 1 is the unbiased estimate whereas n is the MLE
+  const int df = X.rows() - 1 + norm_type; // Subtract 1 by default
+  
+  // Centering matrices
+  X.rowwise() -= X.colwise().mean(); // Centering the matrix to have 0 col means
+  Y.rowwise() -= Y.colwise().mean();
+  
+  // Return the X^T * X is the scatter matrix
+  return X.transpose() * Y / df;
 }
 
