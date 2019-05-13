@@ -18,6 +18,6 @@ Depends:
 LinkingTo: Rcpp, RcppArmadillo, RcppEigen
 Suggests:
     testthat,
-    covr
-Enhances: microbenchmark
+    covr,
+    microbenchmark
 RoxygenNote: 6.1.1
