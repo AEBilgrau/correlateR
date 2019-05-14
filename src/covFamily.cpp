@@ -49,12 +49,19 @@ Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix & X,
   const int n = X.nrow();
   const int m = X.ncol();
   const int df = n - 1 + norm_type;
+
+  Rcpp::NumericMatrix cov(m, m);
+  
+  // Degenerate case
+  if (n == 0) {
+    std::fill(cov.begin(), cov.end(), Rcpp::NumericVector::get_na());
+    return cov; 
+  }
   
   // Centering the matrix!
   X = centerNumericMatrix(X);  // Defined in aux_functions
 
   // Computing the covariance matrix
-  Rcpp::NumericMatrix cov(m, m);
   for (int i = 0; i < m; ++i) {
     for (int j = 0; j <= i; ++j) {
       cov(i,j) = Rcpp::sum(X(Rcpp::_, i)*X(Rcpp::_, j))/df;
@@ -79,12 +86,19 @@ Rcpp::NumericMatrix xcovRcpp(Rcpp::NumericMatrix & X,
   const int m_Y = Y.ncol();
   const int df = n - 1 + norm_type;
   
+  Rcpp::NumericMatrix cov(m_X, m_Y);
+  
+  // Degenerate case
+  if (n == 0) {
+    std::fill(cov.begin(), cov.end(), Rcpp::NumericVector::get_na());
+    return cov; 
+  }
+  
   // Centering the matrices
   X = centerNumericMatrix(X);
   Y = centerNumericMatrix(Y);
   
   // Computing the covariance matrix
-  Rcpp::NumericMatrix cov(m_X, m_Y);
   for (int i = 0; i < m_X; ++i) {
     for (int j = 0; j < m_Y; ++j) {
       cov(i,j) = Rcpp::sum(X(Rcpp::_, i)*Y(Rcpp::_, j))/df;
