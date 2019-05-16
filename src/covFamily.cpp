@@ -109,7 +109,7 @@ Rcpp::NumericMatrix xcovRcpp(Rcpp::NumericMatrix & X,
 }
 
 
-// Covariance "implementation"" in Armadillio
+// Covariance implementation in Armadillio
 //' @rdname covFamily
 //' @export
 // [[Rcpp::export]]
@@ -130,7 +130,7 @@ arma::mat covArma(const arma::mat& X,
 }
 
 
-// Cross-covariance "implementation"" in Armadillio
+// Cross-covariance implementation in Armadillio
 //' @rdname covFamily
 //' @export
 // [[Rcpp::export]]

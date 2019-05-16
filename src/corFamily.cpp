@@ -44,9 +44,18 @@
 Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix & X) {
   
   const int m = X.ncol();
+  const int n = X.nrow();
   
   // Centering the matrix
   X = centerNumericMatrix(X);
+  
+  Rcpp::NumericMatrix cor(m, m);
+  
+  // Degenerate case
+  if (n == 0) {
+    std::fill(cor.begin(), cor.end(), Rcpp::NumericVector::get_na());
+    return cor; 
+  }
   
   // Compute 1 over the sample standard deviation
   Rcpp::NumericVector inv_sqrt_ss(m);
@@ -55,7 +64,6 @@ Rcpp::NumericMatrix corRcpp(Rcpp::NumericMatrix & X) {
   }
   
   // Computing the correlation matrix
-  Rcpp::NumericMatrix cor(m, m);
   for (int i = 0; i < m; ++i) {
     for (int j = 0; j <= i; ++j) {
       cor(i, j) = Rcpp::sum(X(Rcpp::_,i)*X(Rcpp::_,j)) *
@@ -77,11 +85,19 @@ Rcpp::NumericMatrix xcorRcpp(Rcpp::NumericMatrix & X,
   
   const int m_X = X.ncol();
   const int m_Y = Y.ncol();
+  const int n = X.nrow();
   
   // Centering the matrices
   X = centerNumericMatrix(X);
   Y = centerNumericMatrix(Y);
   
+  Rcpp::NumericMatrix cor(m_X, m_Y);
+  
+  // Degenerate case
+  if (n == 0) {
+    std::fill(cor.begin(), cor.end(), Rcpp::NumericVector::get_na());
+    return cor; 
+  }
   
   // Compute 1 over square root the sum of squares
   Rcpp::NumericVector inv_sqrt_ss_X(m_X);
@@ -94,7 +110,6 @@ Rcpp::NumericMatrix xcorRcpp(Rcpp::NumericMatrix & X,
   }
   
   // Computing the cross-correlation matrix
-  Rcpp::NumericMatrix cor(m_X, m_Y);
   for (int i = 0; i < m_X; ++i) {
     for (int j = 0; j < m_Y; ++j) {
       cor(i, j) = Rcpp::sum(X(Rcpp::_, i)*Y(Rcpp::_, j)) *
@@ -112,18 +127,39 @@ Rcpp::NumericMatrix xcorRcpp(Rcpp::NumericMatrix & X,
 //' @export
 // [[Rcpp::export]]
 arma::mat corArma(const arma::mat & X) {
-  arma::mat cor = arma::cor(X, 0);
-  cor.diag() /= cor.diag();   // Ensure 1 in the diagonal (if not NaN)
-  return cor;
+  arma::mat out(X.n_cols, X.n_cols);
+  
+  // Degenerate cases 
+  if (X.n_cols == 0) {
+    return out;
+  } else if (X.n_rows == 0 || X.n_rows == 1) {
+    out.fill(Rcpp::NumericVector::get_na());
+  } else {
+    out = arma::cor(X, 0);
+  }
+
+  out.diag() /= out.diag();   // Ensure 1 in the diagonal (if not NaN)
+  return out;
 }
 
 // Cross-correlation implementation in armadillo
 //' @rdname corFamily
 //' @export
 // [[Rcpp::export]]
-arma::mat xcorArma(const arma::mat & X,
-                   const arma::mat & Y) {
-  return arma::cor(X, Y, 0);
+arma::mat xcorArma(const arma::mat& X,
+                   const arma::mat& Y) {
+  arma::mat out(X.n_cols, Y.n_cols);
+  
+  // Degenerate case first
+  if (X.n_cols == 0 || Y.n_cols == 0) {
+    return out;
+  } else if (X.n_rows == 0 || X.n_rows == 1 || Y.n_rows == 0 || Y.n_rows == 1) {
+    out.fill(Rcpp::NumericVector::get_na());
+  } else {
+    out = arma::cor(X, Y, 0);
+  }
+  
+  return out;
 }
 
 
@@ -134,6 +170,12 @@ arma::mat xcorArma(const arma::mat & X,
 //' @export
 // [[Rcpp::export]]
 Eigen::MatrixXd corEigen(Eigen::Map<Eigen::MatrixXd> & X) {
+  
+  // Handle degenerate cases
+  if (X.rows() == 0 && X.cols() > 0) {
+    return Eigen::MatrixXd::Constant(X.cols(), X.cols(), 
+                                     Rcpp::NumericVector::get_na());
+  }
   
   // Computing degrees of freedom
   // n - 1 is the unbiased estimate whereas n is the MLE
@@ -158,6 +200,14 @@ Eigen::MatrixXd corEigen(Eigen::Map<Eigen::MatrixXd> & X) {
 // [[Rcpp::export]]
 Eigen::MatrixXd xcorEigen(Eigen::Map<Eigen::MatrixXd> & X,
                           Eigen::Map<Eigen::MatrixXd> & Y) {
+  
+  // Handle degenerate cases
+  if (X.cols() == 0 || Y.cols() == 0) {
+    return Eigen::MatrixXd::Constant(0, 0, 0);
+  } else if (X.rows() == 0) { // && X.cols() > 0 && Y.cols() > 0 implicit
+    return Eigen::MatrixXd::Constant(X.cols(), Y.cols(),
+                                     Rcpp::NumericVector::get_na());
+  }
   
   // Computing degrees of freedom
   // n - 1 is the unbiased estimate whereas n is the MLE
