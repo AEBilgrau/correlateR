@@ -49,12 +49,19 @@ Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix & X,
   const int n = X.nrow();
   const int m = X.ncol();
   const int df = n - 1 + norm_type;
+
+  Rcpp::NumericMatrix cov(m, m);
+  
+  // Degenerate case
+  if (n == 0) {
+    std::fill(cov.begin(), cov.end(), Rcpp::NumericVector::get_na());
+    return cov; 
+  }
   
   // Centering the matrix!
   X = centerNumericMatrix(X);  // Defined in aux_functions
 
   // Computing the covariance matrix
-  Rcpp::NumericMatrix cov(m, m);
   for (int i = 0; i < m; ++i) {
     for (int j = 0; j <= i; ++j) {
       cov(i,j) = Rcpp::sum(X(Rcpp::_, i)*X(Rcpp::_, j))/df;
@@ -71,20 +78,27 @@ Rcpp::NumericMatrix covRcpp(Rcpp::NumericMatrix & X,
 //' @export
 // [[Rcpp::export]]
 Rcpp::NumericMatrix xcovRcpp(Rcpp::NumericMatrix & X,
-                                 Rcpp::NumericMatrix & Y,
-                                 const int norm_type = 0) {
+                             Rcpp::NumericMatrix & Y,
+                             const int norm_type = 0) {
   
   const int n = X.nrow();
   const int m_X = X.ncol();
   const int m_Y = Y.ncol();
   const int df = n - 1 + norm_type;
   
+  Rcpp::NumericMatrix cov(m_X, m_Y);
+  
+  // Degenerate case
+  if (n == 0) {
+    std::fill(cov.begin(), cov.end(), Rcpp::NumericVector::get_na());
+    return cov; 
+  }
+  
   // Centering the matrices
   X = centerNumericMatrix(X);
   Y = centerNumericMatrix(Y);
   
   // Computing the covariance matrix
-  Rcpp::NumericMatrix cov(m_X, m_Y);
   for (int i = 0; i < m_X; ++i) {
     for (int j = 0; j < m_Y; ++j) {
       cov(i,j) = Rcpp::sum(X(Rcpp::_, i)*Y(Rcpp::_, j))/df;
@@ -95,43 +109,70 @@ Rcpp::NumericMatrix xcovRcpp(Rcpp::NumericMatrix & X,
 }
 
 
-// Covariance "implementation"" in Armadillio
+// Covariance implementation in Armadillio
 //' @rdname covFamily
 //' @export
 // [[Rcpp::export]]
-arma::mat covArma(const arma::mat & X,
+arma::mat covArma(const arma::mat& X,
                   const int norm_type = 0) {
-  return arma::cov(X, norm_type);
+  arma::mat out(X.n_cols, X.n_cols);
+  
+  // Degenerate cases 
+  if (X.n_cols == 0) {
+    return out;
+  } else if (X.n_rows == 0 || X.n_rows == 1) {
+    out.fill(Rcpp::NumericVector::get_na());
+  } else {
+    out = arma::cov(X, norm_type);
+  }
+  
+  return out;
 }
 
 
-// Cross-covariance "implementation"" in Armadillio
+// Cross-covariance implementation in Armadillio
 //' @rdname covFamily
 //' @export
 // [[Rcpp::export]]
-arma::mat xcovArma(const arma::mat & X,
-                   const arma::mat & Y,
+arma::mat xcovArma(const arma::mat& X,
+                   const arma::mat& Y,
                    const int norm_type = 0) {
-  return arma::cov(X, Y, norm_type);
+  arma::mat out(X.n_cols, Y.n_cols);
+  
+  // Degenerate case first
+  if (X.n_cols == 0 || Y.n_cols == 0) {
+    return out;
+  } else if (X.n_rows == 0 || X.n_rows == 1 || Y.n_rows == 0 || Y.n_rows == 1) {
+    out.fill(Rcpp::NumericVector::get_na());
+  } else {
+    out = arma::cov(X, Y, norm_type);
+  }
+  
+  return out;
 }
 
-
-// covariance in Eigen
+// Covariance in Eigen
 //' @rdname covFamily
 //' @export
 // [[Rcpp::export]]
 Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd> & X,
                          const int norm_type = 0) {
-
-    // Computing degrees of freedom
-    // n - 1 is the unbiased estimate whereas n is the MLE
-    const int df = X.rows() - 1 + norm_type; // Subtract 1 by default
-
-    // Centering the matrix
-    X.rowwise() -= X.colwise().mean();  
-
-    // Return the X^T * X is the scatter matrix
-    return X.transpose() * X / df;  // could be .adjoint()
+  
+  // Handle degenerate cases
+  if (X.rows() == 0 && X.cols() > 0) {
+    return Eigen::MatrixXd::Constant(X.cols(), X.cols(), 
+                                     Rcpp::NumericVector::get_na());
+  }
+  
+  // Computing degrees of freedom
+  // n - 1 is the unbiased estimate whereas n is the MLE
+  const int df = X.rows() - 1 + norm_type; // Subtract 1 by default
+  
+  // Centering the matrix
+  X.rowwise() -= X.colwise().mean(); // Centering the matrix to have 0 col means
+  
+  // Return the X^T * X is the scatter matrix
+  return X.transpose() * X / df;  // could be .adjoint()
 }
 
 
@@ -142,39 +183,24 @@ Eigen::MatrixXd covEigen(Eigen::Map<Eigen::MatrixXd> & X,
 Eigen::MatrixXd xcovEigen(Eigen::Map<Eigen::MatrixXd> & X,
                           Eigen::Map<Eigen::MatrixXd> & Y,
                           const int norm_type = 0) {
-
-    // Computing degrees of freedom
-    // n - 1 is the unbiased estimate whereas n is the MLE
-    const int df = X.rows() - 1 + norm_type; // Subtract 1 by default
-
-    // Centering matrices
-    Y.rowwise() -= Y.colwise().mean();
-    X.rowwise() -= X.colwise().mean();
-
-    // Return the X^T * X is the scatter matrix
-    return X.transpose() * Y / df;
+  
+  // Handle degenerate cases
+  if (X.cols() == 0 || Y.cols() == 0) {
+    return Eigen::MatrixXd::Constant(0, 0, 0);
+  } else if (X.rows() == 0) { // && X.cols() > 0 && Y.cols() > 0 implicit
+    return Eigen::MatrixXd::Constant(X.cols(), Y.cols(),
+                                     Rcpp::NumericVector::get_na());
+  }
+  
+  // Computing degrees of freedom
+  // n - 1 is the unbiased estimate whereas n is the MLE
+  const int df = X.rows() - 1 + norm_type; // Subtract 1 by default
+  
+  // Centering matrices
+  X.rowwise() -= X.colwise().mean(); // Centering the matrix to have 0 col means
+  Y.rowwise() -= Y.colwise().mean();
+  
+  // Return the X^T * X is the scatter matrix
+  return X.transpose() * Y / df;
 }
-
-
-
-
-/*** R
-library("microbenchmark")
-
-X <- replicate(10, rnorm(50))
-dimnames(X) <- list(paste0("obs", 1:nrow(X)), paste0("dim", 1:ncol(X)))
-Y <- replicate(15, rnorm(50))
-dimnames(Y) <- list(paste0("obs", 1:nrow(Y)), paste0("dim", 1:ncol(Y)))
-
-covArma(X, 0)
-covRcpp(X, 0)
-covEigen(X, 0)
-all.equal(covArma(X, 0), covRcpp(X, 0))
-all.equal(covArma(X, 1), covRcpp(X, 1))
-
-all(crosscovRcpp(X, Y, 1) == crosscovArma(X, Y, 1))
-print(microbenchmark(crosscovArma(X, Y, 0), 
-                     crosscovEigen(X, Y, 0),
-                     crosscovRcpp(X, Y, 0), times = 10), order = "median")
-*/
 
